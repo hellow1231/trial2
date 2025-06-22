@@ -226,6 +226,82 @@ const IdeasPage = () => {
         </div>
       </section>
 
+      {/* Policy Section */}
+      <section id="policy" className="py-24 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+          <div className="text-center mb-16 reveal">
+            <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-gray-900 mb-6">Policy Papers</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Research-backed policy recommendations for sustainable development and environmental protection.
+            </p>
+          </div>
+
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-8 lg:p-12 border border-blue-100">
+            <p className="text-gray-700 text-lg leading-relaxed text-center">
+              Our policy papers provide evidence-based recommendations for governments, organizations, and communities 
+              to implement effective environmental policies and sustainable development strategies.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Research Insights Section */}
+      <section id="insights" className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+          <div className="text-center mb-16 reveal">
+            <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-gray-900 mb-6">Research Insights</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Latest findings and analysis from our research initiatives and global partnerships.
+            </p>
+          </div>
+
+          <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-3xl p-8 lg:p-12 border border-emerald-100">
+            <p className="text-gray-700 text-lg leading-relaxed text-center">
+              Our research insights combine scientific rigor with practical application, providing valuable knowledge 
+              that drives innovation and informs decision-making in environmental sustainability.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Future Trends Section */}
+      <section id="trends" className="py-24 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+          <div className="text-center mb-16 reveal">
+            <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-gray-900 mb-6">Future Trends</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Emerging trends in sustainability, technology, and environmental science that will shape our future.
+            </p>
+          </div>
+
+          <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl p-8 lg:p-12 border border-purple-100">
+            <p className="text-gray-700 text-lg leading-relaxed text-center">
+              We analyze emerging trends and technologies to anticipate future challenges and opportunities 
+              in environmental sustainability, helping organizations prepare for tomorrow's solutions.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Thought Leadership Section */}
+      <section id="leadership" className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+          <div className="text-center mb-16 reveal">
+            <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-gray-900 mb-6">Thought Leadership</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Expert opinions and perspectives that influence positive change in environmental policy and practice.
+            </p>
+          </div>
+
+          <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-3xl p-8 lg:p-12 border border-yellow-100">
+            <p className="text-gray-700 text-lg leading-relaxed text-center">
+              Our thought leadership pieces share expert insights and perspectives on critical environmental issues, 
+              influencing policy discussions and driving positive change in sustainability practices.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Search and Filter */}
       <section className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -349,7 +425,7 @@ const IdeasPage = () => {
       )}
 
       {/* Content Grid */}
-      <section id="insights" className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="text-center mb-16 reveal">
             <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-gray-900 mb-6">Latest Ideas</h2>

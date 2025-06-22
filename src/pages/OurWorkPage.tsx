@@ -238,53 +238,156 @@ const OurWorkPage = () => {
       <section className="py-20">
         {activeTab === 'overview' && (
           <div className="max-w-7xl mx-auto px-6 lg:px-10">
-            <div className="text-center mb-16 reveal">
-              <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-gray-900 mb-6">Our Focus Areas</h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                We work across multiple sectors to create comprehensive solutions for environmental 
-                and social challenges.
-              </p>
-            </div>
+            {/* Climate Action Section */}
+            <section id="climate" className="mb-20">
+              <div className="text-center mb-16 reveal">
+                <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-gray-900 mb-6">Climate Action</h2>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                  Implementing comprehensive climate adaptation and mitigation strategies for vulnerable communities.
+                </p>
+              </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {workAreas.map((area, index) => {
-                const IconComponent = area.icon;
-                return (
-                  <div
-                    key={index}
-                    className="group bg-white rounded-2xl overflow-hidden shadow-lg hover-lift border border-gray-100 reveal"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    <div className="relative h-48 overflow-hidden">
-                      <img
-                        src={area.image}
-                        alt={area.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                      <div className={`absolute top-4 left-4 w-12 h-12 bg-gradient-to-br ${area.color} rounded-xl flex items-center justify-center`}>
-                        <IconComponent className="w-6 h-6 text-white" />
-                      </div>
-                    </div>
-                    
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold text-gray-900 mb-3 font-playfair group-hover:text-teal-700 transition-colors">
-                        {area.title}
-                      </h3>
-                      <p className="text-gray-600 mb-4 leading-relaxed">{area.description}</p>
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="text-sm text-gray-500">
-                          <div className="font-medium">{area.projects} Projects</div>
-                          <div className="text-teal-600 font-semibold">{area.beneficiaries} Beneficiaries</div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {workAreas.slice(0, 3).map((area, index) => {
+                  const IconComponent = area.icon;
+                  return (
+                    <div
+                      key={index}
+                      className="group bg-white rounded-2xl overflow-hidden shadow-lg hover-lift border border-gray-100 reveal"
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    >
+                      <div className="relative h-48 overflow-hidden">
+                        <img
+                          src={area.image}
+                          alt={area.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        <div className={`absolute top-4 left-4 w-12 h-12 bg-gradient-to-br ${area.color} rounded-xl flex items-center justify-center`}>
+                          <IconComponent className="w-6 h-6 text-white" />
                         </div>
-                        <div className={`h-1 w-12 bg-gradient-to-r ${area.color} rounded-full`}></div>
+                      </div>
+                      
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-gray-900 mb-3 font-playfair group-hover:text-teal-700 transition-colors">
+                          {area.title}
+                        </h3>
+                        <p className="text-gray-600 mb-4 leading-relaxed">{area.description}</p>
+                        
+                        <div className="flex items-center justify-between">
+                          <div className="text-sm text-gray-500">
+                            <div className="font-medium">{area.projects} Projects</div>
+                            <div className="text-teal-600 font-semibold">{area.beneficiaries} Beneficiaries</div>
+                          </div>
+                          <div className={`h-1 w-12 bg-gradient-to-r ${area.color} rounded-full`}></div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            </section>
+
+            {/* Environmental Health Section */}
+            <section id="health" className="mb-20">
+              <div className="text-center mb-16 reveal">
+                <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-gray-900 mb-6">Environmental Health</h2>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                  Community health and environment initiatives that protect and improve public health outcomes.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {workAreas.slice(3, 6).map((area, index) => {
+                  const IconComponent = area.icon;
+                  return (
+                    <div
+                      key={index}
+                      className="group bg-white rounded-2xl overflow-hidden shadow-lg hover-lift border border-gray-100 reveal"
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    >
+                      <div className="relative h-48 overflow-hidden">
+                        <img
+                          src={area.image}
+                          alt={area.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        <div className={`absolute top-4 left-4 w-12 h-12 bg-gradient-to-br ${area.color} rounded-xl flex items-center justify-center`}>
+                          <IconComponent className="w-6 h-6 text-white" />
+                        </div>
+                      </div>
+                      
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-gray-900 mb-3 font-playfair group-hover:text-teal-700 transition-colors">
+                          {area.title}
+                        </h3>
+                        <p className="text-gray-600 mb-4 leading-relaxed">{area.description}</p>
+                        
+                        <div className="flex items-center justify-between">
+                          <div className="text-sm text-gray-500">
+                            <div className="font-medium">{area.projects} Projects</div>
+                            <div className="text-teal-600 font-semibold">{area.beneficiaries} Beneficiaries</div>
+                          </div>
+                          <div className={`h-1 w-12 bg-gradient-to-r ${area.color} rounded-full`}></div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+
+            {/* Sustainable Development Section */}
+            <section id="development" className="mb-20">
+              <div className="text-center mb-16 reveal">
+                <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-gray-900 mb-6">Sustainable Development</h2>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                  Sustainable livelihood programs that create economic opportunities while protecting the environment.
+                </p>
+              </div>
+
+              <div className="bg-gradient-to-br from-teal-50 to-cyan-50 rounded-3xl p-8 lg:p-12 border border-teal-100">
+                <p className="text-gray-700 text-lg leading-relaxed text-center">
+                  Our sustainable development programs focus on creating economic opportunities that are environmentally responsible 
+                  and socially inclusive. We work with communities to develop skills, create jobs, and build resilient local economies.
+                </p>
+              </div>
+            </section>
+
+            {/* Research Projects Section */}
+            <section id="research" className="mb-20">
+              <div className="text-center mb-16 reveal">
+                <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-gray-900 mb-6">Research Projects</h2>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                  Scientific research and innovation that drives evidence-based environmental solutions.
+                </p>
+              </div>
+
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-8 lg:p-12 border border-blue-100">
+                <p className="text-gray-700 text-lg leading-relaxed text-center">
+                  Our research initiatives combine cutting-edge science with practical application, generating knowledge 
+                  that informs policy and drives innovation in environmental sustainability.
+                </p>
+              </div>
+            </section>
+
+            {/* Global Initiatives Section */}
+            <section id="initiatives" className="mb-20">
+              <div className="text-center mb-16 reveal">
+                <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-gray-900 mb-6">Global Initiatives</h2>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                  Large-scale impact programs that address environmental challenges at a global scale.
+                </p>
+              </div>
+
+              <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl p-8 lg:p-12 border border-purple-100">
+                <p className="text-gray-700 text-lg leading-relaxed text-center">
+                  Our global initiatives tackle environmental challenges that transcend borders, bringing together 
+                  international partners to create coordinated, large-scale solutions.
+                </p>
+              </div>
+            </section>
           </div>
         )}
 

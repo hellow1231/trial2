@@ -290,7 +290,7 @@ const AboutPage = () => {
             {/* Carousel Wrapper */}
             <div className="overflow-hidden rounded-3xl">
               <div 
-                className="flex transition-transform duration-700 ease-in-out"
+                className="flex transition-transform duration-1000 ease-in-out"
                 style={{ transform: `translateX(-${currentSlide * 100}%)` }}
               >
                 {Array.from({ length: totalSlides }).map((_, slideIndex) => (
@@ -299,21 +299,37 @@ const AboutPage = () => {
                       {values.slice(slideIndex * 3, slideIndex * 3 + 3).map((value, index) => {
                         const IconComponent = value.icon;
                         const actualIndex = slideIndex * 3 + index;
+                        const isActive = currentSlide === slideIndex;
+                        
                         return (
                           <div
                             key={actualIndex}
-                            className="bg-white rounded-2xl p-8 shadow-lg hover-lift border border-gray-100 group transform transition-all duration-500"
+                            className={`bg-white rounded-2xl p-8 shadow-lg border border-gray-100 group transform transition-all duration-700 ease-out ${
+                              isActive 
+                                ? 'translate-y-0 scale-100 opacity-100 hover:-translate-y-2 hover:shadow-xl' 
+                                : 'translate-y-8 scale-95 opacity-60'
+                            }`}
                             style={{ 
-                              animationDelay: `${index * 0.1}s`,
-                              transform: currentSlide === slideIndex ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.95)',
-                              opacity: currentSlide === slideIndex ? 1 : 0.7
+                              transitionDelay: isActive ? `${index * 150}ms` : '0ms'
                             }}
                           >
-                            <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 motion-pulse">
-                              <IconComponent className="w-8 h-8 text-gray-700" />
+                            <div className="relative mb-6">
+                              <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-all duration-500 motion-pulse overflow-hidden">
+                                <div className="absolute inset-0 bg-gradient-to-br from-teal-500/0 to-cyan-500/0 group-hover:from-teal-500/10 group-hover:to-cyan-500/10 transition-all duration-500"></div>
+                                <IconComponent className="w-8 h-8 text-gray-700 group-hover:text-teal-600 transition-colors duration-500 relative z-10" />
+                              </div>
+                              <div className="absolute -inset-2 bg-gradient-to-r from-teal-500/0 to-cyan-500/0 group-hover:from-teal-500/20 group-hover:to-cyan-500/20 rounded-3xl transition-all duration-500 -z-10"></div>
                             </div>
-                            <h3 className="text-xl font-bold text-gray-900 mb-4 font-playfair">{value.title}</h3>
-                            <p className="text-gray-600 leading-relaxed">{value.description}</p>
+                            
+                            <h3 className="text-xl font-bold text-gray-900 mb-4 font-playfair group-hover:text-teal-700 transition-colors duration-300">
+                              {value.title}
+                            </h3>
+                            
+                            <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
+                              {value.description}
+                            </p>
+                            
+                            <div className="mt-6 h-1 w-0 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full group-hover:w-full transition-all duration-700 ease-out"></div>
                           </div>
                         );
                       })}
@@ -326,7 +342,7 @@ const AboutPage = () => {
             {/* Navigation Arrows */}
             <button
               onClick={prevSlide}
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center text-gray-700 hover:text-teal-600 hover:bg-white transition-all duration-300 group z-10"
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center text-gray-700 hover:text-teal-600 hover:bg-white hover:scale-110 transition-all duration-300 group z-10"
               aria-label="Previous slide"
             >
               <ChevronLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
@@ -334,7 +350,7 @@ const AboutPage = () => {
             
             <button
               onClick={nextSlide}
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center text-gray-700 hover:text-teal-600 hover:bg-white transition-all duration-300 group z-10"
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center text-gray-700 hover:text-teal-600 hover:bg-white hover:scale-110 transition-all duration-300 group z-10"
               aria-label="Next slide"
             >
               <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
@@ -346,10 +362,10 @@ const AboutPage = () => {
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  className={`w-3 h-3 rounded-full transition-all duration-500 ${
                     currentSlide === index 
-                      ? 'bg-teal-600 scale-125' 
-                      : 'bg-gray-300 hover:bg-gray-400'
+                      ? 'bg-teal-600 scale-125 shadow-lg' 
+                      : 'bg-gray-300 hover:bg-gray-400 hover:scale-110'
                   }`}
                   aria-label={`Go to slide ${index + 1}`}
                 />
@@ -359,7 +375,7 @@ const AboutPage = () => {
             {/* Progress Bar */}
             <div className="mt-6 w-full bg-gray-200 rounded-full h-1 overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full transition-all duration-700 ease-in-out"
+                className="h-full bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full transition-all duration-1000 ease-in-out"
                 style={{ width: `${((currentSlide + 1) / totalSlides) * 100}%` }}
               />
             </div>
@@ -480,6 +496,83 @@ const AboutPage = () => {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Leadership Section */}
+      <section id="leadership" className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+          <div className="text-center mb-16 reveal">
+            <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-gray-900 mb-6">Executive Leadership</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Our executive team brings decades of experience in environmental science, policy, and international development.
+            </p>
+          </div>
+          
+          <div className="bg-gradient-to-br from-teal-50 to-cyan-50 rounded-3xl p-8 lg:p-12 border border-teal-100">
+            <p className="text-gray-700 text-lg leading-relaxed text-center">
+              Our leadership team combines scientific expertise with practical experience in implementing large-scale environmental programs. 
+              Together, they guide GEI's strategic vision and ensure our work creates meaningful, lasting impact for communities and ecosystems worldwide.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Partnerships Section */}
+      <section id="partnerships" className="py-24 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+          <div className="text-center mb-16 reveal">
+            <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-gray-900 mb-6">Global Partnerships</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              We collaborate with leading organizations, governments, and communities to amplify our impact and create sustainable change.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover-lift border border-gray-100 reveal">
+              <h3 className="text-xl font-bold text-gray-900 mb-4 font-playfair">UN Agencies</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Strategic partnerships with UNEP, UNESCO, and other UN agencies to align our work with global sustainability goals.
+              </p>
+            </div>
+            
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover-lift border border-gray-100 reveal" style={{ animationDelay: '0.1s' }}>
+              <h3 className="text-xl font-bold text-gray-900 mb-4 font-playfair">Government Partners</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Collaboration with national and local governments to implement policy-driven environmental solutions.
+              </p>
+            </div>
+            
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover-lift border border-gray-100 reveal" style={{ animationDelay: '0.2s' }}>
+              <h3 className="text-xl font-bold text-gray-900 mb-4 font-playfair">Academic Institutions</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Research partnerships with leading universities to advance scientific understanding and innovation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Careers Section */}
+      <section id="careers" className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+          <div className="text-center mb-16 reveal">
+            <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-gray-900 mb-6">Join Our Team</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Be part of a mission-driven organization that's creating positive environmental impact around the world.
+            </p>
+          </div>
+          
+          <div className="bg-gradient-to-br from-teal-700 via-teal-600 to-cyan-600 rounded-3xl p-8 lg:p-12 text-white text-center">
+            <h3 className="text-2xl font-bold font-playfair mb-4">Current Opportunities</h3>
+            <p className="text-teal-100 mb-8 text-lg leading-relaxed">
+              We're always looking for passionate individuals who want to make a difference. 
+              Explore our current openings and join our global team of changemakers.
+            </p>
+            <button className="px-8 py-4 bg-white text-teal-700 font-semibold rounded-full hover:bg-teal-50 transition-all duration-300 transform hover:scale-105 shadow-lg">
+              View Open Positions
+            </button>
           </div>
         </div>
       </section>
