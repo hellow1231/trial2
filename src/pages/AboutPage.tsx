@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
-import { Target, Eye, Users, Lightbulb, Award, Heart, Globe, Zap, Calendar, MapPin, Mail, Linkedin, Twitter } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Target, Eye, Users, Lightbulb, Award, Heart, Globe, Zap, Calendar, MapPin, Mail, Linkedin, Twitter, ChevronLeft, ChevronRight } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 const AboutPage = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -107,38 +110,32 @@ const AboutPage = () => {
     {
       icon: Heart,
       title: 'Compassion',
-      description: 'We approach every challenge with empathy and understanding for communities and ecosystems.',
-      color: 'from-pink-500 to-rose-500'
+      description: 'We approach every challenge with empathy and understanding for communities and ecosystems, ensuring that human dignity and environmental stewardship guide our every action.'
     },
     {
       icon: Globe,
       title: 'Global Perspective',
-      description: 'We think globally while acting locally, understanding interconnected environmental challenges.',
-      color: 'from-blue-500 to-cyan-500'
+      description: 'We think globally while acting locally, understanding the interconnected nature of environmental challenges and their impact across borders and communities.'
     },
     {
       icon: Lightbulb,
       title: 'Innovation',
-      description: 'We embrace creative solutions and cutting-edge approaches to environmental problems.',
-      color: 'from-yellow-500 to-orange-500'
+      description: 'We embrace creative solutions and cutting-edge approaches to environmental problems, fostering a culture of continuous learning and breakthrough thinking.'
     },
     {
       icon: Users,
       title: 'Collaboration',
-      description: 'We believe in the power of partnerships and community-driven solutions.',
-      color: 'from-purple-500 to-indigo-500'
+      description: 'We believe in the power of partnerships and community-driven solutions, recognizing that lasting change comes through collective action and shared responsibility.'
     },
     {
       icon: Award,
       title: 'Excellence',
-      description: 'We maintain the highest standards in all our programs and research initiatives.',
-      color: 'from-emerald-500 to-teal-500'
+      description: 'We maintain the highest standards in all our programs and research initiatives, ensuring quality, integrity, and measurable impact in everything we do.'
     },
     {
       icon: Zap,
       title: 'Impact',
-      description: 'We focus on measurable, sustainable change that transforms lives and environments.',
-      color: 'from-red-500 to-pink-500'
+      description: 'We focus on measurable, sustainable change that transforms lives and environments, prioritizing long-term solutions over short-term fixes.'
     }
   ];
 
@@ -186,6 +183,32 @@ const AboutPage = () => {
       color: 'from-teal-500 to-cyan-500'
     }
   ];
+
+  // Carousel functionality
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % Math.ceil(values.length / 3));
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + Math.ceil(values.length / 3)) % Math.ceil(values.length / 3));
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
+
+  // Auto-play functionality
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, currentSlide]);
+
+  const totalSlides = Math.ceil(values.length / 3);
 
   return (
     <div className="min-h-screen bg-white">
@@ -248,7 +271,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Values Section */}
+      {/* Values Carousel Section */}
       <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="text-center mb-16 reveal">
@@ -258,23 +281,88 @@ const AboutPage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {values.map((value, index) => {
-              const IconComponent = value.icon;
-              return (
-                <div
-                  key={index}
-                  className="bg-white rounded-2xl p-8 shadow-lg hover-lift border border-gray-100 group reveal"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className={`w-16 h-16 bg-gradient-to-br ${value.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 motion-pulse`}>
-                    <IconComponent className="w-8 h-8 text-white" />
+          {/* Carousel Container */}
+          <div 
+            className="relative reveal"
+            onMouseEnter={() => setIsAutoPlaying(false)}
+            onMouseLeave={() => setIsAutoPlaying(true)}
+          >
+            {/* Carousel Wrapper */}
+            <div className="overflow-hidden rounded-3xl">
+              <div 
+                className="flex transition-transform duration-700 ease-in-out"
+                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+              >
+                {Array.from({ length: totalSlides }).map((_, slideIndex) => (
+                  <div key={slideIndex} className="w-full flex-shrink-0">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
+                      {values.slice(slideIndex * 3, slideIndex * 3 + 3).map((value, index) => {
+                        const IconComponent = value.icon;
+                        const actualIndex = slideIndex * 3 + index;
+                        return (
+                          <div
+                            key={actualIndex}
+                            className="bg-white rounded-2xl p-8 shadow-lg hover-lift border border-gray-100 group transform transition-all duration-500"
+                            style={{ 
+                              animationDelay: `${index * 0.1}s`,
+                              transform: currentSlide === slideIndex ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.95)',
+                              opacity: currentSlide === slideIndex ? 1 : 0.7
+                            }}
+                          >
+                            <div className="w-16 h-16 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 motion-pulse">
+                              <IconComponent className="w-8 h-8 text-gray-700" />
+                            </div>
+                            <h3 className="text-xl font-bold text-gray-900 mb-4 font-playfair">{value.title}</h3>
+                            <p className="text-gray-600 leading-relaxed">{value.description}</p>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 font-playfair">{value.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{value.description}</p>
-                </div>
-              );
-            })}
+                ))}
+              </div>
+            </div>
+
+            {/* Navigation Arrows */}
+            <button
+              onClick={prevSlide}
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center text-gray-700 hover:text-teal-600 hover:bg-white transition-all duration-300 group z-10"
+              aria-label="Previous slide"
+            >
+              <ChevronLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
+            </button>
+            
+            <button
+              onClick={nextSlide}
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center text-gray-700 hover:text-teal-600 hover:bg-white transition-all duration-300 group z-10"
+              aria-label="Next slide"
+            >
+              <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+            </button>
+
+            {/* Dots Indicator */}
+            <div className="flex justify-center mt-8 space-x-3">
+              {Array.from({ length: totalSlides }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    currentSlide === index 
+                      ? 'bg-teal-600 scale-125' 
+                      : 'bg-gray-300 hover:bg-gray-400'
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
+
+            {/* Progress Bar */}
+            <div className="mt-6 w-full bg-gray-200 rounded-full h-1 overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full transition-all duration-700 ease-in-out"
+                style={{ width: `${((currentSlide + 1) / totalSlides) * 100}%` }}
+              />
+            </div>
           </div>
         </div>
       </section>
