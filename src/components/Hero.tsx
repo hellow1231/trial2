@@ -35,7 +35,7 @@ const Hero = () => {
       id: 1,
       name: 'Nepal Office',
       country: 'Nepal',
-      x: 71,
+      x: 72,
       y: 36,
       image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=400&q=80',
       description: 'Supporting climate-resilient agriculture and sustainable water management systems for mountain communities.',
