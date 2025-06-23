@@ -13,6 +13,8 @@ import AboutPage from './pages/AboutPage';
 import OurWorkPage from './pages/OurWorkPage';
 import IdeasPage from './pages/IdeasPage';
 import PublicationDetailPage from './pages/PublicationDetailPage';
+import ClimateActionPage from './pages/programs/ClimateActionPage';
+import WaterSanitationPage from './pages/programs/WaterSanitationPage';
 
 function HomePage() {
   return (
@@ -39,6 +41,10 @@ function App() {
         <Route path="/ideas" element={<IdeasPage />} />
         <Route path="/publications/:id" element={<PublicationDetailPage />} />
         <Route path="/admin/publications" element={<PublicationsAdmin />} />
+        
+        {/* Program Pages */}
+        <Route path="/programs/climate-action" element={<ClimateActionPage />} />
+        <Route path="/programs/water-sanitation" element={<WaterSanitationPage />} />
       </Routes>
     </Router>
   );

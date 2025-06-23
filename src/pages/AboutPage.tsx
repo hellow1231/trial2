@@ -253,7 +253,7 @@ const AboutPage = () => {
               </p>
             </div>
 
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-8 lg:p-12 border border-blue-100 reveal" style={{ animationDelay: '0.2s' }}>
+            <div id="vision" className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-8 lg:p-12 border border-blue-100 reveal" style={{ animationDelay: '0.2s' }}>
               <div className="flex items-center mb-8">
                 <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center mr-6 motion-pulse">
                   <Eye className="w-8 h-8 text-white" />
@@ -272,7 +272,7 @@ const AboutPage = () => {
       </section>
 
       {/* Values Carousel Section */}
-      <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
+      <section id="values" className="py-24 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="text-center mb-16 reveal">
             <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-gray-900 mb-6">Our Core Values</h2>

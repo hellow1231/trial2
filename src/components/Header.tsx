@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, ArrowRight, Leaf } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Header = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -42,8 +45,10 @@ const Header = () => {
       href: '/about',
       dropdown: [
         { name: 'Our Mission', href: '/about#mission', description: 'Learn about our core mission and values' },
+        { name: 'Our Vision', href: '/about#vision', description: 'Our vision for a sustainable future' },
+        { name: 'Core Values', href: '/about#values', description: 'The principles that guide our work' },
         { name: 'Our Team', href: '/about#team', description: 'Meet our leadership and expert team' },
-        { name: 'History', href: '/about#history', description: 'Our journey and milestones' },
+        { name: 'Our History', href: '/about#history', description: 'Our journey and milestones' },
         { name: 'Leadership', href: '/about#leadership', description: 'Executive leadership and board' },
         { name: 'Partnerships', href: '/about#partnerships', description: 'Our global network of partners' },
         { name: 'Careers', href: '/about#careers', description: 'Join our mission for change' }
@@ -53,12 +58,14 @@ const Header = () => {
       label: 'Our Work',
       href: '/our-work',
       dropdown: [
-        { name: 'Climate Action', href: '/our-work#climate', description: 'Climate adaptation and mitigation programs' },
-        { name: 'Environmental Health', href: '/our-work#health', description: 'Community health and environment initiatives' },
-        { name: 'Sustainable Development', href: '/our-work#development', description: 'Sustainable livelihood programs' },
-        { name: 'Research Projects', href: '/our-work#research', description: 'Scientific research and innovation' },
+        { name: 'Climate Action', href: '/programs/climate-action', description: 'Climate adaptation and mitigation programs' },
+        { name: 'Water & Sanitation', href: '/programs/water-sanitation', description: 'Clean water and sanitation initiatives' },
+        { name: 'Renewable Energy', href: '/programs/renewable-energy', description: 'Clean energy solutions and programs' },
+        { name: 'Forest Conservation', href: '/programs/forest-conservation', description: 'Forest protection and restoration' },
+        { name: 'Community Development', href: '/programs/community-development', description: 'Sustainable livelihood programs' },
+        { name: 'Waste Management', href: '/programs/waste-management', description: 'Circular economy and waste solutions' },
         { name: 'Publications', href: '/#publications', description: 'Research papers and publications' },
-        { name: 'Global Initiatives', href: '/our-work#initiatives', description: 'Large-scale impact programs' }
+        { name: 'Impact Stories', href: '/our-work#impact', description: 'Real stories of transformation' }
       ]
     },
     {
@@ -81,10 +88,17 @@ const Header = () => {
     
     if (href.startsWith('/#')) {
       // Navigate to home page section
-      if (window.location.pathname !== '/') {
-        window.location.href = href;
+      const sectionId = href.substring(2); // Remove '/#'
+      if (location.pathname !== '/') {
+        navigate('/');
+        // Wait for navigation to complete, then scroll
+        setTimeout(() => {
+          const element = document.querySelector(`#${sectionId}`);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
       } else {
-        const sectionId = href.substring(2); // Remove '/#'
         const element = document.querySelector(`#${sectionId}`);
         if (element) {
           element.scrollIntoView({ behavior: 'smooth' });
@@ -93,25 +107,26 @@ const Header = () => {
     } else if (href.includes('#')) {
       // Navigate to section on specific page
       const [path, hash] = href.split('#');
-      if (window.location.pathname === path) {
+      if (location.pathname === path) {
         // Already on the correct page, just scroll to section
         const element = document.querySelector(`#${hash}`);
         if (element) {
           element.scrollIntoView({ behavior: 'smooth' });
         }
       } else {
-        // Navigate to page with hash
-        window.location.href = href;
+        // Navigate to page first
+        navigate(path);
+        // Wait for navigation to complete, then scroll
+        setTimeout(() => {
+          const element = document.querySelector(`#${hash}`);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
       }
-    } else if (href.startsWith('/')) {
-      // Navigate to page
-      window.location.href = href;
     } else {
-      // Default scroll behavior for current page sections
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
+      // Navigate to page
+      navigate(href);
     }
   };
 
@@ -217,7 +232,7 @@ const Header = () => {
                     </p>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {item.dropdown.map((dropdownItem, index) => (
                       <button
                         key={index}
