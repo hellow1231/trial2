@@ -59,7 +59,7 @@ const Hero = () => {
       id: 3,
       name: 'Cambodia Office',
       country: 'Cambodia',
-      x: 80,
+      x: 72,
       y: 48,
       image: 'https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=400&q=80',
       description: 'Building water security infrastructure and training communities in environmental conservation practices.',
