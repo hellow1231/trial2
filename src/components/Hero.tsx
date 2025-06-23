@@ -184,7 +184,7 @@ const Hero = () => {
                   <div
                     className="
                       w-6 h-6 rounded-full
-                      bg-[#0F4C51]
+                      bg-[#407F7F]
                       shadow-md
                       transform transition-transform duration-200
                       group-hover:scale-125
