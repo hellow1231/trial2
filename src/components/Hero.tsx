@@ -169,35 +169,52 @@ const Hero = () => {
 
               {/* Location Markers */}
               {locations.map((location) => {
-                return (
-                  <div
-                    key={location.id}
-                    className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-10"
-                    style={{ left: `${location.x}%`, top: `${location.y}%` }}
-                    onClick={() => setActiveLocation(activeLocation === location.id ? null : location.id)}
-                  >
-                    {/* Enhanced Marker */}
-                    <div className="relative">
-                      {/* Outer Glow Ring */}
-                      <div className={`absolute inset-0 w-20 h-20 bg-gradient-to-r ${location.color} rounded-full opacity-20 animate-ping transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2`}></div>
-                      
-                      {/* Middle Ring */}
-                      <div className={`absolute inset-0 w-16 h-16 bg-gradient-to-r ${location.color} rounded-full opacity-30 animate-pulse transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2`} style={{ animationDelay: '0.5s' }}></div>
-                      
-                      {/* Main Marker */}
-                      <div className={`relative w-12 h-12 bg-gradient-to-r ${location.color} rounded-full flex items-center justify-center text-white font-bold text-lg shadow-2xl transform group-hover:scale-125 transition-all duration-300 border-4 border-white group-hover:border-4`}>
-                        <div className="absolute inset-0 bg-white/20 rounded-full animate-pulse"></div>
-                        <span className="relative z-10">{location.id}</span>
-                      </div>
-                      
-                      {/* Hover Effect Ring */}
-                      <div className="absolute inset-0 w-12 h-12 bg-white rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-300 animate-ping"></div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+  return (
+    <div
+      key={location.id}
+      className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-10"
+      style={{ left: `${location.x}%`, top: `${location.y}%` }}
+      onClick={() =>
+        setActiveLocation(
+          activeLocation === location.id ? null : location.id
+        )
+      }
+    >
+      <div className="relative">
+        {/* Main sleek marker */}
+        <div
+          className={`
+            w-6 h-6 rounded-full
+            bg-gradient-to-r ${location.color}
+            shadow-md
+            transform transition-transform duration-200
+            group-hover:scale-125
+          `}
+        />
+
+        {/* Hover highlight ring */}
+        <div className="
+          absolute inset-0 rounded-full
+          bg-white opacity-0
+          transition-opacity duration-200
+          group-hover:opacity-20
+        " />
+      </div>
+
+      {/* Tooltip */}
+      {activeLocation === location.id && (
+        <div className="
+          absolute left-1/2 top-full mt-2
+          w-40 bg-white rounded-md shadow-lg
+          -translate-x-1/2 p-2 text-sm text-gray-800
+        ">
+          <h4 className="font-medium">{location.name}</h4>
+          <p className="mt-1">{location.description}</p>
+        </div>
+      )}
+    </div>
+  );
+})}
 
           {/* Office Details Cards */}
           <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
