@@ -47,7 +47,7 @@ const Hero = () => {
       id: 2,
       name: 'India Office',
       country: 'India',
-      x: 70,
+      x: 69,
       y: 42,
       image: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=400&q=80',
       description: 'Implementing renewable energy solutions and sustainable development programs in rural communities.',
