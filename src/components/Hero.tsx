@@ -168,53 +168,56 @@ const Hero = () => {
               </div>
 
               {/* Location Markers */}
-             {locations.map((location) => {
-  return (
-    <div
-      key={location.id}
-      className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-10"
-      style={{ left: `${location.x}%`, top: `${location.y}%` }}
-      onClick={() =>
-        setActiveLocation(
-          activeLocation === location.id ? null : location.id
-        )
-      }
-    >
-      <div className="relative">
-        {/* Main sleek marker */}
-        <div
-          className={`
-            w-6 h-6 rounded-full
-            bg-gradient-to-r ${location.color}
-            shadow-md
-            transform transition-transform duration-200
-            group-hover:scale-125
-          `}
-        />
+             {locations.map((location) => (
+              <div
+                key={location.id}
+                className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-10"
+                style={{ left: `${location.x}%`, top: `${location.y}%` }}
+                onClick={() =>
+                  setActiveLocation(
+                    activeLocation === location.id ? null : location.id
+                  )
+                }
+              >
+                <div className="relative">
+                  {/* Main sleek marker in GEI blue */}
+                  <div
+                    className="
+                      w-6 h-6 rounded-full
+                      bg-[#0F4C51]
+                      shadow-md
+                      transform transition-transform duration-200
+                      group-hover:scale-125
+                    "
+                  />
+            
+                  {/* Hover highlight ring */}
+                  <div
+                    className="
+                      absolute inset-0 rounded-full
+                      bg-white opacity-0
+                      transition-opacity duration-200
+                      group-hover:opacity-20
+                    "
+                  />
+                </div>
+            
+                {/* Tooltip */}
+                {activeLocation === location.id && (
+                  <div
+                    className="
+                      absolute left-1/2 top-full mt-2
+                      w-40 bg-white rounded-md shadow-lg
+                      -translate-x-1/2 p-2 text-sm text-gray-800
+                    "
+                  >
+                    <h4 className="font-medium">{location.name}</h4>
+                    <p className="mt-1">{location.description}</p>
+                  </div>
+                )}
+              </div>
+            ))}
 
-        {/* Hover highlight ring */}
-        <div className="
-          absolute inset-0 rounded-full
-          bg-white opacity-0
-          transition-opacity duration-200
-          group-hover:opacity-20
-        " />
-      </div>
-
-      {/* Tooltip */}
-      {activeLocation === location.id && (
-        <div className="
-          absolute left-1/2 top-full mt-2
-          w-40 bg-white rounded-md shadow-lg
-          -translate-x-1/2 p-2 text-sm text-gray-800
-        ">
-          <h4 className="font-medium">{location.name}</h4>
-          <p className="mt-1">{location.description}</p>
-        </div>
-      )}
-    </div>
-  );
-})}
             </div>
           </div>
 
