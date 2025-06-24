@@ -38,12 +38,12 @@ const Publications = () => {
 
   const getCategoryColor = (categoryName: string) => {
     const colors: { [key: string]: string } = {
-      'Artificial Intelligence': 'bg-purple-100 text-purple-800 border-purple-200',
-      'Quantum Computing': 'bg-blue-100 text-blue-800 border-blue-200',
-      'Climate Science': 'bg-emerald-100 text-emerald-800 border-emerald-200',
-      'Robotics': 'bg-orange-100 text-orange-800 border-orange-200',
-      'Biotechnology': 'bg-pink-100 text-pink-800 border-pink-200',
-      'Energy Systems': 'bg-yellow-100 text-yellow-800 border-yellow-200'
+      'Artificial Intelligence': 'bg-analogous-indigo/10 text-analogous-indigo border-analogous-indigo/20',
+      'Quantum Computing': 'bg-base-blue/10 text-base-blue border-base-blue/20',
+      'Climate Science': 'bg-analogous-teal/10 text-analogous-teal border-analogous-teal/20',
+      'Robotics': 'bg-amber/10 text-amber border-amber/20',
+      'Biotechnology': 'bg-light-blue/10 text-muted-blue border-light-blue/20',
+      'Energy Systems': 'bg-amber/10 text-amber border-amber/20'
     };
     return colors[categoryName] || 'bg-gray-100 text-gray-800 border-gray-200';
   };
@@ -54,14 +54,14 @@ const Publications = () => {
 
   if (publicationsError) {
     return (
-      <section id="publications" className="py-24 bg-gradient-to-b from-gray-50 to-white">
+      <section id="publications" className="py-24 bg-gradient-to-b from-neutral-100 to-white">
         <div className="max-w-4xl mx-auto px-6 lg:px-10 text-center">
           <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Unable to Load Publications</h2>
           <p className="text-gray-600 mb-8">
             We're having trouble connecting to our database. Please make sure your PostgreSQL server is running and your connection settings are correct.
           </p>
-          <div className="bg-gray-50 rounded-lg p-6 text-left">
+          <div className="bg-neutral-100 rounded-lg p-6 text-left">
             <h3 className="font-semibold text-gray-900 mb-2">Troubleshooting:</h3>
             <ol className="list-decimal list-inside space-y-2 text-sm text-gray-600">
               <li>Check your PostgreSQL server status and credentials in the <code>.env</code> file.</li>
@@ -76,7 +76,7 @@ const Publications = () => {
   }
 
   return (
-    <section id="publications" className="py-24 bg-gradient-to-b from-gray-50 to-white">
+    <section id="publications" className="py-24 bg-gradient-to-b from-neutral-100 to-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         {/* Section Header */}
         <div className="text-center mb-16 reveal">
@@ -100,8 +100,8 @@ const Publications = () => {
               onClick={() => setSelectedCategory('all')}
               className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
                 selectedCategory === 'all'
-                  ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg transform scale-105'
-                  : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 hover:border-teal-300'
+                  ? 'bg-gradient-to-r from-base-blue to-muted-blue text-white shadow-lg transform scale-105'
+                  : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 hover:border-base-blue/30'
               }`}
             >
               All Publications
@@ -118,8 +118,8 @@ const Publications = () => {
                   onClick={() => setSelectedCategory(category.slug)}
                   className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
                     selectedCategory === category.slug
-                      ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg transform scale-105'
-                      : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 hover:border-teal-300'
+                      ? 'bg-gradient-to-r from-base-blue to-muted-blue text-white shadow-lg transform scale-105'
+                      : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 hover:border-base-blue/30'
                   }`}
                 >
                   {category.name}
@@ -133,7 +133,7 @@ const Publications = () => {
         {publicationsLoading ? (
           <div className="flex items-center justify-center py-20">
             <div className="text-center">
-              <Loader2 className="w-12 h-12 animate-spin text-teal-600 mx-auto mb-4" />
+              <Loader2 className="w-12 h-12 animate-spin text-base-blue mx-auto mb-4" />
               <p className="text-gray-600">Loading publications...</p>
             </div>
           </div>
@@ -149,7 +149,7 @@ const Publications = () => {
             </p>
             <button 
               onClick={() => setSelectedCategory('all')}
-              className="text-teal-600 hover:text-teal-700 font-medium"
+              className="text-base-blue hover:text-dark-blue font-medium"
             >
               View All Publications
             </button>
@@ -166,7 +166,7 @@ const Publications = () => {
                   <div className="flex-1">
                     {/* Publication Type & Year */}
                     <div className="flex items-center gap-3 mb-4">
-                      <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-teal-100 to-cyan-100 text-teal-800 text-xs font-medium rounded-full border border-teal-200">
+                      <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-analogous-teal/10 to-muted-blue/10 text-analogous-teal text-xs font-medium rounded-full border border-analogous-teal/20">
                         <BookOpen className="w-3 h-3 mr-1" />
                         {publication.publication_type}
                       </span>
@@ -180,14 +180,14 @@ const Publications = () => {
                         </span>
                       )}
                       {publication.is_featured && (
-                        <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-yellow-100 to-orange-100 text-yellow-800 text-xs font-medium rounded-full border border-yellow-200">
+                        <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-amber/10 to-amber/20 text-amber text-xs font-medium rounded-full border border-amber/20">
                           Featured
                         </span>
                       )}
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-4 group-hover:text-teal-700 transition-colors leading-tight cursor-pointer"
+                    <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-4 group-hover:text-base-blue transition-colors leading-tight cursor-pointer"
                         onClick={() => viewPublication(publication.id)}>
                       {publication.title}
                     </h3>
@@ -207,7 +207,7 @@ const Publications = () => {
 
                     {/* Journal */}
                     {publication.journal && (
-                      <p className="text-teal-700 font-medium mb-4 text-lg">
+                      <p className="text-base-blue font-medium mb-4 text-lg">
                         {publication.journal}
                       </p>
                     )}
@@ -230,7 +230,7 @@ const Publications = () => {
                   {/* Stats & Actions */}
                   <div className="lg:text-right lg:min-w-[200px]">
                     <div className="mb-6">
-                      <div className="text-3xl font-bold gradient-text">
+                      <div className="text-3xl font-bold bg-gradient-to-r from-base-blue to-analogous-teal bg-clip-text text-transparent">
                         {publication.citations}
                       </div>
                       <div className="text-sm text-gray-600 font-medium">Citations</div>
@@ -239,7 +239,7 @@ const Publications = () => {
                     <div className="flex lg:flex-col gap-3">
                       <button
                         onClick={() => viewPublication(publication.id)}
-                        className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-medium rounded-full hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group/btn"
+                        className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-base-blue to-dark-blue text-white text-sm font-medium rounded-full hover:from-dark-blue hover:to-base-blue transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group/btn"
                       >
                         <Eye className="w-4 h-4 mr-2" />
                         View Details
@@ -251,7 +251,7 @@ const Publications = () => {
                           href={publication.pdf_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-teal-600 to-cyan-600 text-white text-sm font-medium rounded-full hover:from-teal-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group/btn"
+                          className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-analogous-teal to-muted-blue text-white text-sm font-medium rounded-full hover:from-muted-blue hover:to-analogous-teal transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group/btn"
                         >
                           <Download className="w-4 h-4 mr-2" />
                           Download PDF
@@ -268,14 +268,14 @@ const Publications = () => {
 
         {/* Admin Panel Link */}
         <div className="mt-20 text-center reveal">
-          <div className="bg-gradient-to-br from-gray-50 to-teal-50 rounded-3xl p-8 lg:p-12 border border-gray-200">
+          <div className="bg-gradient-to-br from-neutral-100 to-light-blue/20 rounded-3xl p-8 lg:p-12 border border-gray-200">
             <h3 className="text-2xl font-bold font-playfair text-gray-900 mb-4">Manage Publications</h3>
             <p className="text-gray-600 mb-8 text-lg leading-relaxed max-w-2xl mx-auto">
               Add, edit, and organize research publications through our comprehensive admin interface.
             </p>
             <a
               href="/admin/publications"
-              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-teal-600 to-cyan-600 text-white font-semibold rounded-full hover:from-teal-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-analogous-teal to-muted-blue text-white font-semibold rounded-full hover:from-muted-blue hover:to-analogous-teal transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
               Open Admin Panel
               <ExternalLink className="w-5 h-5 ml-2" />

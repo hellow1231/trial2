@@ -58,7 +58,7 @@ const Footer = () => {
       {/* Back to Top Button */}
       <button
         onClick={scrollToTop}
-        className="fixed bottom-6 right-6 p-3 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 z-50 group"
+        className="fixed bottom-6 right-6 p-3 bg-gradient-to-r from-analogous-teal to-muted-blue text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 z-50 group"
         aria-label="Back to top"
       >
         <ArrowUp className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
@@ -70,7 +70,7 @@ const Footer = () => {
             {/* Logo and Description */}
             <div className="lg:col-span-2">
               <div className="flex items-center space-x-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl flex items-center justify-center motion-pulse">
+                <div className="w-12 h-12 bg-gradient-to-br from-analogous-teal to-muted-blue rounded-xl flex items-center justify-center motion-pulse">
                   <Leaf className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -93,7 +93,7 @@ const Footer = () => {
                       key={index}
                       href={social.href}
                       aria-label={social.label}
-                      className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-gradient-to-r hover:from-teal-600 hover:to-cyan-600 transition-all duration-300 group transform hover:scale-110"
+                      className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center hover:bg-gradient-to-r hover:from-analogous-teal hover:to-muted-blue transition-all duration-300 group transform hover:scale-110"
                     >
                       <IconComponent className="w-5 h-5 group-hover:scale-110 transition-transform" />
                     </a>
@@ -158,7 +158,7 @@ const Footer = () => {
               {/* Newsletter Signup */}
               <div className="p-6 bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl border border-gray-600">
                 <h5 className="font-semibold mb-3 flex items-center font-playfair">
-                  <Mail className="w-4 h-4 mr-2 text-teal-400" />
+                  <Mail className="w-4 h-4 mr-2 text-analogous-teal" />
                   Newsletter
                 </h5>
                 <p className="text-gray-400 text-sm mb-4 leading-relaxed">
@@ -168,9 +168,9 @@ const Footer = () => {
                   <input
                     type="email"
                     placeholder="Your email"
-                    className="flex-1 px-4 py-2 bg-gray-700 text-white text-sm rounded-l-xl focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-600"
+                    className="flex-1 px-4 py-2 bg-gray-700 text-white text-sm rounded-l-xl focus:outline-none focus:ring-2 focus:ring-analogous-teal border border-gray-600"
                   />
-                  <button className="px-4 py-2 bg-gradient-to-r from-teal-600 to-cyan-600 text-white text-sm rounded-r-xl hover:from-teal-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105">
+                  <button className="px-4 py-2 bg-gradient-to-r from-analogous-teal to-muted-blue text-white text-sm rounded-r-xl hover:from-muted-blue hover:to-analogous-teal transition-all duration-300 transform hover:scale-105">
                     Subscribe
                   </button>
                 </div>

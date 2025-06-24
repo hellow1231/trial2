@@ -21,7 +21,7 @@ const About = () => {
   }, []);
 
   return (
-    <section id="about" className="py-24 bg-gradient-to-b from-white to-gray-50">
+    <section id="about" className="py-24 bg-gradient-to-b from-white to-neutral-100">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         {/* Section Header */}
         <div className="text-center mb-16 reveal">
@@ -38,8 +38,8 @@ const About = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
           <div className="bg-white rounded-3xl p-8 shadow-lg hover-lift border border-gray-100 reveal">
             <div className="flex items-center mb-6">
-              <div className="w-16 h-16 bg-gradient-to-br from-teal-100 to-teal-200 rounded-2xl flex items-center justify-center mr-6">
-                <Target className="w-8 h-8 text-teal-700" />
+              <div className="w-16 h-16 bg-gradient-to-br from-analogous-teal/20 to-analogous-teal/30 rounded-2xl flex items-center justify-center mr-6">
+                <Target className="w-8 h-8 text-analogous-teal" />
               </div>
               <h3 className="text-2xl font-bold font-playfair text-gray-900">Our Mission</h3>
             </div>
@@ -52,8 +52,8 @@ const About = () => {
 
           <div className="bg-white rounded-3xl p-8 shadow-lg hover-lift border border-gray-100 reveal" style={{ animationDelay: '0.1s' }}>
             <div className="flex items-center mb-6">
-              <div className="w-16 h-16 bg-gradient-to-br from-cyan-100 to-cyan-200 rounded-2xl flex items-center justify-center mr-6">
-                <Eye className="w-8 h-8 text-cyan-700" />
+              <div className="w-16 h-16 bg-gradient-to-br from-muted-blue/20 to-muted-blue/30 rounded-2xl flex items-center justify-center mr-6">
+                <Eye className="w-8 h-8 text-muted-blue" />
               </div>
               <h3 className="text-2xl font-bold font-playfair text-gray-900">Our Vision</h3>
             </div>
@@ -66,7 +66,7 @@ const About = () => {
         </div>
 
         {/* Values Section */}
-        <div className="bg-gradient-to-b from-blue-400 to-cyan-600 rounded-3xl p-8 lg:p-12 text-white reveal">
+        <div className="bg-gradient-to-b from-base-blue to-muted-blue rounded-3xl p-8 lg:p-12 text-white reveal">
           <h3 className="text-3xl font-bold font-playfair text-center mb-12">Our Core Values</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="text-center group">
@@ -74,7 +74,7 @@ const About = () => {
                 <Lightbulb className="w-8 h-8" />
               </div>
               <h4 className="text-xl font-semibold mb-3">Innovation</h4>
-              <p className="text-teal-100 text-sm leading-relaxed">
+              <p className="text-light-blue text-sm leading-relaxed">
                 Pursuing creative solutions for environmental challenges through cutting-edge research and technology
               </p>
             </div>
@@ -84,7 +84,7 @@ const About = () => {
                 <Users className="w-8 h-8" />
               </div>
               <h4 className="text-xl font-semibold mb-3">Collaboration</h4>
-              <p className="text-teal-100 text-sm leading-relaxed">
+              <p className="text-light-blue text-sm leading-relaxed">
                 Fostering partnerships across communities, institutions, and sectors for maximum impact
               </p>
             </div>
@@ -94,7 +94,7 @@ const About = () => {
                 <Award className="w-8 h-8" />
               </div>
               <h4 className="text-xl font-semibold mb-3">Excellence</h4>
-              <p className="text-teal-100 text-sm leading-relaxed">
+              <p className="text-light-blue text-sm leading-relaxed">
                 Maintaining the highest standards in research, implementation, and community engagement
               </p>
             </div>
@@ -104,7 +104,7 @@ const About = () => {
                 <Target className="w-8 h-8" />
               </div>
               <h4 className="text-xl font-semibold mb-3">Impact</h4>
-              <p className="text-teal-100 text-sm leading-relaxed">
+              <p className="text-light-blue text-sm leading-relaxed">
                 Creating measurable, sustainable change for communities and the environment
               </p>
             </div>
@@ -114,7 +114,7 @@ const About = () => {
                 <Heart className="w-8 h-8" />
               </div>
               <h4 className="text-xl font-semibold mb-3">Compassion</h4>
-              <p className="text-teal-100 text-sm leading-relaxed">
+              <p className="text-light-blue text-sm leading-relaxed">
                 Approaching every challenge with empathy and understanding for all stakeholders
               </p>
             </div>
@@ -124,7 +124,7 @@ const About = () => {
                 <Eye className="w-8 h-8" />
               </div>
               <h4 className="text-xl font-semibold mb-3">Transparency</h4>
-              <p className="text-teal-100 text-sm leading-relaxed">
+              <p className="text-light-blue text-sm leading-relaxed">
                 Maintaining open communication and accountability in all our operations
               </p>
             </div>

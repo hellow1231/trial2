@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ChevronDown, ArrowRight, Leaf } from 'lucide-react';
+import { Menu, X, ChevronDown, ArrowRight } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const Header = () => {
@@ -181,8 +181,8 @@ const Header = () => {
                     onMouseEnter={() => setActiveDropdown(item.label)}
                     className={`flex items-center space-x-1 font-medium transition-all duration-300 hover:scale-105 ${
                       isScrolled 
-                        ? 'text-gray-700 hover:text-teal-600' 
-                        : 'text-gray-900 hover:text-teal-600'
+                        ? 'text-gray-700 hover:text-base-blue' 
+                        : 'text-gray-900 hover:text-base-blue'
                     }`}
                   >
                     <span>{item.label}</span>
@@ -240,13 +240,13 @@ const Header = () => {
                       <button
                         key={index}
                         onClick={() => handleNavClick(dropdownItem.href)}
-                        className="group bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 text-left border border-gray-100 hover:border-teal-200"
+                        className="group bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 text-left border border-gray-100 hover:border-base-blue/30"
                       >
                         <div className="flex items-center justify-between mb-2">
-                          <h3 className="text-lg font-bold text-gray-900 group-hover:text-teal-700 transition-colors">
+                          <h3 className="text-lg font-bold text-gray-900 group-hover:text-base-blue transition-colors">
                             {dropdownItem.name}
                           </h3>
-                          <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-teal-600 group-hover:translate-x-1 transition-all" />
+                          <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-base-blue group-hover:translate-x-1 transition-all" />
                         </div>
                         <p className="text-gray-600 text-sm leading-relaxed">
                           {dropdownItem.description}
@@ -289,7 +289,7 @@ const Header = () => {
                       <button
                         key={index}
                         onClick={() => handleNavClick(dropdownItem.href)}
-                        className="block w-full text-left py-3 px-4 text-gray-700 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-colors duration-200"
+                        className="block w-full text-left py-3 px-4 text-gray-700 hover:text-base-blue hover:bg-light-blue/10 rounded-lg transition-colors duration-200"
                       >
                         <div className="font-medium">{dropdownItem.name}</div>
                         <div className="text-sm text-gray-500 mt-1">{dropdownItem.description}</div>
