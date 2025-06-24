@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, Globe, Users, Zap, MapPin, ExternalLink, X } from 'lucide-react';
+import ImageGalleryCarousel from './ImageGalleryCarousel';
 
 const Hero = () => {
   const [activeLocation, setActiveLocation] = useState<number | null>(null);
@@ -66,6 +67,40 @@ const Hero = () => {
       impact: '25,000+ people with clean water',
       icon: Users,
       color: 'from-analogous-teal to-light-blue'
+    }
+  ];
+
+  // Gallery images for the carousel
+  const galleryImages = [
+    {
+      src: 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=1200&h=675&fit=crop',
+      alt: 'Community members working together on environmental project',
+      caption: 'Community-led environmental initiatives creating lasting change'
+    },
+    {
+      src: 'https://images.pexels.com/photos/2886937/pexels-photo-2886937.jpeg?auto=compress&cs=tinysrgb&w=1200&h=675&fit=crop',
+      alt: 'Solar panels installation in rural community',
+      caption: 'Renewable energy solutions powering sustainable development'
+    },
+    {
+      src: 'https://images.pexels.com/photos/1072824/pexels-photo-1072824.jpeg?auto=compress&cs=tinysrgb&w=1200&h=675&fit=crop',
+      alt: 'Clean water access project in developing region',
+      caption: 'Clean water infrastructure transforming communities'
+    },
+    {
+      src: 'https://images.pexels.com/photos/1108572/pexels-photo-1108572.jpeg?auto=compress&cs=tinysrgb&w=1200&h=675&fit=crop',
+      alt: 'Reforestation and conservation efforts',
+      caption: 'Forest conservation protecting biodiversity and climate'
+    },
+    {
+      src: 'https://images.pexels.com/photos/2886937/pexels-photo-2886937.jpeg?auto=compress&cs=tinysrgb&w=1200&h=675&fit=crop',
+      alt: 'Agricultural training and sustainable farming',
+      caption: 'Climate-smart agriculture ensuring food security'
+    },
+    {
+      src: 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=1200&h=675&fit=crop',
+      alt: 'Educational programs and capacity building',
+      caption: 'Education and training building local expertise'
     }
   ];
 
@@ -247,6 +282,14 @@ const Hero = () => {
           </div>
         </div>
       </section>
+
+      {/* Image Gallery Carousel */}
+      <ImageGalleryCarousel
+        images={galleryImages}
+        sectionTitle="Our Impact in Action"
+        sectionDescription="Witness the transformative power of our environmental initiatives through real stories and impactful moments from communities around the world."
+        autoScrollSpeed={4000}
+      />
 
       {/* Centered Modal Popup */}
       {activeLocation && (

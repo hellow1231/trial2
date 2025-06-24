@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Leaf, Droplets, Sun, Users, TreePine, Recycle, ArrowRight, MapPin, Calendar, TrendingUp, Award, Target, Zap } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import ImageGalleryCarousel from '../components/ImageGalleryCarousel';
 
 const OurWorkPage = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -161,6 +162,40 @@ const OurWorkPage = () => {
     { id: 'impact', label: 'Impact Stories', icon: TrendingUp }
   ];
 
+  // Gallery images for Our Work page
+  const workGalleryImages = [
+    {
+      src: 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=1200&h=675&fit=crop',
+      alt: 'Climate action project in rural community',
+      caption: 'Climate resilience programs protecting vulnerable communities'
+    },
+    {
+      src: 'https://images.pexels.com/photos/2886937/pexels-photo-2886937.jpeg?auto=compress&cs=tinysrgb&w=1200&h=675&fit=crop',
+      alt: 'Water and sanitation infrastructure development',
+      caption: 'Clean water access transforming health outcomes'
+    },
+    {
+      src: 'https://images.pexels.com/photos/1072824/pexels-photo-1072824.jpeg?auto=compress&cs=tinysrgb&w=1200&h=675&fit=crop',
+      alt: 'Renewable energy installation in remote area',
+      caption: 'Solar energy bringing power to off-grid communities'
+    },
+    {
+      src: 'https://images.pexels.com/photos/1108572/pexels-photo-1108572.jpeg?auto=compress&cs=tinysrgb&w=1200&h=675&fit=crop',
+      alt: 'Forest conservation and restoration efforts',
+      caption: 'Reforestation initiatives protecting biodiversity'
+    },
+    {
+      src: 'https://images.pexels.com/photos/2886937/pexels-photo-2886937.jpeg?auto=compress&cs=tinysrgb&w=1200&h=675&fit=crop',
+      alt: 'Community development and capacity building',
+      caption: 'Empowering communities through skills development'
+    },
+    {
+      src: 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=1200&h=675&fit=crop',
+      alt: 'Waste management and circular economy solutions',
+      caption: 'Innovative waste solutions creating circular economies'
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -206,6 +241,14 @@ const OurWorkPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Image Gallery Carousel */}
+      <ImageGalleryCarousel
+        images={workGalleryImages}
+        sectionTitle="Transforming Communities Worldwide"
+        sectionDescription="Explore our comprehensive programs that create lasting environmental and social impact across diverse communities and ecosystems around the globe."
+        autoScrollSpeed={3500}
+      />
 
       {/* Navigation Tabs */}
       <section className="py-8 bg-gray-50 sticky top-16 z-30">
