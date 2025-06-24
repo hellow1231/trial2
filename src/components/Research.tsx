@@ -125,6 +125,7 @@ const Research = () => {
         </div>
 
         {/* CTA Section */}
+        {/*
         <div className="mt-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-3xl p-8 lg:p-12 text-center text-white reveal">
           <h3 className="text-3xl lg:text-4xl font-bold font-playfair mb-6">
             Interested in Collaboration?
@@ -138,6 +139,7 @@ const Research = () => {
             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
+        */}
       </div>
     </section>
   );

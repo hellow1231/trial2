@@ -100,7 +100,7 @@ const Publications = () => {
               onClick={() => setSelectedCategory('all')}
               className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
                 selectedCategory === 'all'
-                  ? 'bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-lg transform scale-105'
+                  ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg transform scale-105'
                   : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 hover:border-teal-300'
               }`}
             >
@@ -118,7 +118,7 @@ const Publications = () => {
                   onClick={() => setSelectedCategory(category.slug)}
                   className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
                     selectedCategory === category.slug
-                      ? 'bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-lg transform scale-105'
+                      ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg transform scale-105'
                       : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 hover:border-teal-300'
                   }`}
                 >

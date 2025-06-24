@@ -1,4 +1,6 @@
 // File upload utilities for handling PDF uploads
+import { supabase } from './supabase';
+
 export interface UploadResult {
   url: string;
   path: string;
@@ -20,31 +22,32 @@ export class FileUploadService {
     file: File, 
     onProgress?: (progress: number) => void
   ): Promise<UploadResult> {
-    return new Promise((resolve, reject) => {
-      // Simulate file upload with progress
-      let progress = 0;
-      const interval = setInterval(() => {
-        progress += Math.random() * 20;
-        if (progress > 100) progress = 100;
-        
-        onProgress?.(Math.round(progress));
-        
-        if (progress >= 100) {
-          clearInterval(interval);
-          
-          // Simulate successful upload
-          setTimeout(() => {
-            const mockUrl = `https://storage.example.com/pdfs/${Date.now()}-${file.name}`;
-            resolve({
-              url: mockUrl,
-              path: `pdfs/${Date.now()}-${file.name}`,
-              size: file.size,
-              type: file.type
-            });
-          }, 500);
-        }
-      }, 200);
+    // Generate a unique file path
+    const filePath = `pdfs/${Date.now()}-${file.name}`;
+
+    // Upload to Supabase Storage (bucket: 'publications')
+    const { data, error } = await supabase.storage.from('publications').upload(filePath, file, {
+      cacheControl: '3600',
+      upsert: false,
     });
+
+    if (error) {
+      throw error;
+    }
+
+    // Get the public URL
+    const { data: publicUrlData } = supabase.storage.from('publications').getPublicUrl(filePath);
+    const url = publicUrlData.publicUrl;
+
+    // Optionally, call onProgress with 100% when done
+    onProgress?.(100);
+
+    return {
+      url,
+      path: filePath,
+      size: file.size,
+      type: file.type,
+    };
   }
 
   validatePDF(file: File): { valid: boolean; error?: string } {

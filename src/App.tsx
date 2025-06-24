@@ -23,7 +23,7 @@ function HomePage() {
       <Hero />
       <About />
       <Research />
-      <Faculty />
+      {/* <Faculty /> */}
       <Publications />
       <Contact />
       <Footer />

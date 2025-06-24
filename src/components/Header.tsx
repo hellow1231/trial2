@@ -152,9 +152,12 @@ const Header = () => {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center space-x-3 group cursor-pointer" onClick={() => handleNavClick('/')}>
-              <div className="w-10 h-10 bg-gradient-to-br from-teal-600 to-cyan-600 rounded-full flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 motion-pulse">
-                <Leaf className="w-5 h-5 text-white" />
-              </div>
+              <img 
+                src="/gei-logo.svg" 
+                alt="GEI Logo" 
+                className="w-12 h-12 rounded-full bg-white p-1 shadow-md transition-transform duration-300 group-hover:scale-110 motion-pulse" 
+                style={{ objectFit: 'contain' }}
+              />
               <div>
                 <h1 className={`text-xl font-bold transition-colors duration-300 ${
                   isScrolled ? 'text-gray-900' : 'text-gray-900'

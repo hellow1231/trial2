@@ -53,7 +53,7 @@ const Hero = () => {
       description: 'Implementing renewable energy solutions and sustainable development programs in rural communities.',
       impact: '50,000+ people with clean energy',
       icon: Zap,
-      color: 'from-yellow-500 to-orange-500'
+      color: 'from-blue-500 to-cyan-500'
     },
     {
       id: 3,
@@ -72,11 +72,11 @@ const Hero = () => {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-white via-teal-50/30 to-white pt-28">
+      <section className="relative overflow-hidden bg-gradient-to-b from-white via-blue-50/30 to-white pt-28">
         {/* Animated background particles */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-teal-400/20 to-cyan-400/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-teal-400/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-600/20 to-cyan-400/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-cyan-400/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-6 lg:px-10 py-28 grid lg:grid-cols-2 gap-12 items-center relative">
@@ -98,11 +98,12 @@ const Hero = () => {
             </button>
           </div>
           
-          <div className="reveal">
-            <img 
-              src="https://images.unsplash.com/photo-1601471989274-b65393f92c24?auto=format&fit=crop&w=900&q=80" 
-              alt="Satellite imagery of forests and rivers" 
-              className="rounded-2xl shadow-2xl motion-float w-full"
+          <div className="reveal flex items-center justify-center">
+            <img
+              src="/crystal-ball.gif"
+              alt="Animated crystal ball globe"
+              className="rounded-2xl shadow-2xl w-full max-w-xl"
+              style={{ background: 'transparent' }}
             />
           </div>
         </div>
@@ -125,7 +126,7 @@ const Hero = () => {
       </section>
 
       {/* Impact Metrics */}
-      <section className="py-20 bg-gradient-to-r from-teal-50 to-cyan-50">
+      <section className="py-20 bg-gradient-to-r from-blue-50 to-cyan-50">
         <div className="max-w-5xl mx-auto px-6 lg:px-10 grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
           <div className="reveal">
             <p className="text-5xl lg:text-6xl font-bold gradient-text tracking-tight mb-2">1M+</p>
@@ -143,13 +144,13 @@ const Hero = () => {
       </section>
 
       {/* Global Presence Section */}
-      <section className="py-24 bg-gradient-to-br from-slate-800 via-slate-700 to-slate-800 relative overflow-hidden">
+      <section className="py-24 bg-gradient-to-br from-gray-50 to-blue-50 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="text-center mb-16 reveal">
-            <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-white mb-6">
+            <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-slate-800 mb-6">
               Our Global Presence
             </h2>
-            <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
               Working across continents to create sustainable solutions and lasting environmental impact 
               in communities worldwide.
             </p>
@@ -157,7 +158,7 @@ const Hero = () => {
 
           {/* Interactive World Map */}
           <div className="relative reveal">
-            <div className="relative w-full h-[600px] bg-gradient-to-br from-slate-700 to-slate-800 rounded-3xl overflow-hidden shadow-2xl">
+            <div className="relative w-full h-[600px] bg-gradient-to-br from-gray-50 to-blue-50 rounded-3xl overflow-hidden shadow-2xl">
               {/* World Map Background */}
               <div className="absolute inset-0 p-8">
                 <img 
@@ -184,7 +185,7 @@ const Hero = () => {
                   <div
                     className="
                       w-6 h-6 rounded-full
-                      bg-[#407F7F]
+                      bg-blue-500 border-2 border-white
                       shadow-md
                       transform transition-transform duration-200
                       group-hover:scale-125

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Edit, Trash2, Save, X, Loader2, BookOpen, Users, Tag, FileText, Eye } from 'lucide-react';
+import { Plus, Edit, Trash2, Save, X, Loader2, BookOpen, Users, Tag, FileText, Eye, File as FileIcon } from 'lucide-react';
 import { usePublications } from '../../hooks/usePublications';
 import { useCategories } from '../../hooks/useCategories';
 import { publicationsApi, authorsApi } from '../../lib/apiClient';
@@ -14,7 +14,7 @@ const PublicationsAdmin = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPublication, setEditingPublication] = useState<Publication | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<globalThis.File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadError, setUploadError] = useState<string>('');
@@ -89,7 +89,7 @@ const PublicationsAdmin = () => {
     setUploadError('');
   };
 
-  const handleFileSelect = (file: File) => {
+  const handleFileSelect = (file: globalThis.File) => {
     const validation = fileUploadService.validatePDF(file);
     if (!validation.valid) {
       setUploadError(validation.error || 'Invalid file');
@@ -125,6 +125,7 @@ const PublicationsAdmin = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setUploadError(""); // Clear previous errors
 
     try {
       // Upload file if selected
@@ -139,8 +140,8 @@ const PublicationsAdmin = () => {
         doi: formData.doi || undefined,
         pdf_url: pdfUrl || undefined,
         citations: formData.citations,
-        category_id: formData.category_id || undefined,
-        is_featured: formData.is_featured
+        is_featured: formData.is_featured,
+        ...(formData.category_id ? { category_id: formData.category_id } : {}),
       };
 
       let publication: Publication;
@@ -162,7 +163,9 @@ const PublicationsAdmin = () => {
       closeModal();
     } catch (error) {
       console.error('Failed to save publication:', error);
-      if (!uploadError) {
+      if (error && typeof error === 'object' && 'message' in error) {
+        alert(`Failed to save publication: ${(error as any).message}`);
+      } else {
         alert('Failed to save publication. Please try again.');
       }
     } finally {
@@ -178,7 +181,11 @@ const PublicationsAdmin = () => {
       await refetch();
     } catch (error) {
       console.error('Failed to delete publication:', error);
-      alert('Failed to delete publication. Please try again.');
+      if (error && typeof error === 'object' && 'message' in error) {
+        alert(`Failed to delete publication: ${(error as any).message}`);
+      } else {
+        alert('Failed to delete publication. Please try again.');
+      }
     }
   };
 
@@ -256,7 +263,7 @@ const PublicationsAdmin = () => {
                           )}
                           {publication.pdf_url && (
                             <span className="inline-flex items-center px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full">
-                              <FileText className="w-3 h-3 mr-1" />
+                              <FileIcon className="w-3 h-3 mr-1" />
                               PDF
                             </span>
                           )}

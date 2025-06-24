@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
-import { Upload, File, X, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Upload, File as FileIcon, X, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 
 interface FileUploadProps {
-  onFileSelect: (file: File) => void;
+  onFileSelect: (file: globalThis.File) => void;
   onFileRemove: () => void;
-  selectedFile: File | null;
+  selectedFile: globalThis.File | null;
   uploading?: boolean;
   uploadProgress?: number;
   error?: string;
@@ -45,7 +45,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
     }
   };
 
-  const handleFileSelection = (file: File) => {
+  const handleFileSelection = (file: globalThis.File) => {
     // Validate file type
     if (accept && !file.name.toLowerCase().endsWith('.pdf')) {
       return;
@@ -126,7 +126,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
           <div className="flex items-start justify-between">
             <div className="flex items-center flex-1">
               <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mr-4">
-                <File className="w-6 h-6 text-red-600" />
+                <FileIcon className="w-6 h-6 text-red-600" />
               </div>
               
               <div className="flex-1 min-w-0">

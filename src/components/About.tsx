@@ -66,7 +66,7 @@ const About = () => {
         </div>
 
         {/* Values Section */}
-        <div className="bg-gradient-to-br from-teal-700 via-teal-600 to-cyan-600 rounded-3xl p-8 lg:p-12 text-white reveal">
+        <div className="bg-gradient-to-b from-blue-400 to-cyan-600 rounded-3xl p-8 lg:p-12 text-white reveal">
           <h3 className="text-3xl font-bold font-playfair text-center mb-12">Our Core Values</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="text-center group">
