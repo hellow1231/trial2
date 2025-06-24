@@ -166,7 +166,7 @@ const Publications = () => {
                   <div className="flex-1">
                     {/* Publication Type & Year */}
                     <div className="flex items-center gap-3 mb-4">
-                      <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-analogous-teal/10 to-muted-blue/10 text-analogous-teal text-xs font-medium rounded-full border border-analogous-teal/20">
+                      <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-teal-100 to-cyan-100 text-teal-700 text-xs font-medium rounded-full border border-teal-200">
                         <BookOpen className="w-3 h-3 mr-1" />
                         {publication.publication_type}
                       </span>

@@ -70,8 +70,8 @@ const Footer = () => {
             {/* Logo and Description */}
             <div className="lg:col-span-2">
               <div className="flex items-center space-x-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-analogous-teal to-muted-blue rounded-xl flex items-center justify-center motion-pulse">
-                  <Leaf className="w-6 h-6 text-white" />
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center motion-pulse bg-white">
+                  <img src="/gei-logo.svg" alt="GEI Logo" className="w-10 h-10 object-contain" />
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold font-playfair">GEI</h3>
