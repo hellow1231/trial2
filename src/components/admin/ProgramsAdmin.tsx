@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Plus, Edit, Trash2, Save, X, Loader2, Target, Users, Building, FolderOpen, Eye } from 'lucide-react';
 import { usePrograms } from '../../hooks/usePrograms';
 import { programsApi } from '../../lib/programsApi';
+import { imageUploadService } from '../../lib/imageUpload';
+import ImageUpload from './ImageUpload';
 import type { Program, ProgramTeamMember, ProgramPartner, ProgramProject } from '../../lib/programsApi';
 
 const ProgramsAdmin = () => {
@@ -10,6 +12,13 @@ const ProgramsAdmin = () => {
   const [editingProgram, setEditingProgram] = useState<Program | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState('basic');
+  
+  // Image upload states
+  const [selectedHeroImage, setSelectedHeroImage] = useState<globalThis.File | null>(null);
+  const [uploadingHeroImage, setUploadingHeroImage] = useState(false);
+  const [heroImageProgress, setHeroImageProgress] = useState(0);
+  const [heroImageError, setHeroImageError] = useState<string>('');
+
   const [formData, setFormData] = useState({
     title: '',
     slug: '',
@@ -75,6 +84,13 @@ const ProgramsAdmin = () => {
       setPartners([]);
       setProjects([]);
     }
+    
+    // Reset image upload states
+    setSelectedHeroImage(null);
+    setUploadingHeroImage(false);
+    setHeroImageProgress(0);
+    setHeroImageError('');
+    
     setActiveTab('basic');
     setIsModalOpen(true);
   };
@@ -82,6 +98,8 @@ const ProgramsAdmin = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setEditingProgram(null);
+    setSelectedHeroImage(null);
+    setHeroImageError('');
   };
 
   const generateSlug = (title: string) => {
@@ -99,6 +117,44 @@ const ProgramsAdmin = () => {
       title,
       slug: generateSlug(title)
     }));
+  };
+
+  const handleHeroImageSelect = (file: globalThis.File) => {
+    const validation = imageUploadService.validateImage(file);
+    if (!validation.valid) {
+      setHeroImageError(validation.error || 'Invalid file');
+      return;
+    }
+    
+    setSelectedHeroImage(file);
+    setHeroImageError('');
+  };
+
+  const handleHeroImageRemove = () => {
+    setSelectedHeroImage(null);
+    setFormData(prev => ({ ...prev, hero_image: '' }));
+    setHeroImageError('');
+  };
+
+  const uploadHeroImage = async (): Promise<string> => {
+    if (!selectedHeroImage) return formData.hero_image;
+
+    setUploadingHeroImage(true);
+    setHeroImageProgress(0);
+
+    try {
+      const result = await imageUploadService.uploadImage(
+        selectedHeroImage, 
+        'programs/hero', 
+        setHeroImageProgress
+      );
+      return result.url;
+    } catch (error) {
+      setHeroImageError('Failed to upload image. Please try again.');
+      throw error;
+    } finally {
+      setUploadingHeroImage(false);
+    }
   };
 
   const addObjective = () => {
@@ -192,10 +248,15 @@ const ProgramsAdmin = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setHeroImageError('');
 
     try {
+      // Upload hero image if selected
+      const heroImageUrl = await uploadHeroImage();
+
       const programData = {
         ...formData,
+        hero_image: heroImageUrl,
         objectives: formData.objectives.filter(obj => obj.trim() !== '')
       };
 
@@ -215,7 +276,11 @@ const ProgramsAdmin = () => {
       closeModal();
     } catch (error) {
       console.error('Failed to save program:', error);
-      alert('Failed to save program. Please try again.');
+      if (error && typeof error === 'object' && 'message' in error) {
+        alert(`Failed to save program: ${(error as any).message}`);
+      } else {
+        alert('Failed to save program. Please try again.');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -293,50 +358,63 @@ const ProgramsAdmin = () => {
                 {programs.map((program) => (
                   <div key={program.id} className="p-6 hover:bg-gray-50 transition-colors">
                     <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <h3 className="text-lg font-semibold text-gray-900">
-                            {program.title}
-                          </h3>
-                          {program.is_featured && (
-                            <span className="inline-flex items-center px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded-full">
-                              Featured
-                            </span>
-                          )}
-                          <span className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full ${
-                            program.status === 'Active' 
-                              ? 'bg-green-100 text-green-800' 
-                              : program.status === 'Completed'
-                              ? 'bg-blue-100 text-blue-800'
-                              : 'bg-gray-100 text-gray-800'
-                          }`}>
-                            {program.status}
-                          </span>
-                        </div>
-                        
-                        <div className="flex items-center gap-4 text-sm text-gray-600 mb-2">
-                          {program.location && (
-                            <>
-                              <span>{program.location}</span>
-                              <span>•</span>
-                            </>
-                          )}
-                          {program.budget && (
-                            <>
-                              <span className="text-blue-600 font-semibold">{program.budget}</span>
-                              <span>•</span>
-                            </>
-                          )}
-                          {program.beneficiaries && (
-                            <span>{program.beneficiaries}</span>
-                          )}
-                        </div>
-
-                        {program.description && (
-                          <p className="text-gray-600 text-sm leading-relaxed line-clamp-2">
-                            {program.description}
-                          </p>
+                      <div className="flex gap-4 flex-1">
+                        {/* Program Image */}
+                        {program.hero_image && (
+                          <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+                            <img
+                              src={program.hero_image}
+                              alt={program.title}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
                         )}
+                        
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-2">
+                            <h3 className="text-lg font-semibold text-gray-900">
+                              {program.title}
+                            </h3>
+                            {program.is_featured && (
+                              <span className="inline-flex items-center px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded-full">
+                                Featured
+                              </span>
+                            )}
+                            <span className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full ${
+                              program.status === 'Active' 
+                                ? 'bg-green-100 text-green-800' 
+                                : program.status === 'Completed'
+                                ? 'bg-blue-100 text-blue-800'
+                                : 'bg-gray-100 text-gray-800'
+                            }`}>
+                              {program.status}
+                            </span>
+                          </div>
+                          
+                          <div className="flex items-center gap-4 text-sm text-gray-600 mb-2">
+                            {program.location && (
+                              <>
+                                <span>{program.location}</span>
+                                <span>•</span>
+                              </>
+                            )}
+                            {program.budget && (
+                              <>
+                                <span className="text-blue-600 font-semibold">{program.budget}</span>
+                                <span>•</span>
+                              </>
+                            )}
+                            {program.beneficiaries && (
+                              <span>{program.beneficiaries}</span>
+                            )}
+                          </div>
+
+                          {program.description && (
+                            <p className="text-gray-600 text-sm leading-relaxed line-clamp-2">
+                              {program.description}
+                            </p>
+                          )}
+                        </div>
                       </div>
 
                       <div className="flex items-center gap-2 ml-4">
@@ -440,6 +518,22 @@ const ProgramsAdmin = () => {
                         onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         placeholder="program-slug"
+                      />
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Hero Image
+                      </label>
+                      <ImageUpload
+                        onImageSelect={handleHeroImageSelect}
+                        onImageRemove={handleHeroImageRemove}
+                        selectedImage={selectedHeroImage}
+                        currentImageUrl={formData.hero_image}
+                        uploading={uploadingHeroImage}
+                        uploadProgress={heroImageProgress}
+                        error={heroImageError}
+                        label="Upload Hero Image"
                       />
                     </div>
 
@@ -549,19 +643,6 @@ const ProgramsAdmin = () => {
                     </div>
 
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Hero Image URL
-                      </label>
-                      <input
-                        type="url"
-                        value={formData.hero_image}
-                        onChange={(e) => setFormData(prev => ({ ...prev, hero_image: e.target.value }))}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        placeholder="https://example.com/image.jpg"
-                      />
-                    </div>
-
-                    <div className="md:col-span-2">
                       <label className="flex items-center">
                         <input
                           type="checkbox"
@@ -634,13 +715,13 @@ const ProgramsAdmin = () => {
                 </button>
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || uploadingHeroImage}
                   className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
                 >
-                  {isSubmitting ? (
+                  {isSubmitting || uploadingHeroImage ? (
                     <>
                       <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                      Saving...
+                      {uploadingHeroImage ? 'Uploading...' : 'Saving...'}
                     </>
                   ) : (
                     <>
