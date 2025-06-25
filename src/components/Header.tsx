@@ -68,7 +68,7 @@ const Header = () => {
       label: 'Research',
       href: '/ideas',
       dropdown: [
-        { name: 'Publications', href: '/', description: 'Research papers and academic publications' },
+        { name: 'Publications', href: '/ideas', description: 'Research papers and academic publications' },
         { name: 'Innovation Hub', href: '/ideas', description: 'Cutting-edge environmental solutions' },
         { name: 'Policy Papers', href: '/ideas', description: 'Research-backed policy recommendations' },
         { name: 'Future Trends', href: '/ideas', description: 'Emerging trends in sustainability' },
@@ -77,7 +77,7 @@ const Header = () => {
     },
     {
       label: 'Contact',
-      href: '/',
+      href: '/contact',
       single: true
     }
   ];
@@ -88,15 +88,7 @@ const Header = () => {
     setIsMobileMenuOpen(false);
     
     // Navigate to the page
-    if (href === '/' && location.pathname === '/') {
-      // If we're already on home page and clicking contact, scroll to contact
-      const element = document.querySelector('#contact');
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else {
-      navigate(href);
-    }
+    navigate(href);
   };
 
   const isActiveLink = (path: string) => {
