@@ -8,6 +8,7 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,7 +61,7 @@ const Header = () => {
       dropdown: [
         { name: 'Climate Action', href: '/programs/climate-action', description: 'Climate adaptation and mitigation programs' },
         { name: 'Water & Sanitation', href: '/programs/water-sanitation', description: 'Clean water and sanitation initiatives' },
-        { name: 'Renewable Energy', href: '/our-work#energy', description: 'Clean energy solutions and programs' },
+        { name: 'Renewable Energy', href: '/programs/renewable-energy', description: 'Clean energy solutions and programs' },
         { name: 'Forest Conservation', href: '/our-work#conservation', description: 'Forest protection and restoration' },
         { name: 'Community Development', href: '/our-work#development', description: 'Sustainable livelihood programs' },
         { name: 'Waste Management', href: '/our-work#waste', description: 'Circular economy and waste solutions' },
@@ -130,6 +131,36 @@ const Header = () => {
     }
   };
 
+  const handleDropdownEnter = (label: string) => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+      setDropdownTimeout(null);
+    }
+    setActiveDropdown(label);
+  };
+
+  const handleDropdownLeave = () => {
+    const timeout = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 150); // Small delay to allow moving to dropdown
+    setDropdownTimeout(timeout);
+  };
+
+  const handleDropdownContentEnter = () => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+      setDropdownTimeout(null);
+    }
+  };
+
+  const handleDropdownContentLeave = () => {
+    setActiveDropdown(null);
+  };
+
+  const handleDropdownItemClick = (href: string) => {
+    handleNavClick(href);
+  };
+
   const handleMainNavClick = (item: any) => {
     // For main navigation items with dropdowns, toggle dropdown
     if (item.dropdown && item.dropdown.length > 0) {
@@ -137,10 +168,6 @@ const Header = () => {
     } else {
       handleNavClick(item.href);
     }
-  };
-
-  const handleDropdownItemClick = (href: string) => {
-    handleNavClick(href);
   };
 
   const toggleDropdown = (label: string) => {
@@ -185,7 +212,8 @@ const Header = () => {
                 <div key={item.label} className="relative dropdown-container">
                   <button
                     onClick={() => handleMainNavClick(item)}
-                    onMouseEnter={() => setActiveDropdown(item.label)}
+                    onMouseEnter={() => handleDropdownEnter(item.label)}
+                    onMouseLeave={handleDropdownLeave}
                     className={`flex items-center space-x-1 font-medium transition-all duration-300 hover:scale-105 ${
                       isScrolled 
                         ? 'text-gray-700 hover:text-base-blue' 
@@ -227,8 +255,8 @@ const Header = () => {
         <div 
           className="fixed inset-x-0 glass-effect shadow-lg border-b border-white/20 z-40"
           style={{ top: '64px' }}
-          onMouseEnter={() => setActiveDropdown(activeDropdown)}
-          onMouseLeave={() => setActiveDropdown(null)}
+          onMouseEnter={handleDropdownContentEnter}
+          onMouseLeave={handleDropdownContentLeave}
         >
           <div className="max-w-7xl mx-auto px-6 lg:px-10 py-8">
             {navigationItems.map((item) => (
