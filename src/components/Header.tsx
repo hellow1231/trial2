@@ -139,12 +139,12 @@ const Header = () => {
     }
   };
 
-  const toggleDropdown = (label: string) => {
-    setActiveDropdown(activeDropdown === label ? null : label);
-  };
-
   const handleDropdownItemClick = (href: string) => {
     handleNavClick(href);
+  };
+
+  const toggleDropdown = (label: string) => {
+    setActiveDropdown(activeDropdown === label ? null : label);
   };
 
   return (
@@ -227,6 +227,7 @@ const Header = () => {
         <div 
           className="fixed inset-x-0 glass-effect shadow-lg border-b border-white/20 z-40"
           style={{ top: '64px' }}
+          onMouseEnter={() => setActiveDropdown(activeDropdown)}
           onMouseLeave={() => setActiveDropdown(null)}
         >
           <div className="max-w-7xl mx-auto px-6 lg:px-10 py-8">
