@@ -131,9 +131,9 @@ const Header = () => {
   };
 
   const handleMainNavClick = (item: any) => {
-    // For main navigation items with dropdowns, don't navigate immediately
+    // For main navigation items with dropdowns, toggle dropdown
     if (item.dropdown && item.dropdown.length > 0) {
-      toggleDropdown(item.label);
+      setActiveDropdown(activeDropdown === item.label ? null : item.label);
     } else {
       handleNavClick(item.href);
     }
@@ -141,6 +141,10 @@ const Header = () => {
 
   const toggleDropdown = (label: string) => {
     setActiveDropdown(activeDropdown === label ? null : label);
+  };
+
+  const handleDropdownItemClick = (href: string) => {
+    handleNavClick(href);
   };
 
   return (
@@ -180,7 +184,7 @@ const Header = () => {
               {navigationItems.map((item) => (
                 <div key={item.label} className="relative dropdown-container">
                   <button
-                    onClick={() => toggleDropdown(item.label)}
+                    onClick={() => handleMainNavClick(item)}
                     onMouseEnter={() => setActiveDropdown(item.label)}
                     className={`flex items-center space-x-1 font-medium transition-all duration-300 hover:scale-105 ${
                       isScrolled 
@@ -242,7 +246,7 @@ const Header = () => {
                     {item.dropdown.map((dropdownItem, index) => (
                       <button
                         key={index}
-                        onClick={() => handleNavClick(dropdownItem.href)}
+                        onClick={() => handleDropdownItemClick(dropdownItem.href)}
                         className="group bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 text-left border border-gray-100 hover:border-base-blue/30"
                       >
                         <div className="flex items-center justify-between mb-2">
@@ -291,7 +295,7 @@ const Header = () => {
                     {item.dropdown.map((dropdownItem, index) => (
                       <button
                         key={index}
-                        onClick={() => handleNavClick(dropdownItem.href)}
+                        onClick={() => handleDropdownItemClick(dropdownItem.href)}
                         className="block w-full text-left py-3 px-4 text-gray-700 hover:text-base-blue hover:bg-light-blue/10 rounded-lg transition-colors duration-200"
                       >
                         <div className="font-medium">{dropdownItem.name}</div>
