@@ -57,11 +57,11 @@ const Header = () => {
       href: '/our-work',
       dropdown: [
         { name: 'All Programs', href: '/our-work', description: 'Overview of all our environmental programs' },
-        { name: 'Climate Action', href: '/programs/climate-action', description: 'Climate adaptation and mitigation initiatives' },
-        { name: 'Water & Sanitation', href: '/programs/water-sanitation', description: 'Clean water and sanitation projects' },
-        { name: 'Renewable Energy', href: '/programs/renewable-energy', description: 'Clean energy solutions and programs' },
-        { name: 'Forest Conservation', href: '/programs/forest-conservation', description: 'Forest protection and restoration efforts' },
-        { name: 'Waste Management', href: '/programs/waste-management', description: 'Circular economy and waste solutions' }
+        { name: 'Climate Action', href: '/our-work', description: 'Climate adaptation and mitigation initiatives' },
+        { name: 'Water & Sanitation', href: '/our-work', description: 'Clean water and sanitation projects' },
+        { name: 'Renewable Energy', href: '/our-work', description: 'Clean energy solutions and programs' },
+        { name: 'Forest Conservation', href: '/our-work', description: 'Forest protection and restoration efforts' },
+        { name: 'Waste Management', href: '/our-work', description: 'Circular economy and waste solutions' }
       ]
     },
     {
@@ -74,11 +74,6 @@ const Header = () => {
         { name: 'Future Trends', href: '/ideas', description: 'Emerging trends in sustainability' },
         { name: 'Thought Leadership', href: '/ideas', description: 'Expert insights and perspectives' }
       ]
-    },
-    {
-      label: 'Contact',
-      href: '/contact',
-      single: true
     }
   ];
 
@@ -201,28 +196,10 @@ const Header = () => {
                           </div>
                         </button>
                       ))}
-                      
-                      {/* Dropdown Footer */}
-                      <div className="border-t border-gray-100 mt-2 pt-3 px-6">
-                        <button
-                          onClick={() => handleNavClick('/contact')}
-                          className="flex items-center justify-center w-full bg-gradient-to-r from-base-blue to-analogous-teal text-white py-2.5 rounded-lg text-sm font-medium hover:from-dark-blue hover:to-muted-blue transition-all duration-200"
-                        >
-                          Get in Touch
-                        </button>
-                      </div>
                     </div>
                   )}
                 </div>
               ))}
-
-              {/* CTA Button */}
-              <button
-                onClick={() => handleNavClick('/contact')}
-                className="bg-gradient-to-r from-base-blue to-analogous-teal text-white px-6 py-2 rounded-full text-sm font-medium hover:from-dark-blue hover:to-muted-blue hover:scale-105 transform transition-all duration-200 shadow-md hover:shadow-lg"
-              >
-                Get Started
-              </button>
             </nav>
 
             {/* Mobile Menu Button */}
@@ -299,15 +276,6 @@ const Header = () => {
                 )}
               </div>
             ))}
-            
-            <div className="pt-4">
-              <button
-                onClick={() => handleNavClick('/contact')}
-                className="block w-full text-center bg-gradient-to-r from-base-blue to-analogous-teal text-white px-6 py-3 rounded-full text-sm font-medium hover:from-dark-blue hover:to-muted-blue transition-all duration-200"
-              >
-                Get Started
-              </button>
-            </div>
           </nav>
         </div>
       )}
