@@ -131,8 +131,12 @@ const Header = () => {
   };
 
   const handleMainNavClick = (item: any) => {
-    // For main navigation items, go to the main page
-    handleNavClick(item.href);
+    // For main navigation items with dropdowns, don't navigate immediately
+    if (item.dropdown && item.dropdown.length > 0) {
+      toggleDropdown(item.label);
+    } else {
+      handleNavClick(item.href);
+    }
   };
 
   const toggleDropdown = (label: string) => {
@@ -155,7 +159,7 @@ const Header = () => {
               <img 
                 src="/gei-logo.svg" 
                 alt="GEI Logo" 
-                className="w-12 h-12 rounded-full bg-white p-1 shadow-md transition-transform duration-300 group-hover:scale-110 motion-pulse" 
+                onClick={() => handleMainNavClick(item)}
                 style={{ objectFit: 'contain' }}
               />
               <div>

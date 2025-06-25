@@ -24,28 +24,21 @@ const ImageGalleryCarousel: React.FC<ImageGalleryCarouselProps> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [direction, setDirection] = useState(1); // 1 for forward, -1 for backward
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll logic with back-and-forth movement
+  // Calculate how many images to show (3 for desktop, 1 for mobile)
+  const imagesPerView = 3;
+  const totalSlides = Math.ceil(images.length / imagesPerView);
+
+  // Auto-scroll logic - continuous forward movement
   useEffect(() => {
     if (!isPlaying || images.length <= 1) return;
 
     intervalRef.current = setInterval(() => {
       setCurrentIndex((prevIndex) => {
-        let nextIndex = prevIndex + direction;
-        
-        // Change direction when reaching boundaries
-        if (nextIndex >= images.length - 1) {
-          setDirection(-1);
-          return images.length - 1;
-        } else if (nextIndex <= 0) {
-          setDirection(1);
-          return 0;
-        }
-        
-        return nextIndex;
+        // Move forward continuously, loop back to start
+        return (prevIndex + 1) % images.length;
       });
     }, autoScrollSpeed);
 
@@ -54,21 +47,18 @@ const ImageGalleryCarousel: React.FC<ImageGalleryCarouselProps> = ({
         clearInterval(intervalRef.current);
       }
     };
-  }, [isPlaying, direction, images.length, autoScrollSpeed]);
+  }, [isPlaying, images.length, autoScrollSpeed]);
 
-  // Smooth scroll to current image
+  // Update auto-play to use new slide calculation
   useEffect(() => {
-    if (containerRef.current) {
-      const container = containerRef.current;
-      const imageWidth = container.scrollWidth / images.length;
-      const scrollPosition = currentIndex * imageWidth;
-      
-      container.scrollTo({
-        left: scrollPosition,
-        behavior: 'smooth'
-      });
-    }
-  }, [currentIndex, images.length]);
+    if (!isPlaying) return;
+    
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % totalSlides);
+    }, autoScrollSpeed);
+
+    return () => clearInterval(interval);
+  }, [isPlaying, totalSlides, autoScrollSpeed]);
 
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
@@ -76,13 +66,13 @@ const ImageGalleryCarousel: React.FC<ImageGalleryCarouselProps> = ({
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) => 
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? totalSlides - 1 : prevIndex - 1
     );
   };
 
   const goToNext = () => {
     setCurrentIndex((prevIndex) => 
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      prevIndex === totalSlides - 1 ? 0 : prevIndex + 1
     );
   };
 
@@ -124,20 +114,20 @@ const ImageGalleryCarousel: React.FC<ImageGalleryCarouselProps> = ({
           {/* Main Carousel */}
           <div className="relative overflow-hidden rounded-3xl shadow-2xl bg-white border border-gray-100">
             <div
-              ref={containerRef}
-              className="flex transition-transform duration-1000 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+              className="flex transition-transform duration-700 ease-in-out"
+              style={{ transform: `translateX(-${currentIndex * (100 / imagesPerView)}%)` }}
             >
               {images.map((image, index) => (
                 <div
                   key={index}
-                  className="w-full flex-shrink-0 relative group"
+                  className="flex-shrink-0 relative group"
+                  style={{ width: `${100 / imagesPerView}%` }}
                 >
-                  <div className="aspect-[16/9] overflow-hidden">
+                  <div className="aspect-[16/9] overflow-hidden mx-2">
                     <img
                       src={image.src}
                       alt={image.alt}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 rounded-xl"
                       loading={index === 0 ? 'eager' : 'lazy'}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -145,8 +135,8 @@ const ImageGalleryCarousel: React.FC<ImageGalleryCarouselProps> = ({
                   
                   {/* Caption */}
                   {image.caption && (
-                    <div className="absolute bottom-6 left-6 right-6">
-                      <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                    <div className="absolute bottom-6 left-8 right-8">
+                      <div className="bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                         <p className="text-gray-800 font-medium">{image.caption}</p>
                       </div>
                     </div>
@@ -158,7 +148,7 @@ const ImageGalleryCarousel: React.FC<ImageGalleryCarouselProps> = ({
             {/* Navigation Arrows */}
             <button
               onClick={goToPrevious}
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center text-gray-700 hover:text-teal-600 hover:bg-white hover:scale-110 transition-all duration-300 group z-10"
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center text-gray-700 hover:text-base-blue hover:bg-white hover:scale-110 transition-all duration-300 group z-10"
               aria-label="Previous image"
             >
               <ChevronLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
@@ -166,7 +156,7 @@ const ImageGalleryCarousel: React.FC<ImageGalleryCarouselProps> = ({
             
             <button
               onClick={goToNext}
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center text-gray-700 hover:text-teal-600 hover:bg-white hover:scale-110 transition-all duration-300 group z-10"
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center text-gray-700 hover:text-base-blue hover:bg-white hover:scale-110 transition-all duration-300 group z-10"
               aria-label="Next image"
             >
               <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
@@ -175,7 +165,7 @@ const ImageGalleryCarousel: React.FC<ImageGalleryCarouselProps> = ({
             {/* Play/Pause Button */}
             <button
               onClick={togglePlayPause}
-              className="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center text-gray-700 hover:text-teal-600 hover:bg-white hover:scale-110 transition-all duration-300 z-10"
+              className="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center text-gray-700 hover:text-base-blue hover:bg-white hover:scale-110 transition-all duration-300 z-10"
               aria-label={isPlaying ? 'Pause slideshow' : 'Play slideshow'}
             >
               {isPlaying ? (
@@ -188,13 +178,13 @@ const ImageGalleryCarousel: React.FC<ImageGalleryCarouselProps> = ({
 
           {/* Dots Indicator */}
           <div className="flex justify-center mt-8 space-x-3">
-            {images.map((_, index) => (
+            {Array.from({ length: totalSlides }).map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
                 className={`w-3 h-3 rounded-full transition-all duration-500 ${
                   currentIndex === index 
-                    ? 'bg-teal-600 scale-125 shadow-lg' 
+                    ? 'bg-base-blue scale-125 shadow-lg' 
                     : 'bg-gray-300 hover:bg-gray-400 hover:scale-110'
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
@@ -205,8 +195,8 @@ const ImageGalleryCarousel: React.FC<ImageGalleryCarouselProps> = ({
           {/* Progress Bar */}
           <div className="mt-6 w-full bg-gray-200 rounded-full h-1 overflow-hidden">
             <div 
-              className="h-full bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full transition-all duration-1000 ease-in-out"
-              style={{ width: `${((currentIndex + 1) / images.length) * 100}%` }}
+              className="h-full bg-gradient-to-r from-base-blue to-analogous-teal rounded-full transition-all duration-1000 ease-in-out"
+              style={{ width: `${((currentIndex + 1) / totalSlides) * 100}%` }}
             />
           </div>
         </div>
@@ -214,7 +204,7 @@ const ImageGalleryCarousel: React.FC<ImageGalleryCarouselProps> = ({
         {/* Image Counter */}
         <div className="text-center mt-6">
           <span className="text-sm text-gray-500 font-medium">
-            {currentIndex + 1} of {images.length}
+            {currentIndex + 1} of {totalSlides}
           </span>
         </div>
       </div>
