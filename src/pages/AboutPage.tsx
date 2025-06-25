@@ -1,11 +1,27 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Target, Eye, Users, Lightbulb, Award, Heart, Globe, Zap, Calendar, MapPin, Mail, Linkedin, Twitter, ChevronLeft, ChevronRight } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 const AboutPage = () => {
+  const location = useLocation();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
+  useEffect(() => {
+    // Handle hash-based scrolling
+    if (location.hash) {
+      const elementId = location.hash.substring(1); // Remove the '#'
+      const element = document.getElementById(elementId);
+      if (element) {
+        // Small delay to ensure the page is fully rendered
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, [location.hash]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(

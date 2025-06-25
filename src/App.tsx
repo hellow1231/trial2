@@ -1,13 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import About from './components/About';
-import Research from './components/Research';
-import Faculty from './components/Faculty';
-import Publications from './components/Publications';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
+import HomePage from './pages/HomePage';
 import PublicationsAdmin from './components/admin/PublicationsAdmin';
 import ProgramsAdmin from './components/admin/ProgramsAdmin';
 import AboutPage from './pages/AboutPage';
@@ -17,21 +10,6 @@ import PublicationDetailPage from './pages/PublicationDetailPage';
 import ProgramDetailPage from './pages/ProgramDetailPage';
 import ClimateActionPage from './pages/programs/ClimateActionPage';
 import WaterSanitationPage from './pages/programs/WaterSanitationPage';
-
-function HomePage() {
-  return (
-    <div className="min-h-screen bg-white">
-      <Header />
-      <Hero />
-      <About />
-      <Research />
-      {/* <Faculty /> */}
-      <Publications />
-      <Contact />
-      <Footer />
-    </div>
-  );
-}
 
 function App() {
   return (

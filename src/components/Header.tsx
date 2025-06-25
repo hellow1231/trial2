@@ -62,9 +62,9 @@ const Header = () => {
         { name: 'Climate Action', href: '/programs/climate-action', description: 'Climate adaptation and mitigation programs' },
         { name: 'Water & Sanitation', href: '/programs/water-sanitation', description: 'Clean water and sanitation initiatives' },
         { name: 'Renewable Energy', href: '/programs/renewable-energy', description: 'Clean energy solutions and programs' },
-        { name: 'Forest Conservation', href: '/our-work#conservation', description: 'Forest protection and restoration' },
+        { name: 'Forest Conservation', href: '/programs/forest-conservation', description: 'Forest protection and restoration' },
         { name: 'Community Development', href: '/our-work#development', description: 'Sustainable livelihood programs' },
-        { name: 'Waste Management', href: '/our-work#waste', description: 'Circular economy and waste solutions' },
+        { name: 'Waste Management', href: '/programs/waste-management', description: 'Circular economy and waste solutions' },
         { name: 'Publications', href: '/#publications', description: 'Research papers and publications' },
         { name: 'Impact Stories', href: '/our-work#impact', description: 'Real stories of transformation' }
       ]
@@ -87,48 +87,8 @@ const Header = () => {
     setActiveDropdown(null);
     setIsMobileMenuOpen(false);
     
-    if (href.startsWith('/#')) {
-      // Navigate to home page section
-      const sectionId = href.substring(2); // Remove '/#'
-      if (location.pathname !== '/') {
-        navigate('/');
-        // Wait for navigation to complete, then scroll
-        setTimeout(() => {
-          const element = document.querySelector(`#${sectionId}`);
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-          }
-        }, 100);
-      } else {
-        const element = document.querySelector(`#${sectionId}`);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-    } else if (href.includes('#')) {
-      // Navigate to section on specific page
-      const [path, hash] = href.split('#');
-      if (location.pathname === path) {
-        // Already on the correct page, just scroll to section
-        const element = document.querySelector(`#${hash}`);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      } else {
-        // Navigate to page first
-        navigate(path);
-        // Wait for navigation to complete, then scroll
-        setTimeout(() => {
-          const element = document.querySelector(`#${hash}`);
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-          }
-        }, 100);
-      }
-    } else {
-      // Navigate to page
-      navigate(href);
-    }
+    // Simply navigate to the href - let the target page handle scrolling
+    navigate(href);
   };
 
   const handleDropdownEnter = (label: string) => {

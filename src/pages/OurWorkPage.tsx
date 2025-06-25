@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Target, Users, MapPin, Calendar, TrendingUp, Award, ExternalLink, Search, Filter, Eye, Loader2, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
@@ -7,11 +8,26 @@ import ImageGalleryCarousel from '../components/ImageGalleryCarousel';
 import { usePrograms } from '../hooks/usePrograms';
 
 const OurWorkPage = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [selectedStatus, setSelectedStatus] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   
   const { programs, loading, error } = usePrograms();
+
+  useEffect(() => {
+    // Handle hash-based scrolling
+    if (location.hash) {
+      const elementId = location.hash.substring(1); // Remove the '#'
+      const element = document.getElementById(elementId);
+      if (element) {
+        // Small delay to ensure the page is fully rendered
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, [location.hash]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -316,7 +332,7 @@ const OurWorkPage = () => {
       )}
 
       {/* All Programs Grid */}
-      <section className="py-20 bg-gray-50">
+      <section id="development" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="text-center mb-16 reveal">
             <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-gray-900 mb-6">All Programs</h2>
