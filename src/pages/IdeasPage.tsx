@@ -328,7 +328,7 @@ const IdeasPage = () => {
                     onClick={() => setActiveCategory(category)}
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                       activeCategory === category
-                        ? 'bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-lg'
+                        ? 'bg-gradient-to-r from-base-blue to-analogous-teal text-white shadow-lg'
                         : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 hover:border-teal-300'
                     }`}
                   >
@@ -411,7 +411,7 @@ const IdeasPage = () => {
                         <Download className="w-4 h-4 mr-2" />
                         Download
                       </a>
-                      <button className="inline-flex items-center text-teal-700 font-semibold hover:text-teal-800 transition-colors group/btn">
+                      <button className="inline-flex items-center text-base-blue font-semibold hover:text-dark-blue transition-colors group/btn">
                         Read More
                         <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
                       </button>
@@ -446,7 +446,7 @@ const IdeasPage = () => {
                   setActiveCategory('all');
                   setSearchTerm('');
                 }}
-                className="text-teal-600 hover:text-teal-700 font-medium"
+                className="text-base-blue hover:text-dark-blue font-medium"
               >
                 Clear Filters
               </button>
@@ -521,12 +521,12 @@ const IdeasPage = () => {
                     <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
                       <a
                         href={item.downloadUrl}
-                        className="inline-flex items-center text-gray-600 hover:text-teal-600 text-sm font-medium transition-colors group/btn"
+                        className="inline-flex items-center text-gray-600 hover:text-base-blue text-sm font-medium transition-colors group/btn"
                       >
                         <Download className="w-4 h-4 mr-1" />
                         Download
                       </a>
-                      <button className="inline-flex items-center text-teal-600 hover:text-teal-700 text-sm font-medium transition-colors group/btn">
+                      <button className="inline-flex items-center text-base-blue hover:text-dark-blue text-sm font-medium transition-colors group/btn">
                         Read More
                         <ExternalLink className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 transition-transform" />
                       </button>

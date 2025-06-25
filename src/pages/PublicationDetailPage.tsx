@@ -128,7 +128,7 @@ const PublicationDetailPage = () => {
               </p>
               <button
                 onClick={() => navigate('/')}
-                className="inline-flex items-center px-6 py-3 bg-teal-600 text-white font-semibold rounded-lg hover:bg-teal-700 transition-colors"
+                className="inline-flex items-center px-6 py-3 bg-base-blue text-white font-semibold rounded-lg hover:bg-dark-blue transition-colors"
               >
                 <ArrowLeft className="w-5 h-5 mr-2" />
                 Back to Home
@@ -151,7 +151,7 @@ const PublicationDetailPage = () => {
           {/* Back Button */}
           <button
             onClick={() => navigate(-1)}
-            className="inline-flex items-center text-teal-600 hover:text-teal-700 font-medium mb-8 group"
+            className="inline-flex items-center text-base-blue hover:text-dark-blue font-medium mb-8 group"
           >
             <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
             Back to Publications
@@ -161,7 +161,7 @@ const PublicationDetailPage = () => {
           <div className="mb-8">
             {/* Metadata */}
             <div className="flex flex-wrap items-center gap-4 mb-6">
-              <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-teal-100 to-cyan-100 text-teal-800 text-sm font-medium rounded-full border border-teal-200">
+              <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-light-blue/20 to-analogous-teal/20 text-base-blue text-sm font-medium rounded-full border border-base-blue/20">
                 <BookOpen className="w-4 h-4 mr-1" />
                 {publication.publication_type}
               </span>
@@ -218,7 +218,7 @@ const PublicationDetailPage = () => {
                   href={publication.pdf_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-teal-600 to-cyan-600 text-white font-semibold rounded-lg hover:from-teal-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
+                  className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-base-blue to-analogous-teal text-white font-semibold rounded-lg hover:from-dark-blue hover:to-muted-blue transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
                 >
                   <Download className="w-5 h-5 mr-2" />
                   Download PDF
@@ -285,8 +285,8 @@ const PublicationDetailPage = () => {
               {publication.abstract && (
                 <div className="mb-12">
                   <h2 className="text-2xl font-bold font-playfair text-gray-900 mb-6">Abstract</h2>
-                  <div className="bg-gray-50 rounded-2xl p-8 border-l-4 border-teal-500">
-                    <Quote className="w-8 h-8 text-teal-600 mb-4" />
+                  <div className="bg-gray-50 rounded-2xl p-8 border-l-4 border-base-blue">
+                    <Quote className="w-8 h-8 text-base-blue mb-4" />
                     <p className="text-gray-700 leading-relaxed text-lg">
                       {publication.abstract}
                     </p>
@@ -376,7 +376,7 @@ const PublicationDetailPage = () => {
                       href={publication.pdf_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r from-teal-600 to-cyan-600 text-white font-medium rounded-lg hover:from-teal-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 group"
+                      className="w-full inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r from-base-blue to-analogous-teal text-white font-medium rounded-lg hover:from-dark-blue hover:to-muted-blue transition-all duration-300 transform hover:scale-105 group"
                     >
                       <Download className="w-4 h-4 mr-2" />
                       Download Full Paper

@@ -228,7 +228,7 @@ const OurWorkPage = () => {
               const IconComponent = stat.icon;
               return (
                 <div key={index} className="text-center reveal" style={{ animationDelay: `${index * 0.1}s` }}>
-                  <div className={`w-16 h-16 bg-gradient-to-r ${stat.color} rounded-2xl flex items-center justify-center mx-auto mb-4 motion-pulse`}>
+                  <div className="w-16 h-16 bg-gradient-to-r from-base-blue to-analogous-teal rounded-2xl flex items-center justify-center mx-auto mb-4 motion-pulse">
                     <IconComponent className="w-8 h-8 text-white" />
                   </div>
                   <div className="text-3xl lg:text-4xl font-bold gradient-text mb-2">
@@ -320,9 +320,9 @@ const OurWorkPage = () => {
                         <div className="flex items-center justify-between">
                           <div className="text-sm text-gray-500">
                             <div className="font-medium">{area.projects} Projects</div>
-                            <div className="text-teal-600 font-semibold">{area.beneficiaries} Beneficiaries</div>
+                            <div className="text-base-blue font-semibold">{area.beneficiaries} Beneficiaries</div>
                           </div>
-                          <div className={`h-1 w-12 bg-gradient-to-r ${area.color} rounded-full`}></div>
+                          <div className="h-1 w-12 bg-gradient-to-r from-base-blue to-analogous-teal rounded-full"></div>
                         </div>
                       </div>
                     </div>
@@ -370,9 +370,9 @@ const OurWorkPage = () => {
                         <div className="flex items-center justify-between">
                           <div className="text-sm text-gray-500">
                             <div className="font-medium">{area.projects} Projects</div>
-                            <div className="text-teal-600 font-semibold">{area.beneficiaries} Beneficiaries</div>
+                            <div className="text-base-blue font-semibold">{area.beneficiaries} Beneficiaries</div>
                           </div>
-                          <div className={`h-1 w-12 bg-gradient-to-r ${area.color} rounded-full`}></div>
+                          <div className="h-1 w-12 bg-gradient-to-r from-base-blue to-analogous-teal rounded-full"></div>
                         </div>
                       </div>
                     </div>
@@ -498,7 +498,7 @@ const OurWorkPage = () => {
                         <div className="space-y-1">
                           {project.impact.secondary.map((impact, impactIndex) => (
                             <div key={impactIndex} className="flex items-center text-sm text-gray-600">
-                              <div className="w-2 h-2 bg-teal-500 rounded-full mr-3"></div>
+                              <div className="w-2 h-2 bg-base-blue rounded-full mr-3"></div>
                               {impact}
                             </div>
                           ))}

@@ -125,7 +125,7 @@ const ClimateActionPage = () => {
           {/* Back Button */}
           <button
             onClick={() => navigate('/our-work')}
-            className="inline-flex items-center text-emerald-600 hover:text-emerald-700 font-medium mb-8 group reveal"
+            className="inline-flex items-center text-base-blue hover:text-dark-blue font-medium mb-8 group reveal"
           >
             <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
             Back to Our Work
@@ -134,7 +134,7 @@ const ClimateActionPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="reveal">
               <div className="flex items-center mb-6">
-                <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center mr-4 motion-pulse">
+                <div className="w-16 h-16 bg-gradient-to-br from-base-blue to-analogous-teal rounded-2xl flex items-center justify-center mr-4 motion-pulse">
                   <Leaf className="w-8 h-8 text-white" />
                 </div>
                 <h1 className="text-4xl lg:text-5xl font-bold font-playfair text-gray-900">
@@ -147,11 +147,11 @@ const ClimateActionPage = () => {
               </p>
               <div className="flex flex-wrap gap-4">
                 <div className="bg-white rounded-lg px-4 py-2 shadow-md border border-emerald-100">
-                  <span className="text-2xl font-bold text-emerald-600">45</span>
+                  <span className="text-2xl font-bold text-base-blue">45</span>
                   <span className="text-gray-600 ml-2">Active Projects</span>
                 </div>
                 <div className="bg-white rounded-lg px-4 py-2 shadow-md border border-emerald-100">
-                  <span className="text-2xl font-bold text-emerald-600">250K+</span>
+                  <span className="text-2xl font-bold text-base-blue">250K+</span>
                   <span className="text-gray-600 ml-2">Beneficiaries</span>
                 </div>
               </div>
@@ -176,7 +176,7 @@ const ClimateActionPage = () => {
               const IconComponent = stat.icon;
               return (
                 <div key={index} className="text-center reveal" style={{ animationDelay: `${index * 0.1}s` }}>
-                  <div className="w-16 h-16 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-4 motion-pulse">
+                  <div className="w-16 h-16 bg-gradient-to-r from-base-blue to-analogous-teal rounded-2xl flex items-center justify-center mx-auto mb-4 motion-pulse">
                     <IconComponent className="w-8 h-8 text-white" />
                   </div>
                   <div className="text-3xl lg:text-4xl font-bold gradient-text mb-2">
@@ -214,7 +214,7 @@ const ClimateActionPage = () => {
                     <IconComponent className="w-8 h-8 text-white" />
                   </div>
                   
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 font-playfair group-hover:text-emerald-700 transition-colors">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4 font-playfair group-hover:text-base-blue transition-colors">
                     {approach.title}
                   </h3>
                   
@@ -295,14 +295,14 @@ const ClimateActionPage = () => {
                       <div className="space-y-2">
                         {project.impact.map((impact, impactIndex) => (
                           <div key={impactIndex} className="flex items-center text-sm text-gray-600">
-                            <div className="w-2 h-2 bg-emerald-500 rounded-full mr-3"></div>
+                            <div className="w-2 h-2 bg-base-blue rounded-full mr-3"></div>
                             {impact}
                           </div>
                         ))}
                       </div>
                     </div>
 
-                    <button className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-medium rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all duration-300 transform hover:scale-105 group">
+                    <button className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-base-blue to-analogous-teal text-white font-medium rounded-lg hover:from-dark-blue hover:to-muted-blue transition-all duration-300 transform hover:scale-105 group">
                       Learn More
                       <ExternalLink className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                     </button>
@@ -327,8 +327,8 @@ const ClimateActionPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-white rounded-2xl p-8 shadow-lg hover-lift border border-gray-100 reveal">
               <div className="text-center">
-                <TrendingUp className="w-12 h-12 text-emerald-600 mx-auto mb-4" />
-                <div className="text-3xl font-bold text-emerald-600 mb-2">85%</div>
+                <TrendingUp className="w-12 h-12 text-base-blue mx-auto mb-4" />
+                <div className="text-3xl font-bold text-base-blue mb-2">85%</div>
                 <div className="text-gray-600 font-medium mb-4">Improvement in Climate Resilience</div>
                 <p className="text-gray-600 text-sm leading-relaxed">
                   Communities show significant improvement in their ability to adapt to and recover from climate-related challenges.
@@ -338,8 +338,8 @@ const ClimateActionPage = () => {
 
             <div className="bg-white rounded-2xl p-8 shadow-lg hover-lift border border-gray-100 reveal" style={{ animationDelay: '0.1s' }}>
               <div className="text-center">
-                <Users className="w-12 h-12 text-emerald-600 mx-auto mb-4" />
-                <div className="text-3xl font-bold text-emerald-600 mb-2">250K+</div>
+                <Users className="w-12 h-12 text-base-blue mx-auto mb-4" />
+                <div className="text-3xl font-bold text-base-blue mb-2">250K+</div>
                 <div className="text-gray-600 font-medium mb-4">Lives Transformed</div>
                 <p className="text-gray-600 text-sm leading-relaxed">
                   Individuals and families have gained access to climate-resilient livelihoods and improved living conditions.
@@ -349,8 +349,8 @@ const ClimateActionPage = () => {
 
             <div className="bg-white rounded-2xl p-8 shadow-lg hover-lift border border-gray-100 reveal" style={{ animationDelay: '0.2s' }}>
               <div className="text-center">
-                <Award className="w-12 h-12 text-emerald-600 mx-auto mb-4" />
-                <div className="text-3xl font-bold text-emerald-600 mb-2">12</div>
+                <Award className="w-12 h-12 text-base-blue mx-auto mb-4" />
+                <div className="text-3xl font-bold text-base-blue mb-2">12</div>
                 <div className="text-gray-600 font-medium mb-4">Countries Reached</div>
                 <p className="text-gray-600 text-sm leading-relaxed">
                   Our climate action programs span across multiple countries, adapting to local contexts and needs.

@@ -125,7 +125,7 @@ const WaterSanitationPage = () => {
           {/* Back Button */}
           <button
             onClick={() => navigate('/our-work')}
-            className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium mb-8 group reveal"
+            className="inline-flex items-center text-base-blue hover:text-dark-blue font-medium mb-8 group reveal"
           >
             <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
             Back to Our Work
@@ -134,7 +134,7 @@ const WaterSanitationPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="reveal">
               <div className="flex items-center mb-6">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mr-4 motion-pulse">
+                <div className="w-16 h-16 bg-gradient-to-br from-base-blue to-analogous-teal rounded-2xl flex items-center justify-center mr-4 motion-pulse">
                   <Droplets className="w-8 h-8 text-white" />
                 </div>
                 <h1 className="text-4xl lg:text-5xl font-bold font-playfair text-gray-900">
@@ -147,11 +147,11 @@ const WaterSanitationPage = () => {
               </p>
               <div className="flex flex-wrap gap-4">
                 <div className="bg-white rounded-lg px-4 py-2 shadow-md border border-blue-100">
-                  <span className="text-2xl font-bold text-blue-600">32</span>
+                  <span className="text-2xl font-bold text-base-blue">32</span>
                   <span className="text-gray-600 ml-2">Active Projects</span>
                 </div>
                 <div className="bg-white rounded-lg px-4 py-2 shadow-md border border-blue-100">
-                  <span className="text-2xl font-bold text-blue-600">180K+</span>
+                  <span className="text-2xl font-bold text-base-blue">180K+</span>
                   <span className="text-gray-600 ml-2">Beneficiaries</span>
                 </div>
               </div>
@@ -176,7 +176,7 @@ const WaterSanitationPage = () => {
               const IconComponent = stat.icon;
               return (
                 <div key={index} className="text-center reveal" style={{ animationDelay: `${index * 0.1}s` }}>
-                  <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4 motion-pulse">
+                  <div className="w-16 h-16 bg-gradient-to-r from-base-blue to-analogous-teal rounded-2xl flex items-center justify-center mx-auto mb-4 motion-pulse">
                     <IconComponent className="w-8 h-8 text-white" />
                   </div>
                   <div className="text-3xl lg:text-4xl font-bold gradient-text mb-2">
@@ -214,7 +214,7 @@ const WaterSanitationPage = () => {
                     <IconComponent className="w-8 h-8 text-white" />
                   </div>
                   
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 font-playfair group-hover:text-blue-700 transition-colors">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4 font-playfair group-hover:text-base-blue transition-colors">
                     {approach.title}
                   </h3>
                   
@@ -295,14 +295,14 @@ const WaterSanitationPage = () => {
                       <div className="space-y-2">
                         {project.impact.map((impact, impactIndex) => (
                           <div key={impactIndex} className="flex items-center text-sm text-gray-600">
-                            <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                            <div className="w-2 h-2 bg-base-blue rounded-full mr-3"></div>
                             {impact}
                           </div>
                         ))}
                       </div>
                     </div>
 
-                    <button className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-medium rounded-lg hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 group">
+                    <button className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-base-blue to-analogous-teal text-white font-medium rounded-lg hover:from-dark-blue hover:to-muted-blue transition-all duration-300 transform hover:scale-105 group">
                       Learn More
                       <ExternalLink className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                     </button>
@@ -327,8 +327,8 @@ const WaterSanitationPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-white rounded-2xl p-8 shadow-lg hover-lift border border-gray-100 reveal">
               <div className="text-center">
-                <TrendingUp className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-                <div className="text-3xl font-bold text-blue-600 mb-2">92%</div>
+                <TrendingUp className="w-12 h-12 text-base-blue mx-auto mb-4" />
+                <div className="text-3xl font-bold text-base-blue mb-2">92%</div>
                 <div className="text-gray-600 font-medium mb-4">Project Success Rate</div>
                 <p className="text-gray-600 text-sm leading-relaxed">
                   Our water and sanitation projects maintain high success rates with sustainable community management.
@@ -338,8 +338,8 @@ const WaterSanitationPage = () => {
 
             <div className="bg-white rounded-2xl p-8 shadow-lg hover-lift border border-gray-100 reveal" style={{ animationDelay: '0.1s' }}>
               <div className="text-center">
-                <Users className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-                <div className="text-3xl font-bold text-blue-600 mb-2">180K+</div>
+                <Users className="w-12 h-12 text-base-blue mx-auto mb-4" />
+                <div className="text-3xl font-bold text-base-blue mb-2">180K+</div>
                 <div className="text-gray-600 font-medium mb-4">People Served</div>
                 <p className="text-gray-600 text-sm leading-relaxed">
                   Individuals and families now have reliable access to clean water and improved sanitation facilities.
@@ -349,8 +349,8 @@ const WaterSanitationPage = () => {
 
             <div className="bg-white rounded-2xl p-8 shadow-lg hover-lift border border-gray-100 reveal" style={{ animationDelay: '0.2s' }}>
               <div className="text-center">
-                <Award className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-                <div className="text-3xl font-bold text-blue-600 mb-2">15</div>
+                <Award className="w-12 h-12 text-base-blue mx-auto mb-4" />
+                <div className="text-3xl font-bold text-base-blue mb-2">15</div>
                 <div className="text-gray-600 font-medium mb-4">Countries Reached</div>
                 <p className="text-gray-600 text-sm leading-relaxed">
                   Our water and sanitation programs span across multiple countries, adapting to local contexts.
