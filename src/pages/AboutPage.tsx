@@ -321,7 +321,7 @@ const AboutPage = () => {
                               <div className="absolute -inset-2 bg-gradient-to-r from-teal-500/0 to-cyan-500/0 group-hover:from-teal-500/20 group-hover:to-cyan-500/20 rounded-3xl transition-all duration-500 -z-10"></div>
                             </div>
                             
-                            <h3 className="text-xl font-bold text-gray-900 mb-4 font-playfair group-hover:text-teal-700 transition-colors duration-300">
+                            <h3 className="text-xl font-bold text-gray-900 mb-4 font-playfair group-hover:text-base-blue transition-colors duration-300">
                               {value.title}
                             </h3>
                             
@@ -329,7 +329,7 @@ const AboutPage = () => {
                               {value.description}
                             </p>
                             
-                            <div className="mt-6 h-1 w-0 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full group-hover:w-full transition-all duration-700 ease-out"></div>
+                            <div className="mt-6 h-1 w-0 bg-gradient-to-r from-base-blue to-analogous-teal rounded-full group-hover:w-full transition-all duration-700 ease-out"></div>
                           </div>
                         );
                       })}
@@ -364,7 +364,7 @@ const AboutPage = () => {
                   onClick={() => goToSlide(index)}
                   className={`w-3 h-3 rounded-full transition-all duration-500 ${
                     currentSlide === index 
-                      ? 'bg-teal-600 scale-125 shadow-lg' 
+                      ? 'bg-base-blue scale-125 shadow-lg' 
                       : 'bg-gray-300 hover:bg-gray-400 hover:scale-110'
                   }`}
                   aria-label={`Go to slide ${index + 1}`}
@@ -375,7 +375,7 @@ const AboutPage = () => {
             {/* Progress Bar */}
             <div className="mt-6 w-full bg-gray-200 rounded-full h-1 overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full transition-all duration-1000 ease-in-out"
+                className="h-full bg-gradient-to-r from-base-blue to-analogous-teal rounded-full transition-all duration-1000 ease-in-out"
                 style={{ width: `${((currentSlide + 1) / totalSlides) * 100}%` }}
               />
             </div>
