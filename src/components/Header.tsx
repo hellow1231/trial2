@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ChevronDown, ArrowRight } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const Header = () => {
@@ -42,43 +42,43 @@ const Header = () => {
 
   const navigationItems = [
     {
-      label: 'About Us',
+      label: 'About',
       href: '/about',
       dropdown: [
-        { name: 'Our Mission', href: '/about#mission', description: 'Learn about our core mission and values' },
-        { name: 'Our Vision', href: '/about#vision', description: 'Our vision for a sustainable future' },
-        { name: 'Core Values', href: '/about#values', description: 'The principles that guide our work' },
-        { name: 'Our Team', href: '/about#team', description: 'Meet our leadership and expert team' },
-        { name: 'Our History', href: '/about#history', description: 'Our journey and milestones' },
-        { name: 'Leadership', href: '/about#leadership', description: 'Executive leadership and board' },
-        { name: 'Partnerships', href: '/about#partnerships', description: 'Our global network of partners' },
-        { name: 'Careers', href: '/about#careers', description: 'Join our mission for change' }
+        { name: 'Our Story', href: '/about', description: 'Learn about our mission, vision, and values' },
+        { name: 'Our Team', href: '/about', description: 'Meet our leadership and expert team' },
+        { name: 'Our History', href: '/about', description: 'Our journey and key milestones' },
+        { name: 'Partnerships', href: '/about', description: 'Our global network of collaborators' },
+        { name: 'Careers', href: '/about', description: 'Join our mission for environmental change' }
       ]
     },
     {
       label: 'Our Work',
       href: '/our-work',
       dropdown: [
-        { name: 'Climate Action', href: '/programs/climate-action', description: 'Climate adaptation and mitigation programs' },
-        { name: 'Water & Sanitation', href: '/programs/water-sanitation', description: 'Clean water and sanitation initiatives' },
+        { name: 'All Programs', href: '/our-work', description: 'Overview of all our environmental programs' },
+        { name: 'Climate Action', href: '/programs/climate-action', description: 'Climate adaptation and mitigation initiatives' },
+        { name: 'Water & Sanitation', href: '/programs/water-sanitation', description: 'Clean water and sanitation projects' },
         { name: 'Renewable Energy', href: '/programs/renewable-energy', description: 'Clean energy solutions and programs' },
-        { name: 'Forest Conservation', href: '/programs/forest-conservation', description: 'Forest protection and restoration' },
-        { name: 'Community Development', href: '/our-work#development', description: 'Sustainable livelihood programs' },
-        { name: 'Waste Management', href: '/programs/waste-management', description: 'Circular economy and waste solutions' },
-        { name: 'Publications', href: '/#publications', description: 'Research papers and publications' },
-        { name: 'Impact Stories', href: '/our-work#impact', description: 'Real stories of transformation' }
+        { name: 'Forest Conservation', href: '/programs/forest-conservation', description: 'Forest protection and restoration efforts' },
+        { name: 'Waste Management', href: '/programs/waste-management', description: 'Circular economy and waste solutions' }
       ]
     },
     {
-      label: 'Ideas',
+      label: 'Research',
       href: '/ideas',
       dropdown: [
-        { name: 'Innovation Hub', href: '/ideas#innovation', description: 'Cutting-edge environmental solutions' },
-        { name: 'Policy Papers', href: '/ideas#policy', description: 'Research-backed policy recommendations' },
-        { name: 'Research Insights', href: '/ideas#insights', description: 'Latest findings and analysis' },
-        { name: 'Future Trends', href: '/ideas#trends', description: 'Emerging trends in sustainability' },
-        { name: 'Thought Leadership', href: '/ideas#leadership', description: 'Expert opinions and perspectives' }
+        { name: 'Publications', href: '/', description: 'Research papers and academic publications' },
+        { name: 'Innovation Hub', href: '/ideas', description: 'Cutting-edge environmental solutions' },
+        { name: 'Policy Papers', href: '/ideas', description: 'Research-backed policy recommendations' },
+        { name: 'Future Trends', href: '/ideas', description: 'Emerging trends in sustainability' },
+        { name: 'Thought Leadership', href: '/ideas', description: 'Expert insights and perspectives' }
       ]
+    },
+    {
+      label: 'Contact',
+      href: '/',
+      single: true
     }
   ];
 
@@ -87,8 +87,16 @@ const Header = () => {
     setActiveDropdown(null);
     setIsMobileMenuOpen(false);
     
-    // Simply navigate to the href - let the target page handle scrolling
-    navigate(href);
+    // Navigate to the page
+    if (href === '/' && location.pathname === '/') {
+      // If we're already on home page and clicking contact, scroll to contact
+      const element = document.querySelector('#contact');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      navigate(href);
+    }
   };
 
   const handleDropdownEnter = (label: string) => {
@@ -102,7 +110,7 @@ const Header = () => {
   const handleDropdownLeave = () => {
     const timeout = setTimeout(() => {
       setActiveDropdown(null);
-    }, 150); // Small delay to allow moving to dropdown
+    }, 150);
     setDropdownTimeout(timeout);
   };
 
@@ -117,15 +125,15 @@ const Header = () => {
     setActiveDropdown(null);
   };
 
-  const handleDropdownItemClick = (href: string) => {
-    handleNavClick(href);
-  };
-
   const handleMainNavClick = (item: any) => {
-    // For main navigation items with dropdowns, toggle dropdown
-    if (item.dropdown && item.dropdown.length > 0) {
+    if (item.single) {
+      // For single items like Contact, navigate directly
+      handleNavClick(item.href);
+    } else if (item.dropdown && item.dropdown.length > 0) {
+      // For items with dropdowns, toggle dropdown
       setActiveDropdown(activeDropdown === item.label ? null : item.label);
     } else {
+      // For items without dropdowns, navigate to the page
       handleNavClick(item.href);
     }
   };
@@ -140,7 +148,7 @@ const Header = () => {
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-in-out ${
           isScrolled 
             ? 'glass-effect shadow-lg border-b border-white/20' 
-            : 'bg-white/10 backdrop-blur-sm'
+            : 'bg-white/95 backdrop-blur-sm'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -172,8 +180,8 @@ const Header = () => {
                 <div key={item.label} className="relative dropdown-container">
                   <button
                     onClick={() => handleMainNavClick(item)}
-                    onMouseEnter={() => handleDropdownEnter(item.label)}
-                    onMouseLeave={handleDropdownLeave}
+                    onMouseEnter={() => !item.single && handleDropdownEnter(item.label)}
+                    onMouseLeave={() => !item.single && handleDropdownLeave()}
                     className={`flex items-center space-x-1 font-medium transition-all duration-300 hover:scale-105 ${
                       isScrolled 
                         ? 'text-gray-700 hover:text-base-blue' 
@@ -181,11 +189,13 @@ const Header = () => {
                     }`}
                   >
                     <span>{item.label}</span>
-                    <ChevronDown 
-                      className={`w-4 h-4 transition-transform duration-300 ${
-                        activeDropdown === item.label ? 'rotate-180' : ''
-                      }`} 
-                    />
+                    {!item.single && (
+                      <ChevronDown 
+                        className={`w-4 h-4 transition-transform duration-300 ${
+                          activeDropdown === item.label ? 'rotate-180' : ''
+                        }`} 
+                      />
+                    )}
                   </button>
                 </div>
               ))}
@@ -220,30 +230,27 @@ const Header = () => {
         >
           <div className="max-w-7xl mx-auto px-6 lg:px-10 py-8">
             {navigationItems.map((item) => (
-              activeDropdown === item.label && (
+              activeDropdown === item.label && !item.single && (
                 <div key={item.label} className="animate-fadeInUp">
                   <div className="text-center mb-8">
                     <h2 className="text-3xl font-bold font-playfair text-gray-900 mb-3">{item.label}</h2>
                     <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                      {item.label === 'About Us' && 'Learn more about our mission, team, and journey'}
-                      {item.label === 'Our Work' && 'Explore our programs, research, and global impact'}
-                      {item.label === 'Ideas' && 'Discover innovative solutions and thought leadership'}
+                      {item.label === 'About' && 'Learn more about our mission, team, and journey toward environmental sustainability'}
+                      {item.label === 'Our Work' && 'Explore our comprehensive programs creating environmental impact worldwide'}
+                      {item.label === 'Research' && 'Discover our research, innovations, and thought leadership in sustainability'}
                     </p>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {item.dropdown.map((dropdownItem, index) => (
                       <button
                         key={index}
-                        onClick={() => handleDropdownItemClick(dropdownItem.href)}
-                        className="group bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 text-left border border-gray-100 hover:border-base-blue/30"
+                        onClick={() => handleNavClick(dropdownItem.href)}
+                        className="group bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 text-left border border-gray-100 hover:border-base-blue/30"
                       >
-                        <div className="flex items-center justify-between mb-2">
-                          <h3 className="text-lg font-bold text-gray-900 group-hover:text-base-blue transition-colors">
-                            {dropdownItem.name}
-                          </h3>
-                          <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-base-blue group-hover:translate-x-1 transition-all" />
-                        </div>
+                        <h3 className="text-lg font-bold text-gray-900 group-hover:text-base-blue transition-colors mb-2">
+                          {dropdownItem.name}
+                        </h3>
                         <p className="text-gray-600 text-sm leading-relaxed">
                           {dropdownItem.description}
                         </p>
@@ -263,36 +270,47 @@ const Header = () => {
           <nav className="max-w-7xl mx-auto px-6 py-8 space-y-6">
             {navigationItems.map((item) => (
               <div key={item.label}>
-                <button
-                  onClick={() => toggleDropdown(item.label)}
-                  className="w-full flex items-center justify-between py-4 text-xl font-bold text-gray-900 border-b border-gray-200"
-                >
-                  <span>{item.label}</span>
-                  <ChevronDown 
-                    className={`w-5 h-5 transition-transform duration-300 ${
-                      activeDropdown === item.label ? 'rotate-180' : ''
-                    }`} 
-                  />
-                </button>
-                
-                <div
-                  className={`overflow-hidden transition-all duration-300 ${
-                    activeDropdown === item.label ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                  }`}
-                >
-                  <div className="pt-4 space-y-3">
-                    {item.dropdown.map((dropdownItem, index) => (
-                      <button
-                        key={index}
-                        onClick={() => handleDropdownItemClick(dropdownItem.href)}
-                        className="block w-full text-left py-3 px-4 text-gray-700 hover:text-base-blue hover:bg-light-blue/10 rounded-lg transition-colors duration-200"
-                      >
-                        <div className="font-medium">{dropdownItem.name}</div>
-                        <div className="text-sm text-gray-500 mt-1">{dropdownItem.description}</div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                {item.single ? (
+                  <button
+                    onClick={() => handleNavClick(item.href)}
+                    className="w-full text-left py-4 text-xl font-bold text-gray-900 border-b border-gray-200"
+                  >
+                    {item.label}
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => toggleDropdown(item.label)}
+                      className="w-full flex items-center justify-between py-4 text-xl font-bold text-gray-900 border-b border-gray-200"
+                    >
+                      <span>{item.label}</span>
+                      <ChevronDown 
+                        className={`w-5 h-5 transition-transform duration-300 ${
+                          activeDropdown === item.label ? 'rotate-180' : ''
+                        }`} 
+                      />
+                    </button>
+                    
+                    <div
+                      className={`overflow-hidden transition-all duration-300 ${
+                        activeDropdown === item.label ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                      }`}
+                    >
+                      <div className="pt-4 space-y-3">
+                        {item.dropdown.map((dropdownItem, index) => (
+                          <button
+                            key={index}
+                            onClick={() => handleNavClick(dropdownItem.href)}
+                            className="block w-full text-left py-3 px-4 text-gray-700 hover:text-base-blue hover:bg-light-blue/10 rounded-lg transition-colors duration-200"
+                          >
+                            <div className="font-medium">{dropdownItem.name}</div>
+                            <div className="text-sm text-gray-500 mt-1">{dropdownItem.description}</div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             ))}
           </nav>
