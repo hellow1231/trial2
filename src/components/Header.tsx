@@ -60,10 +60,10 @@ const Header = () => {
       dropdown: [
         { name: 'Climate Action', href: '/programs/climate-action', description: 'Climate adaptation and mitigation programs' },
         { name: 'Water & Sanitation', href: '/programs/water-sanitation', description: 'Clean water and sanitation initiatives' },
-        { name: 'Renewable Energy', href: '/programs/renewable-energy', description: 'Clean energy solutions and programs' },
-        { name: 'Forest Conservation', href: '/programs/forest-conservation', description: 'Forest protection and restoration' },
-        { name: 'Community Development', href: '/programs/community-development', description: 'Sustainable livelihood programs' },
-        { name: 'Waste Management', href: '/programs/waste-management', description: 'Circular economy and waste solutions' },
+        { name: 'Renewable Energy', href: '/our-work#energy', description: 'Clean energy solutions and programs' },
+        { name: 'Forest Conservation', href: '/our-work#conservation', description: 'Forest protection and restoration' },
+        { name: 'Community Development', href: '/our-work#development', description: 'Sustainable livelihood programs' },
+        { name: 'Waste Management', href: '/our-work#waste', description: 'Circular economy and waste solutions' },
         { name: 'Publications', href: '/#publications', description: 'Research papers and publications' },
         { name: 'Impact Stories', href: '/our-work#impact', description: 'Real stories of transformation' }
       ]
@@ -159,8 +159,7 @@ const Header = () => {
               <img 
                 src="/gei-logo.svg" 
                 alt="GEI Logo" 
-                onClick={() => handleMainNavClick(item)}
-                style={{ objectFit: 'contain' }}
+                className="w-8 h-8 object-contain"
               />
               <div>
                 <h1 className={`text-xl font-bold transition-colors duration-300 ${
