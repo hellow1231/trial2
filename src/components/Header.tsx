@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, ArrowRight } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const Header = () => {
@@ -46,10 +46,11 @@ const Header = () => {
       href: '/about',
       dropdown: [
         { name: 'Our Story', href: '/about', description: 'Learn about our mission, vision, and values' },
-        { name: 'Our Team', href: '/about', description: 'Meet our leadership and expert team' },
-        { name: 'Our History', href: '/about', description: 'Our journey and key milestones' },
-        { name: 'Partnerships', href: '/about', description: 'Our global network of collaborators' },
-        { name: 'Careers', href: '/about', description: 'Join our mission for environmental change' }
+        { name: 'Our Team', href: '/about#team', description: 'Meet our leadership and expert team' },
+        { name: 'Our History', href: '/about#history', description: 'Our journey and key milestones' },
+        { name: 'Leadership', href: '/about#leadership', description: 'Executive leadership and board' },
+        { name: 'Partnerships', href: '/about#partnerships', description: 'Our global network of collaborators' },
+        { name: 'Careers', href: '/about#careers', description: 'Join our mission for environmental change' }
       ]
     },
     {
@@ -60,24 +61,24 @@ const Header = () => {
         { name: 'Climate Action', href: '/programs/climate-action', description: 'Climate adaptation and mitigation initiatives' },
         { name: 'Water & Sanitation', href: '/programs/water-sanitation', description: 'Clean water and sanitation projects' },
         { name: 'Renewable Energy', href: '/programs/renewable-energy', description: 'Clean energy solutions and programs' },
-        { name: 'Forest Conservation', href: '/programs/forest-conservation', description: 'Forest protection and restoration efforts' },
-        { name: 'Waste Management', href: '/programs/waste-management', description: 'Circular economy and waste solutions' }
+        { name: 'Forest Conservation', href: '/our-work#conservation', description: 'Forest protection and restoration efforts' },
+        { name: 'Waste Management', href: '/our-work#waste', description: 'Circular economy and waste solutions' }
       ]
     },
     {
       label: 'Research',
       href: '/ideas',
       dropdown: [
-        { name: 'Publications', href: '/', description: 'Research papers and academic publications' },
-        { name: 'Innovation Hub', href: '/ideas', description: 'Cutting-edge environmental solutions' },
-        { name: 'Policy Papers', href: '/ideas', description: 'Research-backed policy recommendations' },
-        { name: 'Future Trends', href: '/ideas', description: 'Emerging trends in sustainability' },
-        { name: 'Thought Leadership', href: '/ideas', description: 'Expert insights and perspectives' }
+        { name: 'Publications', href: '/#publications', description: 'Research papers and academic publications' },
+        { name: 'Innovation Hub', href: '/ideas#innovation', description: 'Cutting-edge environmental solutions' },
+        { name: 'Policy Papers', href: '/ideas#policy', description: 'Research-backed policy recommendations' },
+        { name: 'Future Trends', href: '/ideas#trends', description: 'Emerging trends in sustainability' },
+        { name: 'Thought Leadership', href: '/ideas#leadership', description: 'Expert insights and perspectives' }
       ]
     },
     {
       label: 'Contact',
-      href: '/',
+      href: '/#contact',
       single: true
     }
   ];
@@ -87,14 +88,46 @@ const Header = () => {
     setActiveDropdown(null);
     setIsMobileMenuOpen(false);
     
-    // Navigate to the page
-    if (href === '/' && location.pathname === '/') {
-      // If we're already on home page and clicking contact, scroll to contact
-      const element = document.querySelector('#contact');
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+    if (href.startsWith('/#')) {
+      // Navigate to home page section
+      const sectionId = href.substring(2); // Remove '/#'
+      if (location.pathname !== '/') {
+        navigate('/');
+        // Wait for navigation to complete, then scroll
+        setTimeout(() => {
+          const element = document.querySelector(`#${sectionId}`);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      } else {
+        const element = document.querySelector(`#${sectionId}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    } else if (href.includes('#')) {
+      // Navigate to section on specific page
+      const [path, hash] = href.split('#');
+      if (location.pathname === path) {
+        // Already on the correct page, just scroll to section
+        const element = document.querySelector(`#${hash}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        // Navigate to page first
+        navigate(path);
+        // Wait for navigation to complete, then scroll
+        setTimeout(() => {
+          const element = document.querySelector(`#${hash}`);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
       }
     } else {
+      // Navigate to page
       navigate(href);
     }
   };
@@ -130,8 +163,10 @@ const Header = () => {
       // For single items like Contact, navigate directly
       handleNavClick(item.href);
     } else if (item.dropdown && item.dropdown.length > 0) {
-      // For items with dropdowns, toggle dropdown
-      setActiveDropdown(activeDropdown === item.label ? null : item.label);
+      // For items with dropdowns, toggle dropdown on mobile, show on hover on desktop
+      if (window.innerWidth < 1024) {
+        setActiveDropdown(activeDropdown === item.label ? null : item.label);
+      }
     } else {
       // For items without dropdowns, navigate to the page
       handleNavClick(item.href);
@@ -147,45 +182,48 @@ const Header = () => {
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-in-out ${
           isScrolled 
-            ? 'glass-effect shadow-lg border-b border-white/20' 
-            : 'bg-white/95 backdrop-blur-sm'
+            ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200/50' 
+            : 'bg-white/90 backdrop-blur-sm'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <div className="flex items-center space-x-3 group cursor-pointer" onClick={() => handleNavClick('/')}>
-              <img 
-                src="/gei-logo.svg" 
-                alt="GEI Logo" 
-                className="w-6 h-6 object-contain"
-              />
+            <div 
+              className="flex items-center space-x-3 group cursor-pointer transition-transform duration-300 hover:scale-105" 
+              onClick={() => handleNavClick('/')}
+            >
+              <div className="relative">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
+                  <span className="text-white font-bold text-lg">G</span>
+                </div>
+                <div className="absolute -inset-1 bg-gradient-to-br from-blue-600/20 to-cyan-600/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+              </div>
               <div>
-                <h1 className={`text-lg font-bold transition-colors duration-300 ${
-                  isScrolled ? 'text-gray-900' : 'text-gray-900'
-                }`}>
+                <h1 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
                   GEI
                 </h1>
-                <p className={`text-xs leading-none transition-colors duration-300 ${
-                  isScrolled ? 'text-gray-600' : 'text-gray-700'
-                }`}>
+                <p className="text-xs text-gray-600 leading-none">
                   Global Environmental Initiative
                 </p>
               </div>
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-8">
+            <nav className="hidden lg:flex items-center space-x-1">
               {navigationItems.map((item) => (
                 <div key={item.label} className="relative dropdown-container">
                   <button
                     onClick={() => handleMainNavClick(item)}
                     onMouseEnter={() => !item.single && handleDropdownEnter(item.label)}
                     onMouseLeave={() => !item.single && handleDropdownLeave()}
-                    className={`flex items-center space-x-1 font-medium transition-all duration-300 hover:scale-105 ${
-                      isScrolled 
-                        ? 'text-gray-700 hover:text-base-blue' 
-                        : 'text-gray-900 hover:text-base-blue'
+                    className={`flex items-center space-x-1 px-4 py-3 font-medium rounded-xl transition-all duration-300 hover:bg-blue-50 hover:text-blue-600 ${
+                      location.pathname === item.href || 
+                      (item.href === '/our-work' && location.pathname.startsWith('/programs/')) ||
+                      (item.href === '/ideas' && location.pathname === '/ideas') ||
+                      (item.href === '/about' && location.pathname === '/about')
+                        ? 'text-blue-600 bg-blue-50' 
+                        : 'text-gray-700'
                     }`}
                   >
                     <span>{item.label}</span>
@@ -201,19 +239,25 @@ const Header = () => {
               ))}
             </nav>
 
+            {/* CTA Button */}
+            <div className="hidden lg:flex items-center space-x-4">
+              <a
+                href="/admin/programs"
+                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                Admin Panel
+              </a>
+            </div>
+
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`lg:hidden p-2 rounded-xl transition-all duration-300 ${
-                isScrolled 
-                  ? 'text-gray-700 hover:bg-gray-100' 
-                  : 'text-gray-900 hover:bg-white/20'
-              }`}
+              className="lg:hidden p-3 rounded-xl transition-all duration-300 hover:bg-gray-100"
             >
               {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
+                <X className="w-6 h-6 text-gray-700" />
               ) : (
-                <Menu className="w-6 h-6" />
+                <Menu className="w-6 h-6 text-gray-700" />
               )}
             </button>
           </div>
@@ -223,18 +267,18 @@ const Header = () => {
       {/* Dropdown Overlay */}
       {activeDropdown && (
         <div 
-          className="fixed inset-x-0 glass-effect shadow-lg border-b border-white/20 z-40"
-          style={{ top: '64px' }}
+          className="fixed inset-x-0 bg-white/95 backdrop-blur-md shadow-xl border-b border-gray-200/50 z-40"
+          style={{ top: '80px' }}
           onMouseEnter={handleDropdownContentEnter}
           onMouseLeave={handleDropdownContentLeave}
         >
-          <div className="max-w-7xl mx-auto px-6 lg:px-10 py-8">
+          <div className="max-w-7xl mx-auto px-6 lg:px-10 py-12">
             {navigationItems.map((item) => (
               activeDropdown === item.label && !item.single && (
                 <div key={item.label} className="animate-fadeInUp">
-                  <div className="text-center mb-8">
-                    <h2 className="text-3xl font-bold font-playfair text-gray-900 mb-3">{item.label}</h2>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                  <div className="text-center mb-12">
+                    <h2 className="text-4xl font-bold font-playfair text-gray-900 mb-4">{item.label}</h2>
+                    <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
                       {item.label === 'About' && 'Learn more about our mission, team, and journey toward environmental sustainability'}
                       {item.label === 'Our Work' && 'Explore our comprehensive programs creating environmental impact worldwide'}
                       {item.label === 'Research' && 'Discover our research, innovations, and thought leadership in sustainability'}
@@ -246,11 +290,14 @@ const Header = () => {
                       <button
                         key={index}
                         onClick={() => handleNavClick(dropdownItem.href)}
-                        className="group bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 text-left border border-gray-100 hover:border-base-blue/30"
+                        className="group bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-left border border-gray-100 hover:border-blue-200"
                       >
-                        <h3 className="text-lg font-bold text-gray-900 group-hover:text-base-blue transition-colors mb-2">
-                          {dropdownItem.name}
-                        </h3>
+                        <div className="flex items-center justify-between mb-3">
+                          <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                            {dropdownItem.name}
+                          </h3>
+                          <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+                        </div>
                         <p className="text-gray-600 text-sm leading-relaxed">
                           {dropdownItem.description}
                         </p>
@@ -266,54 +313,66 @@ const Header = () => {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-40 bg-white lg:hidden" style={{ top: '64px' }}>
-          <nav className="max-w-7xl mx-auto px-6 py-8 space-y-6">
-            {navigationItems.map((item) => (
-              <div key={item.label}>
-                {item.single ? (
-                  <button
-                    onClick={() => handleNavClick(item.href)}
-                    className="w-full text-left py-4 text-xl font-bold text-gray-900 border-b border-gray-200"
-                  >
-                    {item.label}
-                  </button>
-                ) : (
-                  <>
+        <div className="fixed inset-0 z-40 bg-white lg:hidden" style={{ top: '80px' }}>
+          <div className="h-full overflow-y-auto">
+            <nav className="max-w-7xl mx-auto px-6 py-8 space-y-2">
+              {navigationItems.map((item) => (
+                <div key={item.label}>
+                  {item.single ? (
                     <button
-                      onClick={() => toggleDropdown(item.label)}
-                      className="w-full flex items-center justify-between py-4 text-xl font-bold text-gray-900 border-b border-gray-200"
+                      onClick={() => handleNavClick(item.href)}
+                      className="w-full text-left py-4 px-4 text-lg font-semibold text-gray-900 rounded-xl hover:bg-blue-50 hover:text-blue-600 transition-colors"
                     >
-                      <span>{item.label}</span>
-                      <ChevronDown 
-                        className={`w-5 h-5 transition-transform duration-300 ${
-                          activeDropdown === item.label ? 'rotate-180' : ''
-                        }`} 
-                      />
+                      {item.label}
                     </button>
-                    
-                    <div
-                      className={`overflow-hidden transition-all duration-300 ${
-                        activeDropdown === item.label ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                      }`}
-                    >
-                      <div className="pt-4 space-y-3">
-                        {item.dropdown.map((dropdownItem, index) => (
-                          <button
-                            key={index}
-                            onClick={() => handleNavClick(dropdownItem.href)}
-                            className="block w-full text-left py-3 px-4 text-gray-700 hover:text-base-blue hover:bg-light-blue/10 rounded-lg transition-colors duration-200"
-                          >
-                            <div className="font-medium">{dropdownItem.name}</div>
-                            <div className="text-sm text-gray-500 mt-1">{dropdownItem.description}</div>
-                          </button>
-                        ))}
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => toggleDropdown(item.label)}
+                        className="w-full flex items-center justify-between py-4 px-4 text-lg font-semibold text-gray-900 rounded-xl hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                      >
+                        <span>{item.label}</span>
+                        <ChevronDown 
+                          className={`w-5 h-5 transition-transform duration-300 ${
+                            activeDropdown === item.label ? 'rotate-180' : ''
+                          }`} 
+                        />
+                      </button>
+                      
+                      <div
+                        className={`overflow-hidden transition-all duration-300 ${
+                          activeDropdown === item.label ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                        }`}
+                      >
+                        <div className="pt-2 pb-4 space-y-2">
+                          {item.dropdown.map((dropdownItem, index) => (
+                            <button
+                              key={index}
+                              onClick={() => handleNavClick(dropdownItem.href)}
+                              className="block w-full text-left py-3 px-6 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-colors duration-200"
+                            >
+                              <div className="font-medium">{dropdownItem.name}</div>
+                              <div className="text-sm text-gray-500 mt-1">{dropdownItem.description}</div>
+                            </button>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  </>
-                )}
+                    </>
+                  )}
+                </div>
+              ))}
+              
+              {/* Mobile CTA */}
+              <div className="pt-6 border-t border-gray-200 mt-6">
+                <a
+                  href="/admin/programs"
+                  className="block w-full text-center py-4 px-6 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-cyan-700 transition-all duration-300"
+                >
+                  Admin Panel
+                </a>
               </div>
-            ))}
-          </nav>
+            </nav>
+          </div>
         </div>
       )}
     </>
