@@ -28,8 +28,8 @@ const Contact = () => {
                 <div className="space-y-6">
                   {/* Address */}
                   <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <MapPin className="w-6 h-6 text-green-700" />
+                    <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <MapPin className="w-6 h-6 text-blue-700" />
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold text-gray-900 mb-1">Address</h4>
@@ -56,8 +56,8 @@ const Contact = () => {
 
                   {/* Email */}
                   <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Mail className="w-6 h-6 text-purple-700" />
+                    <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Mail className="w-6 h-6 text-blue-700" />
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold text-gray-900 mb-1">Email</h4>
@@ -68,8 +68,8 @@ const Contact = () => {
 
                   {/* Hours */}
                   <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Clock className="w-6 h-6 text-orange-700" />
+                    <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Clock className="w-6 h-6 text-blue-700" />
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold text-gray-900 mb-1">Office Hours</h4>
@@ -84,7 +84,7 @@ const Contact = () => {
               {/* Departments */}
               <div className="bg-gray-50 rounded-2xl p-6">
                 <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                  <Building className="w-5 h-5 mr-2 text-green-700" />
+                  <Building className="w-5 h-5 mr-2 text-blue-700" />
                   Department Contacts
                 </h3>
                 <div className="space-y-3 text-sm">
@@ -121,7 +121,7 @@ const Contact = () => {
                     <input
                       type="text"
                       id="firstName"
-                      className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       placeholder="Enter your first name"
                     />
                   </div>
@@ -132,7 +132,7 @@ const Contact = () => {
                     <input
                       type="text"
                       id="lastName"
-                      className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       placeholder="Enter your last name"
                     />
                   </div>
@@ -145,7 +145,7 @@ const Contact = () => {
                   <input
                     type="email"
                     id="email"
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                     placeholder="Enter your email address"
                   />
                 </div>
@@ -157,7 +157,7 @@ const Contact = () => {
                   <input
                     type="text"
                     id="organization"
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                     placeholder="Enter your organization name"
                   />
                 </div>
@@ -168,7 +168,7 @@ const Contact = () => {
                   </label>
                   <select
                     id="subject"
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   >
                     <option value="">Select a subject</option>
                     <option value="partnership">Research Partnership</option>
@@ -187,14 +187,14 @@ const Contact = () => {
                   <textarea
                     id="message"
                     rows={6}
-                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all resize-none"
+                    className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
                     placeholder="Tell us about your inquiry or how we can help you..."
                   ></textarea>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-green-700 to-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-green-800 hover:to-blue-700 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center group"
+                  className="w-full bg-gradient-to-r from-blue-700 to-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-800 hover:to-blue-700 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center group"
                 >
                   Send Message
                   <Send className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />

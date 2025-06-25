@@ -25,21 +25,17 @@ const ImageGalleryCarousel: React.FC<ImageGalleryCarouselProps> = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   // Calculate how many images to show (3 for desktop, 1 for mobile)
   const imagesPerView = 3;
   const totalSlides = Math.ceil(images.length / imagesPerView);
 
-  // Auto-scroll logic - continuous forward movement
+  // Auto-scroll logic
   useEffect(() => {
     if (!isPlaying || images.length <= 1) return;
 
     intervalRef.current = setInterval(() => {
-      setCurrentIndex((prevIndex) => {
-        // Move forward continuously, loop back to start
-        return (prevIndex + 1) % images.length;
-      });
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % totalSlides);
     }, autoScrollSpeed);
 
     return () => {
@@ -47,17 +43,6 @@ const ImageGalleryCarousel: React.FC<ImageGalleryCarouselProps> = ({
         clearInterval(intervalRef.current);
       }
     };
-  }, [isPlaying, images.length, autoScrollSpeed]);
-
-  // Update auto-play to use new slide calculation
-  useEffect(() => {
-    if (!isPlaying) return;
-    
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % totalSlides);
-    }, autoScrollSpeed);
-
-    return () => clearInterval(interval);
   }, [isPlaying, totalSlides, autoScrollSpeed]);
 
   const goToSlide = (index: number) => {
@@ -65,14 +50,14 @@ const ImageGalleryCarousel: React.FC<ImageGalleryCarouselProps> = ({
   };
 
   const goToPrevious = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === 0 ? totalSlides - 1 : prevIndex - 1
+    setCurrentIndex((prev) => 
+      prev === 0 ? totalSlides - 1 : prev - 1
     );
   };
 
   const goToNext = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === totalSlides - 1 ? 0 : prevIndex + 1
+    setCurrentIndex((prev) => 
+      prev === totalSlides - 1 ? 0 : prev + 1
     );
   };
 
@@ -114,7 +99,7 @@ const ImageGalleryCarousel: React.FC<ImageGalleryCarouselProps> = ({
           {/* Main Carousel */}
           <div className="relative overflow-hidden rounded-3xl shadow-2xl bg-white border border-gray-100">
             <div
-              className="flex transition-transform duration-700 ease-in-out"
+              className="flex transition-transform duration-1000 ease-in-out"
               style={{ transform: `translateX(-${currentIndex * (100 / imagesPerView)}%)` }}
             >
               {images.map((image, index) => (

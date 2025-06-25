@@ -38,7 +38,7 @@ const Publications = () => {
 
   const getCategoryColor = (categoryName: string) => {
     const colors: { [key: string]: string } = {
-      'Artificial Intelligence': 'bg-analogous-indigo/10 text-analogous-indigo border-analogous-indigo/20',
+      'Artificial Intelligence': 'bg-blue-100 text-blue-800 border-blue-200',
       'Quantum Computing': 'bg-base-blue/10 text-base-blue border-base-blue/20',
       'Climate Science': 'bg-analogous-teal/10 text-analogous-teal border-analogous-teal/20',
       'Robotics': 'bg-amber/10 text-amber border-amber/20',
@@ -166,7 +166,7 @@ const Publications = () => {
                   <div className="flex-1">
                     {/* Publication Type & Year */}
                     <div className="flex items-center gap-3 mb-4">
-                      <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-teal-100 to-cyan-100 text-teal-700 text-xs font-medium rounded-full border border-teal-200">
+                      <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-700 text-xs font-medium rounded-full border border-blue-200">
                         <BookOpen className="w-3 h-3 mr-1" />
                         {publication.publication_type}
                       </span>

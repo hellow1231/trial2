@@ -79,8 +79,8 @@ const FileUpload: React.FC<FileUploadProps> = ({
         <div
           className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300 ${
             dragActive
-              ? 'border-green-500 bg-green-50'
-              : 'border-gray-300 hover:border-green-400 hover:bg-gray-50'
+              ? 'border-blue-500 bg-blue-50'
+              : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50'
           }`}
           onDragEnter={handleDrag}
           onDragLeave={handleDrag}
@@ -111,7 +111,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="px-6 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"
+              className="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
             >
               Choose File
             </button>
@@ -145,7 +145,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
-                        className="bg-green-600 h-2 rounded-full transition-all duration-300"
+                        className="bg-blue-600 h-2 rounded-full transition-all duration-300"
                         style={{ width: `${uploadProgress}%` }}
                       ></div>
                     </div>

@@ -215,7 +215,7 @@ const PublicationsAdmin = () => {
               </div>
               <button
                 onClick={() => openModal()}
-                className="inline-flex items-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
+                className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
               >
                 <Plus className="w-5 h-5 mr-2" />
                 Add Publication
@@ -231,7 +231,7 @@ const PublicationsAdmin = () => {
 
             {loading ? (
               <div className="flex items-center justify-center py-20">
-                <Loader2 className="w-8 h-8 animate-spin text-green-600" />
+                <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
               </div>
             ) : publications.length === 0 ? (
               <div className="text-center py-20">
@@ -240,7 +240,7 @@ const PublicationsAdmin = () => {
                 <p className="text-gray-600 mb-6">Get started by adding your first publication.</p>
                 <button
                   onClick={() => openModal()}
-                  className="inline-flex items-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors"
+                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
                 >
                   <Plus className="w-5 h-5 mr-2" />
                   Add First Publication
@@ -262,7 +262,7 @@ const PublicationsAdmin = () => {
                             </span>
                           )}
                           {publication.pdf_url && (
-                            <span className="inline-flex items-center px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full">
+                            <span className="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">
                               <FileIcon className="w-3 h-3 mr-1" />
                               PDF
                             </span>
@@ -276,7 +276,7 @@ const PublicationsAdmin = () => {
                           {publication.journal && (
                             <>
                               <span>•</span>
-                              <span className="text-green-600">{publication.journal}</span>
+                              <span className="text-blue-600">{publication.journal}</span>
                             </>
                           )}
                           <span>•</span>
@@ -315,7 +315,7 @@ const PublicationsAdmin = () => {
                         </button>
                         <button
                           onClick={() => openModal(publication)}
-                          className="p-2 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                          className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                           title="Edit Publication"
                         >
                           <Edit className="w-4 h-4" />
@@ -366,7 +366,7 @@ const PublicationsAdmin = () => {
                     required
                     value={formData.title}
                     onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="Enter publication title"
                   />
                 </div>
@@ -379,7 +379,7 @@ const PublicationsAdmin = () => {
                     rows={4}
                     value={formData.abstract}
                     onChange={(e) => setFormData(prev => ({ ...prev, abstract: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                     placeholder="Enter publication abstract"
                   />
                 </div>
@@ -413,7 +413,7 @@ const PublicationsAdmin = () => {
                     type="text"
                     value={formData.journal}
                     onChange={(e) => setFormData(prev => ({ ...prev, journal: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="Enter journal name"
                   />
                 </div>
@@ -428,7 +428,7 @@ const PublicationsAdmin = () => {
                     max={new Date().getFullYear() + 10}
                     value={formData.publication_year}
                     onChange={(e) => setFormData(prev => ({ ...prev, publication_year: parseInt(e.target.value) }))}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
 
@@ -439,7 +439,7 @@ const PublicationsAdmin = () => {
                   <select
                     value={formData.publication_type}
                     onChange={(e) => setFormData(prev => ({ ...prev, publication_type: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="Journal Article">Journal Article</option>
                     <option value="Conference Paper">Conference Paper</option>
@@ -456,7 +456,7 @@ const PublicationsAdmin = () => {
                   <select
                     value={formData.category_id}
                     onChange={(e) => setFormData(prev => ({ ...prev, category_id: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     <option value="">Select a category</option>
                     {categories.map((category) => (
@@ -475,7 +475,7 @@ const PublicationsAdmin = () => {
                     type="text"
                     value={formData.doi}
                     onChange={(e) => setFormData(prev => ({ ...prev, doi: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="10.1000/xyz123"
                   />
                 </div>
@@ -489,7 +489,7 @@ const PublicationsAdmin = () => {
                     min="0"
                     value={formData.citations}
                     onChange={(e) => setFormData(prev => ({ ...prev, citations: parseInt(e.target.value) || 0 }))}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
 
@@ -499,7 +499,7 @@ const PublicationsAdmin = () => {
                       type="checkbox"
                       checked={formData.is_featured}
                       onChange={(e) => setFormData(prev => ({ ...prev, is_featured: e.target.checked }))}
-                      className="rounded border-gray-300 text-green-600 focus:ring-green-500"
+                      className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     />
                     <span className="ml-2 text-sm font-medium text-gray-700">Featured Publication</span>
                   </label>
@@ -516,7 +516,7 @@ const PublicationsAdmin = () => {
                           type="checkbox"
                           checked={formData.author_ids.includes(author.id)}
                           onChange={() => handleAuthorToggle(author.id)}
-                          className="rounded border-gray-300 text-green-600 focus:ring-green-500"
+                          className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                         />
                         <span className="ml-2 text-sm text-gray-700">{author.name}</span>
                       </label>
@@ -536,7 +536,7 @@ const PublicationsAdmin = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting || uploading}
-                  className="inline-flex items-center px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50"
+                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
                 >
                   {isSubmitting || uploading ? (
                     <>

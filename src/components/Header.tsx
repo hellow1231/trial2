@@ -159,10 +159,10 @@ const Header = () => {
               <img 
                 src="/gei-logo.svg" 
                 alt="GEI Logo" 
-                className="w-8 h-8 object-contain"
+                className="w-6 h-6 object-contain"
               />
               <div>
-                <h1 className={`text-xl font-bold transition-colors duration-300 ${
+                <h1 className={`text-lg font-bold transition-colors duration-300 ${
                   isScrolled ? 'text-gray-900' : 'text-gray-900'
                 }`}>
                   GEI
