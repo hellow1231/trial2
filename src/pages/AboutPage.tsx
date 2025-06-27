@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Target, Eye, Users, Lightbulb, Award, Heart, Globe, Zap, Calendar, MapPin, Mail, Linkedin, Twitter, ChevronLeft, ChevronRight } from 'lucide-react';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 const AboutPage = () => {
   const location = useLocation();

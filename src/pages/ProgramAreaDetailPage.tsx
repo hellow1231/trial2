@@ -180,34 +180,32 @@ const ProgramAreaDetailPage = () => {
                     {programArea.projects.map((project, index) => (
                       <div key={project.id} className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover-lift">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-                          {project.image && (
-                            <div className="relative h-64 lg:h-auto overflow-hidden">
-                              <img
-                                src={project.image}
-                                alt={project.title}
-                                className="w-full h-full object-cover"
-                              />
-                              <div className="absolute top-4 left-4 flex items-center gap-2">
-                                <span className={`px-3 py-1 text-xs font-medium rounded-full border ${getStatusColor(project.status)}`}>
-                                  {getStatusIcon(project.status)}
-                                  <span className="ml-1">{project.status}</span>
+                          <div className="relative h-64 lg:h-auto overflow-hidden">
+                            <img
+                              src={project.image || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80'}
+                              alt={project.title}
+                              className="w-full h-full object-cover"
+                            />
+                            <div className="absolute top-4 left-4 flex items-center gap-2">
+                              <span className={`px-3 py-1 text-xs font-medium rounded-full border ${getStatusColor(project.status)}`}>
+                                {getStatusIcon(project.status)}
+                                <span className="ml-1">{project.status}</span>
+                              </span>
+                              {project.budget && (
+                                <span className="px-3 py-1 bg-white/90 text-gray-700 text-xs font-medium rounded-full border border-white/50">
+                                  {project.budget}
                                 </span>
-                                {project.budget && (
-                                  <span className="px-3 py-1 bg-white/90 text-gray-700 text-xs font-medium rounded-full border border-white/50">
-                                    {project.budget}
-                                  </span>
-                                )}
-                              </div>
-                              {project.location && (
-                                <div className="absolute bottom-4 left-4 text-white">
-                                  <div className="flex items-center gap-2">
-                                    <MapPin className="w-4 h-4" />
-                                    <span className="text-sm font-medium">{project.location}</span>
-                                  </div>
-                                </div>
                               )}
                             </div>
-                          )}
+                            {project.location && (
+                              <div className="absolute bottom-4 left-4 text-white">
+                                <div className="flex items-center gap-2">
+                                  <MapPin className="w-4 h-4" />
+                                  <span className="text-sm font-medium">{project.location}</span>
+                                </div>
+                              </div>
+                            )}
+                          </div>
                           
                           <div className="p-8">
                             <h3 className="text-2xl font-bold text-gray-900 mb-4 font-playfair">

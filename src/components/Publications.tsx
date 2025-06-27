@@ -52,6 +52,13 @@ const Publications = () => {
     navigate(`/publications/${publicationId}`);
   };
 
+  // Publications to display based on filter
+  const filteredPublications = selectedCategory === 'all'
+    ? publications // Show all, including those with no category
+    : publications.filter(
+        (pub) => pub.research_categories && pub.research_categories.slug === selectedCategory
+      );
+
   if (publicationsError) {
     return (
       <section id="publications" className="py-24 bg-gradient-to-b from-neutral-100 to-white">
@@ -137,7 +144,7 @@ const Publications = () => {
               <p className="text-gray-600">Loading publications...</p>
             </div>
           </div>
-        ) : publications.length === 0 ? (
+        ) : filteredPublications.length === 0 ? (
           <div className="text-center py-20">
             <BookOpen className="w-16 h-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-900 mb-2">No Publications Found</h3>
@@ -156,7 +163,7 @@ const Publications = () => {
           </div>
         ) : (
           <div className="space-y-8">
-            {publications.map((publication, index) => (
+            {filteredPublications.map((publication, index) => (
               <div
                 key={publication.id}
                 className="bg-white border border-gray-200 rounded-2xl p-8 hover-lift group reveal"
@@ -251,7 +258,7 @@ const Publications = () => {
                           href={publication.pdf_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-analogous-teal to-muted-blue text-white text-sm font-medium rounded-full hover:from-muted-blue hover:to-analogous-teal transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group/btn"
+                          className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-base-blue to-muted-blue text-white text-sm font-medium rounded-full hover:from-dark-blue hover:to-base-blue transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group/btn"
                         >
                           <Download className="w-4 h-4 mr-2" />
                           Download PDF

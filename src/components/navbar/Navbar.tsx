@@ -2,12 +2,16 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Globe, ChevronDown } from 'lucide-react';
 import { APP_CONFIG } from '../../constants/app';
+import { useProgramAreas } from '../../hooks/useProgramAreas';
 
 const Header: React.FC = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+
+  // Fetch program areas for dynamic Our Work dropdown
+  const { programAreas } = useProgramAreas();
 
   const navigationItems = [
     { 
@@ -26,13 +30,15 @@ const Header: React.FC = () => {
       name: 'Our Work', 
       path: '/our-work',
       hasDropdown: true,
-      dropdownItems: [
-        { name: 'Climate Action', path: '/our-work#climate', description: 'Fighting climate change through innovative solutions' },
-        { name: 'Health & Wellness', path: '/our-work#health', description: 'Improving community health and well-being' },
-        { name: 'Sustainable Development', path: '/our-work#development', description: 'Building sustainable communities' },
-        { name: 'Research & Innovation', path: '/our-work#research', description: 'Advancing environmental research' },
-        { name: 'Impact Stories', path: '/our-work#impact', description: 'Real-world impact and success stories' },
-      ]
+      dropdownItems: programAreas && programAreas.length > 0
+        ? programAreas.map(area => ({
+            name: area.name,
+            path: `/areas/${area.slug}`,
+            description: area.description || 'Learn more about this program area'
+          }))
+        : [
+            { name: 'All Programs', path: '/our-work', description: 'Overview of all our environmental programs' }
+          ]
     },
     { 
       name: 'Ideas', 
@@ -122,7 +128,7 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <nav className={`sticky top-0 z-50 transition-all duration-300 ${
+      <nav className={`sticky top-0 z-50 transition-all duration-500 ease-in-out animate-in ${
         isScrolled 
           ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200' 
           : 'bg-white shadow-sm border-b border-gray-100'
@@ -177,12 +183,12 @@ const Header: React.FC = () => {
                       
                       {/* Dropdown Menu */}
                       {activeDropdown === item.name && (
-                        <div className="fixed left-0 right-0 top-16 z-50 bg-white shadow-xl border-t border-gray-100 py-10 animate-slide-down w-full">
+                        <div className="fixed left-0 right-0 top-16 z-50 bg-white shadow-xl border-t border-gray-100 py-10 animate-in transition-all duration-500 ease-in-out w-full">
                           {/* Content Container */}
                           <div className="relative max-w-6xl mx-auto px-4">
                             {/* Dropdown Title and Subtitle */}
-                            <div className="text-center mb-10">
-                              <h2 className="font-playfair font-bold text-3xl text-gray-900 mb-2">{item.name}</h2>
+                            <div className="text-center mb-10 transition-all duration-500 ease-in-out">
+                              <h2 className="font-playfair font-bold text-3xl text-gray-900 mb-2 scale-100 group-hover:scale-105 transition-transform duration-500 ease-in-out">{item.name}</h2>
                               {item.name === 'About' && (
                                 <div className="text-gray-500 text-lg max-w-2xl mx-auto">
                                   Learn more about our mission, team, and journey toward environmental sustainability
@@ -204,7 +210,7 @@ const Header: React.FC = () => {
                                 <button
                                   key={dropdownItem.name}
                                   onClick={() => handleDropdownItemClick(dropdownItem.path)}
-                                  className="w-full text-left bg-white rounded-xl shadow-md p-6 transition-all duration-200 border border-gray-100 hover:border-blue-200 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+                                  className="w-full text-left bg-white rounded-xl shadow-md p-6 transition-all duration-300 border border-gray-100 hover:border-blue-200 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-200 transform hover:scale-105 opacity-90 hover:opacity-100"
                                 >
                                   <div className="font-semibold text-gray-900 text-lg mb-2">{dropdownItem.name}</div>
                                   <div className="text-gray-600 text-sm">{dropdownItem.description}</div>
@@ -251,7 +257,7 @@ const Header: React.FC = () => {
 
       {/* Mobile Navigation Menu */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-40 bg-white lg:hidden" style={{ top: '64px' }}>
+        <div className={`fixed inset-0 z-40 bg-white lg:hidden animate-in transition-all duration-500 ease-in-out`} style={{ top: '64px' }}>
           <nav className="max-w-7xl mx-auto px-6 py-8 space-y-6">
             {navigationItems.map((item) => (
               <div key={item.name}>
@@ -269,7 +275,7 @@ const Header: React.FC = () => {
                       />
                     </button>
                     <div
-                      className={`overflow-hidden transition-all duration-300 ${
+                      className={`overflow-hidden transition-all duration-500 ease-in-out ${
                         activeDropdown === item.name ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                       }`}
                     >

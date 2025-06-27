@@ -6,6 +6,7 @@ import Research from '../components/Research';
 import Publications from '../components/Publications';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 const HomePage = () => {
   const location = useLocation();

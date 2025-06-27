@@ -214,7 +214,7 @@ const PublicationDetailPage = () => {
                   href={publication.pdf_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-base-blue to-analogous-teal text-white font-semibold rounded-lg hover:from-dark-blue hover:to-muted-blue transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
+                  className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-base-blue to-muted-blue text-white font-semibold rounded-lg hover:from-dark-blue hover:to-base-blue transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
                 >
                   <Download className="w-5 h-5 mr-2" />
                   Download PDF
@@ -305,10 +305,10 @@ const PublicationDetailPage = () => {
 
             {/* Sidebar */}
             <div className="lg:col-span-1">
-              <div className="bg-white border border-gray-200 rounded-2xl p-6 sticky top-24">
-                <h3 className="text-lg font-semibold text-gray-900 mb-6">Publication Details</h3>
+              <div className="bg-white border border-gray-200 rounded-2xl p-8 sticky top-24">
+                <h3 className="text-lg font-semibold text-gray-900 mb-8">Publication Details</h3>
                 
-                <div className="space-y-4">
+                <div className="space-y-6 mb-8">
                   {/* Citations */}
                   <div className="text-center p-4 bg-gradient-to-br from-teal-50 to-cyan-50 rounded-lg border border-teal-100">
                     <div className="text-3xl font-bold gradient-text mb-1">
@@ -367,12 +367,12 @@ const PublicationDetailPage = () => {
 
                 {/* PDF Download */}
                 {publication.pdf_url && (
-                  <div className="mt-6 pt-6 border-t border-gray-200">
+                  <div className="mt-8 pt-8 border-t border-gray-200">
                     <a
                       href={publication.pdf_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r from-base-blue to-analogous-teal text-white font-medium rounded-lg hover:from-dark-blue hover:to-muted-blue transition-all duration-300 transform hover:scale-105 group"
+                      className="w-full inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r from-base-blue to-muted-blue text-white font-medium rounded-lg hover:from-dark-blue hover:to-base-blue transition-all duration-300 transform hover:scale-105 group"
                     >
                       <Download className="w-4 h-4 mr-2" />
                       Download Full Paper

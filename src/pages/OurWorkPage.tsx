@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import ImageGalleryCarousel from '../components/ImageGalleryCarousel';
 import { useProgramAreas } from '../hooks/useProgramAreas';
+import Header from '../components/Header';
 
 const OurWorkPage = () => {
   const location = useLocation();

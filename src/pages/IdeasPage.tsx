@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Lightbulb, TrendingUp, FileText, Users, Zap, Globe, ArrowRight, Calendar, Clock, BookOpen, Download, ExternalLink, Search, Filter } from 'lucide-react';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 const IdeasPage = () => {
   const [activeCategory, setActiveCategory] = useState('all');
