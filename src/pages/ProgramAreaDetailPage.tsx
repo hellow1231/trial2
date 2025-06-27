@@ -349,5 +349,4 @@ const ProgramAreaDetailPage = () => {
   );
 };
 
-export { ProgramAreaDetailPage };
 export default ProgramAreaDetailPage;

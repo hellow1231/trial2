@@ -3,7 +3,7 @@ import { Lightbulb, TrendingUp, FileText, Users, Zap, Globe, ArrowRight, Calenda
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
-export const IdeasPage = () => {
+const IdeasPage = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -567,3 +567,5 @@ export const IdeasPage = () => {
     </div>
   );
 };
+
+export default IdeasPage;
