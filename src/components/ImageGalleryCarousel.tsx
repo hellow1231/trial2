@@ -61,10 +61,6 @@ const ImageGalleryCarousel: React.FC<ImageGalleryCarouselProps> = ({
     );
   };
 
-  const togglePlayPause = () => {
-    setIsPlaying(!isPlaying);
-  };
-
   const handleMouseEnter = () => {
     setIsPlaying(false);
   };
@@ -108,11 +104,11 @@ const ImageGalleryCarousel: React.FC<ImageGalleryCarouselProps> = ({
                   className="flex-shrink-0 relative group"
                   style={{ width: `${100 / imagesPerView}%` }}
                 >
-                  <div className="aspect-[16/9] overflow-hidden mx-2">
+                  <div className="overflow-hidden flex items-center justify-center bg-white mx-2 md:h-[420px] lg:h-[520px]" style={{height: '100%'}}>
                     <img
                       src={image.src}
                       alt={image.alt}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 rounded-xl"
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 rounded-xl"
                       loading={index === 0 ? 'eager' : 'lazy'}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -145,19 +141,6 @@ const ImageGalleryCarousel: React.FC<ImageGalleryCarouselProps> = ({
               aria-label="Next image"
             >
               <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-            </button>
-
-            {/* Play/Pause Button */}
-            <button
-              onClick={togglePlayPause}
-              className="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full shadow-lg border border-gray-200 flex items-center justify-center text-gray-700 hover:text-base-blue hover:bg-white hover:scale-110 transition-all duration-300 z-10"
-              aria-label={isPlaying ? 'Pause slideshow' : 'Play slideshow'}
-            >
-              {isPlaying ? (
-                <Pause className="w-5 h-5" />
-              ) : (
-                <Play className="w-5 h-5" />
-              )}
             </button>
           </div>
 

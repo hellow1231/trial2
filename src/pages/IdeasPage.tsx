@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Lightbulb, TrendingUp, FileText, Users, Zap, Globe, ArrowRight, Calendar, Clock, BookOpen, Download, ExternalLink, Search, Filter } from 'lucide-react';
-import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 const IdeasPage = () => {
@@ -167,8 +166,6 @@ const IdeasPage = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
-      
       {/* Hero Section */}
       <section className="pt-32 pb-20 bg-gradient-to-br from-teal-50 via-white to-cyan-50 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">

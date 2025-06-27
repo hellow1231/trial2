@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import Header from '../components/Header';
 import Hero from '../components/Hero';
 import About from '../components/About';
 import Research from '../components/Research';
@@ -27,7 +26,6 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
       <Hero />
       <About />
       <Research />

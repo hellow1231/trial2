@@ -237,20 +237,6 @@ const Hero = () => {
                     "
                   />
                 </div>
-            
-                {/* Tooltip */}
-                {activeLocation === location.id && (
-                  <div
-                    className="
-                      absolute left-1/2 top-full mt-2
-                      w-40 bg-white rounded-md shadow-lg
-                      -translate-x-1/2 p-2 text-sm text-gray-800
-                    "
-                  >
-                    <h4 className="font-medium">{location.name}</h4>
-                    <p className="mt-1">{location.description}</p>
-                  </div>
-                )}
               </div>
             ))}
 

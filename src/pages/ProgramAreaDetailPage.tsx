@@ -45,7 +45,6 @@ const ProgramAreaDetailPage = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-white">
-        <Header />
         <div className="pt-32 pb-20">
           <div className="max-w-4xl mx-auto px-6 lg:px-10">
             <div className="flex items-center justify-center py-20">
@@ -64,7 +63,6 @@ const ProgramAreaDetailPage = () => {
   if (error || !programArea) {
     return (
       <div className="min-h-screen bg-white">
-        <Header />
         <div className="pt-32 pb-20">
           <div className="max-w-4xl mx-auto px-6 lg:px-10">
             <div className="text-center py-20">
@@ -116,8 +114,6 @@ const ProgramAreaDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
-      
       {/* Hero Section */}
       <section className="pt-32 pb-20 bg-gradient-to-br from-blue-50 via-white to-cyan-50 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">

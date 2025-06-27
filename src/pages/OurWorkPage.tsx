@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Target, Users, MapPin, Calendar, TrendingUp, Award, ExternalLink, Search, Filter, Eye, Loader2, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ImageGalleryCarousel from '../components/ImageGalleryCarousel';
 import { useProgramAreas } from '../hooks/useProgramAreas';
@@ -100,7 +99,6 @@ const OurWorkPage = () => {
   if (error) {
     return (
       <div className="min-h-screen bg-white">
-        <Header />
         <div className="pt-32 pb-20">
           <div className="max-w-4xl mx-auto px-6 lg:px-10 text-center">
             <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
@@ -117,7 +115,6 @@ const OurWorkPage = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
       
       {/* Hero Section */}
       <section className="pt-32 pb-20 bg-gradient-to-br from-blue-50 via-white to-cyan-50 relative overflow-hidden">

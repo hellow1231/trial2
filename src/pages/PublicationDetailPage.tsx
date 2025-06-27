@@ -98,7 +98,6 @@ const PublicationDetailPage = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-white">
-        <Header />
         <div className="pt-32 pb-20">
           <div className="max-w-4xl mx-auto px-6 lg:px-10">
             <div className="flex items-center justify-center py-20">
@@ -117,7 +116,6 @@ const PublicationDetailPage = () => {
   if (error || !publication) {
     return (
       <div className="min-h-screen bg-white">
-        <Header />
         <div className="pt-32 pb-20">
           <div className="max-w-4xl mx-auto px-6 lg:px-10">
             <div className="text-center py-20">
@@ -143,8 +141,6 @@ const PublicationDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
-      
       {/* Hero Section */}
       <section className="pt-32 pb-12 bg-gradient-to-br from-teal-50 via-white to-cyan-50">
         <div className="max-w-4xl mx-auto px-6 lg:px-10">
