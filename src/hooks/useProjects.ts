@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Project, CreateProjectData, UpdateProjectData } from '../types/project';
-import { ProjectsAPI } from '../lib/projectsApi';
+import { projectsApi } from '../lib/projectsApi';
+import type { Project, ProjectFormData, ProjectStatus } from '../types/project';
 
 export function useProjects() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -11,68 +11,11 @@ export function useProjects() {
     try {
       setLoading(true);
       setError(null);
-      const data = await ProjectsAPI.getProjects();
+      const data = await projectsApi.getProjects();
       setProjects(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch projects');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const createProject = async (projectData: CreateProjectData) => {
-    try {
-      const newProject = await ProjectsAPI.createProject(projectData);
-      setProjects(prev => [newProject, ...prev]);
-      return newProject;
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to create project');
-      throw err;
-    }
-  };
-
-  const updateProject = async (projectData: UpdateProjectData) => {
-    try {
-      const updatedProject = await ProjectsAPI.updateProject(projectData);
-      setProjects(prev => prev.map(p => p.id === updatedProject.id ? updatedProject : p));
-      return updatedProject;
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to update project');
-      throw err;
-    }
-  };
-
-  const deleteProject = async (id: string) => {
-    try {
-      await ProjectsAPI.deleteProject(id);
-      setProjects(prev => prev.filter(p => p.id !== id));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to delete project');
-      throw err;
-    }
-  };
-
-  const searchProjects = async (query: string) => {
-    try {
-      setLoading(true);
-      setError(null);
-      const data = await ProjectsAPI.searchProjects(query);
-      setProjects(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to search projects');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const filterByStatus = async (status: string) => {
-    try {
-      setLoading(true);
-      setError(null);
-      const data = await ProjectsAPI.getProjectsByStatus(status);
-      setProjects(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to filter projects');
+      console.error('Error fetching projects:', err);
     } finally {
       setLoading(false);
     }
@@ -82,16 +25,62 @@ export function useProjects() {
     fetchProjects();
   }, []);
 
+  const createProject = async (projectData: ProjectFormData): Promise<Project | null> => {
+    try {
+      setError(null);
+      const newProject = await projectsApi.createProject(projectData);
+      if (newProject) {
+        setProjects(prev => [newProject, ...prev]);
+      }
+      return newProject;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to create project');
+      return null;
+    }
+  };
+
+  const updateProject = async (id: string, projectData: Partial<ProjectFormData>): Promise<Project | null> => {
+    try {
+      setError(null);
+      const updatedProject = await projectsApi.updateProject(id, projectData);
+      if (updatedProject) {
+        setProjects(prev => prev.map(p => p.id === id ? updatedProject : p));
+      }
+      return updatedProject;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to update project');
+      return null;
+    }
+  };
+
+  const deleteProject = async (id: string): Promise<boolean> => {
+    try {
+      setError(null);
+      const success = await projectsApi.deleteProject(id);
+      if (success) {
+        setProjects(prev => prev.filter(p => p.id !== id));
+      }
+      return success;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to delete project');
+      return false;
+    }
+  };
+
+  const filterByStatus = (status: ProjectStatus | 'all') => {
+    if (status === 'all') return projects;
+    return projects.filter(project => project.status === status);
+  };
+
   return {
     projects,
     loading,
     error,
-    fetchProjects,
     createProject,
     updateProject,
     deleteProject,
-    searchProjects,
-    filterByStatus
+    filterByStatus,
+    refetch: fetchProjects
   };
 }
 
@@ -100,29 +89,24 @@ export function useProject(id: string) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchProject = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const data = await ProjectsAPI.getProject(id);
-      setProject(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch project');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchProject = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await projectsApi.getProject(id);
+        setProject(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to fetch project');
+      } finally {
+        setLoading(false);
+      }
+    };
+
     if (id) {
       fetchProject();
     }
   }, [id]);
 
-  return {
-    project,
-    loading,
-    error,
-    refetch: fetchProject
-  };
+  return { project, loading, error };
 }

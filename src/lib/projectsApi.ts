@@ -1,282 +1,163 @@
 import { supabase } from './supabase';
-import { Project, CreateProjectData, UpdateProjectData, ProjectMedia, ProjectStakeholder, ProjectUpdate } from '../types/project';
+import type { Project, ProjectFormData, ProjectStatus } from '../types/project';
 
 export class ProjectsAPI {
-  // Project CRUD operations
-  static async getProjects(): Promise<Project[]> {
-    const { data, error } = await supabase
-      .from('projects')
-      .select(`
-        *,
-        program_areas (
-          id,
-          name
-        ),
-        project_media (*),
-        project_stakeholders (*),
-        project_updates (*)
-      `)
-      .order('created_at', { ascending: false });
+  async getProjects(): Promise<Project[]> {
+    try {
+      const { data, error } = await supabase
+        .from('projects')
+        .select(`
+          *,
+          project_media(*),
+          project_stakeholders(*),
+          project_updates(*)
+        `)
+        .order('created_at', { ascending: false });
 
-    if (error) {
-      console.error('Error fetching projects:', error);
-      throw error;
-    }
+      if (error) {
+        console.error('Error fetching projects:', error);
+        return [];
+      }
 
-    return data || [];
-  }
-
-  static async getProject(id: string): Promise<Project | null> {
-    const { data, error } = await supabase
-      .from('projects')
-      .select(`
-        *,
-        program_areas (
-          id,
-          name
-        ),
-        project_media (*),
-        project_stakeholders (*),
-        project_updates (*)
-      `)
-      .eq('id', id)
-      .single();
-
-    if (error) {
-      console.error('Error fetching project:', error);
-      throw error;
-    }
-
-    return data;
-  }
-
-  static async getProjectsByProgramArea(programAreaId: string): Promise<Project[]> {
-    const { data, error } = await supabase
-      .from('projects')
-      .select(`
-        *,
-        program_areas (
-          id,
-          name
-        ),
-        project_media (*),
-        project_stakeholders (*),
-        project_updates (*)
-      `)
-      .eq('program_area_id', programAreaId)
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      console.error('Error fetching projects by program area:', error);
-      throw error;
-    }
-
-    return data || [];
-  }
-
-  static async createProject(projectData: CreateProjectData): Promise<Project> {
-    const { data, error } = await supabase
-      .from('projects')
-      .insert([projectData])
-      .select(`
-        *,
-        program_areas (
-          id,
-          name
-        )
-      `)
-      .single();
-
-    if (error) {
-      console.error('Error creating project:', error);
-      throw error;
-    }
-
-    return data;
-  }
-
-  static async updateProject(projectData: UpdateProjectData): Promise<Project> {
-    const { id, ...updateData } = projectData;
-    
-    const { data, error } = await supabase
-      .from('projects')
-      .update(updateData)
-      .eq('id', id)
-      .select(`
-        *,
-        program_areas (
-          id,
-          name
-        )
-      `)
-      .single();
-
-    if (error) {
-      console.error('Error updating project:', error);
-      throw error;
-    }
-
-    return data;
-  }
-
-  static async deleteProject(id: string): Promise<void> {
-    const { error } = await supabase
-      .from('projects')
-      .delete()
-      .eq('id', id);
-
-    if (error) {
-      console.error('Error deleting project:', error);
-      throw error;
+      return data || [];
+    } catch (error) {
+      console.error('Error in getProjects:', error);
+      return [];
     }
   }
 
-  // Project Media operations
-  static async addProjectMedia(projectId: string, mediaData: Omit<ProjectMedia, 'id' | 'project_id' | 'created_at'>): Promise<ProjectMedia> {
-    const { data, error } = await supabase
-      .from('project_media')
-      .insert([{ ...mediaData, project_id: projectId }])
-      .select()
-      .single();
+  async getProject(id: string): Promise<Project | null> {
+    try {
+      const { data, error } = await supabase
+        .from('projects')
+        .select(`
+          *,
+          project_media(*),
+          project_stakeholders(*),
+          project_updates(*)
+        `)
+        .eq('id', id)
+        .single();
 
-    if (error) {
-      console.error('Error adding project media:', error);
-      throw error;
-    }
+      if (error) {
+        console.error('Error fetching project:', error);
+        return null;
+      }
 
-    return data;
-  }
-
-  static async deleteProjectMedia(id: string): Promise<void> {
-    const { error } = await supabase
-      .from('project_media')
-      .delete()
-      .eq('id', id);
-
-    if (error) {
-      console.error('Error deleting project media:', error);
-      throw error;
+      return data;
+    } catch (error) {
+      console.error('Error in getProject:', error);
+      return null;
     }
   }
 
-  // Project Stakeholder operations
-  static async addProjectStakeholder(projectId: string, stakeholderData: Omit<ProjectStakeholder, 'id' | 'project_id' | 'created_at'>): Promise<ProjectStakeholder> {
-    const { data, error } = await supabase
-      .from('project_stakeholders')
-      .insert([{ ...stakeholderData, project_id: projectId }])
-      .select()
-      .single();
+  async createProject(projectData: ProjectFormData): Promise<Project | null> {
+    try {
+      const { data, error } = await supabase
+        .from('projects')
+        .insert([{
+          title: projectData.title,
+          description: projectData.description,
+          status: projectData.status,
+          start_date: projectData.start_date,
+          end_date: projectData.end_date,
+          location: projectData.location,
+          budget: projectData.budget,
+          program_area_id: projectData.program_area_id
+        }])
+        .select()
+        .single();
 
-    if (error) {
-      console.error('Error adding project stakeholder:', error);
-      throw error;
-    }
+      if (error) {
+        console.error('Error creating project:', error);
+        return null;
+      }
 
-    return data;
-  }
-
-  static async updateProjectStakeholder(id: string, stakeholderData: Partial<Omit<ProjectStakeholder, 'id' | 'project_id' | 'created_at'>>): Promise<ProjectStakeholder> {
-    const { data, error } = await supabase
-      .from('project_stakeholders')
-      .update(stakeholderData)
-      .eq('id', id)
-      .select()
-      .single();
-
-    if (error) {
-      console.error('Error updating project stakeholder:', error);
-      throw error;
-    }
-
-    return data;
-  }
-
-  static async deleteProjectStakeholder(id: string): Promise<void> {
-    const { error } = await supabase
-      .from('project_stakeholders')
-      .delete()
-      .eq('id', id);
-
-    if (error) {
-      console.error('Error deleting project stakeholder:', error);
-      throw error;
+      return data;
+    } catch (error) {
+      console.error('Error in createProject:', error);
+      return null;
     }
   }
 
-  // Project Update operations
-  static async addProjectUpdate(projectId: string, updateData: Omit<ProjectUpdate, 'id' | 'project_id' | 'created_at'>): Promise<ProjectUpdate> {
-    const { data, error } = await supabase
-      .from('project_updates')
-      .insert([{ ...updateData, project_id: projectId }])
-      .select()
-      .single();
+  async updateProject(id: string, projectData: Partial<ProjectFormData>): Promise<Project | null> {
+    try {
+      const { data, error } = await supabase
+        .from('projects')
+        .update(projectData)
+        .eq('id', id)
+        .select()
+        .single();
 
-    if (error) {
-      console.error('Error adding project update:', error);
-      throw error;
-    }
+      if (error) {
+        console.error('Error updating project:', error);
+        return null;
+      }
 
-    return data;
-  }
-
-  static async deleteProjectUpdate(id: string): Promise<void> {
-    const { error } = await supabase
-      .from('project_updates')
-      .delete()
-      .eq('id', id);
-
-    if (error) {
-      console.error('Error deleting project update:', error);
-      throw error;
+      return data;
+    } catch (error) {
+      console.error('Error in updateProject:', error);
+      return null;
     }
   }
 
-  // Search and filter operations
-  static async searchProjects(query: string): Promise<Project[]> {
-    const { data, error } = await supabase
-      .from('projects')
-      .select(`
-        *,
-        program_areas (
-          id,
-          name
-        ),
-        project_media (*),
-        project_stakeholders (*),
-        project_updates (*)
-      `)
-      .or(`name.ilike.%${query}%,description.ilike.%${query}%,location.ilike.%${query}%`)
-      .order('created_at', { ascending: false });
+  async deleteProject(id: string): Promise<boolean> {
+    try {
+      const { error } = await supabase
+        .from('projects')
+        .delete()
+        .eq('id', id);
 
-    if (error) {
-      console.error('Error searching projects:', error);
-      throw error;
+      if (error) {
+        console.error('Error deleting project:', error);
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Error in deleteProject:', error);
+      return false;
     }
-
-    return data || [];
   }
 
-  static async getProjectsByStatus(status: string): Promise<Project[]> {
-    const { data, error } = await supabase
-      .from('projects')
-      .select(`
-        *,
-        program_areas (
-          id,
-          name
-        ),
-        project_media (*),
-        project_stakeholders (*),
-        project_updates (*)
-      `)
-      .eq('status', status)
-      .order('created_at', { ascending: false });
+  async uploadProjectMedia(projectId: string, file: File): Promise<string | null> {
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${projectId}/${Date.now()}.${fileExt}`;
 
-    if (error) {
-      console.error('Error fetching projects by status:', error);
-      throw error;
+      const { error: uploadError } = await supabase.storage
+        .from('project-media')
+        .upload(fileName, file);
+
+      if (uploadError) {
+        console.error('Error uploading file:', uploadError);
+        return null;
+      }
+
+      const { data } = supabase.storage
+        .from('project-media')
+        .getPublicUrl(fileName);
+
+      // Save media record to database
+      const { error: dbError } = await supabase
+        .from('project_media')
+        .insert([{
+          project_id: projectId,
+          file_url: data.publicUrl,
+          file_name: file.name,
+          file_type: file.type
+        }]);
+
+      if (dbError) {
+        console.error('Error saving media record:', dbError);
+      }
+
+      return data.publicUrl;
+    } catch (error) {
+      console.error('Error in uploadProjectMedia:', error);
+      return null;
     }
-
-    return data || [];
   }
 }
+
+export const projectsApi = new ProjectsAPI();

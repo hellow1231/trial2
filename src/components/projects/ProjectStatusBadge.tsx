@@ -1,18 +1,25 @@
 import React from 'react';
-import { CheckCircle, Clock, Pause, XCircle } from 'lucide-react';
+import { CheckCircle, Clock, Play, Pause, XCircle } from 'lucide-react';
+import type { ProjectStatus } from '../../types/project';
 
 interface ProjectStatusBadgeProps {
-  status: 'active' | 'completed' | 'on_hold' | 'cancelled';
+  status: ProjectStatus;
   size?: 'sm' | 'md' | 'lg';
 }
 
 export function ProjectStatusBadge({ status, size = 'md' }: ProjectStatusBadgeProps) {
-  const getStatusConfig = (status: string) => {
+  const getStatusConfig = (status: ProjectStatus) => {
     switch (status) {
+      case 'planning':
+        return {
+          label: 'Planning',
+          icon: Clock,
+          className: 'bg-yellow-100 text-yellow-800 border-yellow-200'
+        };
       case 'active':
         return {
           label: 'Active',
-          icon: Clock,
+          icon: Play,
           className: 'bg-green-100 text-green-800 border-green-200'
         };
       case 'completed':
@@ -25,7 +32,7 @@ export function ProjectStatusBadge({ status, size = 'md' }: ProjectStatusBadgePr
         return {
           label: 'On Hold',
           icon: Pause,
-          className: 'bg-yellow-100 text-yellow-800 border-yellow-200'
+          className: 'bg-orange-100 text-orange-800 border-orange-200'
         };
       case 'cancelled':
         return {
@@ -42,7 +49,7 @@ export function ProjectStatusBadge({ status, size = 'md' }: ProjectStatusBadgePr
     }
   };
 
-  const getSizeClasses = (size: string) => {
+  const getSizeClasses = (size: 'sm' | 'md' | 'lg') => {
     switch (size) {
       case 'sm':
         return 'px-2 py-1 text-xs';
@@ -58,7 +65,7 @@ export function ProjectStatusBadge({ status, size = 'md' }: ProjectStatusBadgePr
   const sizeClasses = getSizeClasses(size);
 
   return (
-    <span className={`inline-flex items-center gap-1 font-medium rounded-full border ${config.className} ${sizeClasses}`}>
+    <span className={`inline-flex items-center gap-1 rounded-full border font-medium ${config.className} ${sizeClasses}`}>
       <Icon className={`${size === 'sm' ? 'w-3 h-3' : size === 'lg' ? 'w-5 h-5' : 'w-4 h-4'}`} />
       {config.label}
     </span>
