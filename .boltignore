@@ -1,0 +1,10 @@
+# Ignore all files and directories by default
+*
+
+# Un-ignore specific files and directories related to "our-work" and "program" sections
+!/src/pages/OurWorkPage.tsx
+!/src/pages/ProgramDetailPage.tsx
+!/src/components/admin/ProgramsAdmin.tsx
+!/src/lib/programsApi.ts
+!/src/hooks/usePrograms.ts
+!/src/pages/programs/
