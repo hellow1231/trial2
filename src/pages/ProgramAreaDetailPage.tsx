@@ -17,12 +17,12 @@ import {
 } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { useProgram } from '../hooks/usePrograms';
+import { useProgramArea } from '../hooks/useProgramAreas';
 
-const ProgramDetailPage = () => {
+const ProgramAreaDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const { program, loading, error } = useProgram(slug || '');
+  const { programArea, loading, error } = useProgramArea(slug || '');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -40,7 +40,7 @@ const ProgramDetailPage = () => {
     document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  }, [program]);
+  }, [programArea]);
 
   if (loading) {
     return (
@@ -51,7 +51,7 @@ const ProgramDetailPage = () => {
             <div className="flex items-center justify-center py-20">
               <div className="text-center">
                 <Loader2 className="w-12 h-12 animate-spin text-blue-600 mx-auto mb-4" />
-                <p className="text-gray-600">Loading program...</p>
+                <p className="text-gray-600">Loading program area...</p>
               </div>
             </div>
           </div>
@@ -61,7 +61,7 @@ const ProgramDetailPage = () => {
     );
   }
 
-  if (error || !program) {
+  if (error || !programArea) {
     return (
       <div className="min-h-screen bg-white">
         <Header />
@@ -69,9 +69,9 @@ const ProgramDetailPage = () => {
           <div className="max-w-4xl mx-auto px-6 lg:px-10">
             <div className="text-center py-20">
               <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-              <h1 className="text-2xl font-bold text-gray-900 mb-4">Program Not Found</h1>
+              <h1 className="text-2xl font-bold text-gray-900 mb-4">Program Area Not Found</h1>
               <p className="text-gray-600 mb-8">
-                The program you're looking for doesn't exist or has been removed.
+                The program area you're looking for doesn't exist or has been removed.
               </p>
               <button
                 onClick={() => navigate('/our-work')}
@@ -137,47 +137,31 @@ const ProgramDetailPage = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="reveal">
-              <div className="flex items-center gap-4 mb-6">
-                <span className={`inline-flex items-center px-3 py-1 text-sm font-medium rounded-full border ${getStatusColor(program.status)}`}>
-                  {getStatusIcon(program.status)}
-                  <span className="ml-1">{program.status}</span>
-                </span>
-                {program.is_featured && (
-                  <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-yellow-100 to-orange-100 text-yellow-800 text-sm font-medium rounded-full border border-yellow-200">
-                    Featured Program
-                  </span>
-                )}
-              </div>
-
               <h1 className="text-4xl lg:text-5xl font-bold font-playfair text-gray-900 mb-6">
-                {program.title}
+                {programArea.name}
               </h1>
               
               <p className="text-xl text-gray-600 leading-relaxed mb-8">
-                {program.overview}
+                {programArea.description}
               </p>
 
               <div className="grid grid-cols-2 gap-4">
-                {program.beneficiaries && (
-                  <div className="bg-white rounded-lg px-4 py-3 shadow-md border border-blue-100">
-                    <div className="text-2xl font-bold text-base-blue">{program.beneficiaries}</div>
-                    <div className="text-sm text-gray-600">Beneficiaries</div>
-                  </div>
-                )}
-                {program.budget && (
-                  <div className="bg-white rounded-lg px-4 py-3 shadow-md border border-blue-100">
-                    <div className="text-2xl font-bold text-base-blue">{program.budget}</div>
-                    <div className="text-sm text-gray-600">Total Budget</div>
-                  </div>
-                )}
+                <div className="bg-white rounded-lg px-4 py-3 shadow-md border border-blue-100">
+                  <div className="text-2xl font-bold text-base-blue">{programArea.projects?.length || 0}</div>
+                  <div className="text-sm text-gray-600">Active Projects</div>
+                </div>
+                <div className="bg-white rounded-lg px-4 py-3 shadow-md border border-blue-100">
+                  <div className="text-2xl font-bold text-base-blue">{programArea.team_members?.length || 0}</div>
+                  <div className="text-sm text-gray-600">Team Members</div>
+                </div>
               </div>
             </div>
             
             <div className="reveal">
-              {program.hero_image && (
+              {programArea.hero_image && (
                 <img 
-                  src={program.hero_image} 
-                  alt={program.title} 
+                  src={programArea.hero_image} 
+                  alt={programArea.name} 
                   className="rounded-2xl shadow-2xl motion-float w-full"
                 />
               )}
@@ -186,61 +170,18 @@ const ProgramDetailPage = () => {
         </div>
       </section>
 
-      {/* Program Information */}
+      {/* Program Area Information */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-12">
-              {/* Overview */}
-              {program.overview && (
-                <div className="reveal">
-                  <h2 className="text-3xl font-bold font-playfair text-gray-900 mb-6">Program Overview</h2>
-                  <div className="bg-gray-50 rounded-2xl p-8 border-l-4 border-base-blue">
-                    <p className="text-gray-700 leading-relaxed text-lg">
-                      {program.overview}
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {/* Objectives */}
-              {program.objectives && program.objectives.length > 0 && (
-                <div className="reveal">
-                  <h2 className="text-3xl font-bold font-playfair text-gray-900 mb-6">Objectives</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {program.objectives.map((objective, index) => (
-                      <div key={index} className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-                        <div className="flex items-start">
-                          <div className="w-6 h-6 bg-base-blue rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
-                            <span className="text-white text-xs font-bold">{index + 1}</span>
-                          </div>
-                          <p className="text-gray-700 leading-relaxed">{objective}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Approach */}
-              {program.approach && (
-                <div className="reveal">
-                  <h2 className="text-3xl font-bold font-playfair text-gray-900 mb-6">Our Approach</h2>
-                  <div className="prose prose-lg max-w-none">
-                    <p className="text-gray-700 leading-relaxed text-lg">
-                      {program.approach}
-                    </p>
-                  </div>
-                </div>
-              )}
-
               {/* Projects */}
-              {program.projects && program.projects.length > 0 && (
+              {programArea.projects && programArea.projects.length > 0 && (
                 <div className="reveal">
-                  <h2 className="text-3xl font-bold font-playfair text-gray-900 mb-6">Key Projects</h2>
+                  <h2 className="text-3xl font-bold font-playfair text-gray-900 mb-6">Active Projects</h2>
                   <div className="space-y-8">
-                    {program.projects.map((project, index) => (
+                    {programArea.projects.map((project, index) => (
                       <div key={project.id} className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover-lift">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                           {project.image && (
@@ -252,7 +193,8 @@ const ProgramDetailPage = () => {
                               />
                               <div className="absolute top-4 left-4 flex items-center gap-2">
                                 <span className={`px-3 py-1 text-xs font-medium rounded-full border ${getStatusColor(project.status)}`}>
-                                  {project.status}
+                                  {getStatusIcon(project.status)}
+                                  <span className="ml-1">{project.status}</span>
                                 </span>
                                 {project.budget && (
                                   <span className="px-3 py-1 bg-white/90 text-gray-700 text-xs font-medium rounded-full border border-white/50">
@@ -313,59 +255,34 @@ const ProgramDetailPage = () => {
             {/* Sidebar */}
             <div className="lg:col-span-1">
               <div className="space-y-8">
-                {/* Program Details */}
+                {/* Program Area Details */}
                 <div className="bg-white border border-gray-200 rounded-2xl p-6 sticky top-24">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-6">Program Information</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-6">Program Area Information</h3>
                   
                   <div className="space-y-4">
-                    {program.status && (
-                      <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                        <span className="text-sm font-medium text-gray-600">Status</span>
-                        <span className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full border ${getStatusColor(program.status)}`}>
-                          {getStatusIcon(program.status)}
-                          <span className="ml-1">{program.status}</span>
-                        </span>
-                      </div>
-                    )}
+                    <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                      <span className="text-sm font-medium text-gray-600">Projects</span>
+                      <span className="text-sm text-gray-900 font-semibold">{programArea.projects?.length || 0}</span>
+                    </div>
 
-                    {program.location && (
-                      <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                        <span className="text-sm font-medium text-gray-600">Location</span>
-                        <span className="text-sm text-gray-900">{program.location}</span>
-                      </div>
-                    )}
+                    <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                      <span className="text-sm font-medium text-gray-600">Team Members</span>
+                      <span className="text-sm text-gray-900 font-semibold">{programArea.team_members?.length || 0}</span>
+                    </div>
 
-                    {program.start_date && (
-                      <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                        <span className="text-sm font-medium text-gray-600">Start Date</span>
-                        <span className="text-sm text-gray-900">
-                          {new Date(program.start_date).getFullYear()}
-                        </span>
-                      </div>
-                    )}
-
-                    {program.budget && (
-                      <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                        <span className="text-sm font-medium text-gray-600">Budget</span>
-                        <span className="text-sm text-gray-900 font-semibold">{program.budget}</span>
-                      </div>
-                    )}
-
-                    {program.beneficiaries && (
-                      <div className="flex justify-between items-center py-2">
-                        <span className="text-sm font-medium text-gray-600">Beneficiaries</span>
-                        <span className="text-sm text-gray-900 font-semibold">{program.beneficiaries}</span>
-                      </div>
-                    )}
+                    <div className="flex justify-between items-center py-2">
+                      <span className="text-sm font-medium text-gray-600">Partners</span>
+                      <span className="text-sm text-gray-900 font-semibold">{programArea.partners?.length || 0}</span>
+                    </div>
                   </div>
                 </div>
 
                 {/* Team Members */}
-                {program.team_members && program.team_members.length > 0 && (
+                {programArea.team_members && programArea.team_members.length > 0 && (
                   <div className="bg-white border border-gray-200 rounded-2xl p-6">
                     <h3 className="text-lg font-semibold text-gray-900 mb-6">Team Members</h3>
                     <div className="space-y-4">
-                      {program.team_members.map((member) => (
+                      {programArea.team_members.map((member) => (
                         <div key={member.id} className="flex items-center space-x-4">
                           {member.image && (
                             <img
@@ -400,11 +317,11 @@ const ProgramDetailPage = () => {
                 )}
 
                 {/* Partners */}
-                {program.partners && program.partners.length > 0 && (
+                {programArea.partners && programArea.partners.length > 0 && (
                   <div className="bg-white border border-gray-200 rounded-2xl p-6">
                     <h3 className="text-lg font-semibold text-gray-900 mb-6">Partners</h3>
                     <div className="space-y-4">
-                      {program.partners.map((partner) => (
+                      {programArea.partners.map((partner) => (
                         <div key={partner.id} className="flex items-center justify-between">
                           <div>
                             <h4 className="text-sm font-semibold text-gray-900">{partner.name}</h4>
@@ -438,4 +355,4 @@ const ProgramDetailPage = () => {
   );
 };
 
-export default ProgramDetailPage;
+export default ProgramAreaDetailPage;

@@ -57,11 +57,11 @@ const Header = () => {
       href: '/our-work',
       dropdown: [
         { name: 'All Programs', href: '/our-work', description: 'Overview of all our environmental programs' },
-        { name: 'Climate Action', href: '/programs/climate-action', description: 'Climate adaptation and mitigation initiatives' },
-        { name: 'Water & Sanitation', href: '/programs/water-sanitation', description: 'Clean water and sanitation projects' },
-        { name: 'Renewable Energy', href: '/programs/renewable-energy', description: 'Clean energy solutions and programs' },
-        { name: 'Forest Conservation', href: '/programs/forest-conservation', description: 'Forest protection and restoration efforts' },
-        { name: 'Waste Management', href: '/programs/waste-management', description: 'Circular economy and waste solutions' }
+        { name: 'Climate Action', href: '/areas/climate-action', description: 'Climate adaptation and mitigation initiatives' },
+        { name: 'Water & Sanitation', href: '/areas/water-sanitation', description: 'Clean water and sanitation projects' },
+        { name: 'Renewable Energy', href: '/areas/renewable-energy', description: 'Clean energy solutions and programs' },
+        { name: 'Forest Conservation', href: '/areas/forest-conservation', description: 'Forest protection and restoration efforts' },
+        { name: 'Waste Management', href: '/areas/waste-management', description: 'Circular economy and waste solutions' }
       ]
     },
     {

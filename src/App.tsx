@@ -2,14 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import PublicationsAdmin from './components/admin/PublicationsAdmin';
-import ProgramsAdmin from './components/admin/ProgramsAdmin';
+import ProgramAreasAdmin from './components/admin/ProgramAreasAdmin';
 import AboutPage from './pages/AboutPage';
 import OurWorkPage from './pages/OurWorkPage';
 import IdeasPage from './pages/IdeasPage';
 import PublicationDetailPage from './pages/PublicationDetailPage';
-import ProgramDetailPage from './pages/ProgramDetailPage';
-import ClimateActionPage from './pages/programs/ClimateActionPage';
-import WaterSanitationPage from './pages/programs/WaterSanitationPage';
+import ProgramAreaDetailPage from './pages/ProgramAreaDetailPage';
 
 function App() {
   return (
@@ -21,14 +19,10 @@ function App() {
         <Route path="/ideas" element={<IdeasPage />} />
         <Route path="/publications/:id" element={<PublicationDetailPage />} />
         <Route path="/admin/publications" element={<PublicationsAdmin />} />
-        <Route path="/admin/programs" element={<ProgramsAdmin />} />
+        <Route path="/admin/program-areas" element={<ProgramAreasAdmin />} />
         
-        {/* Program Pages - Dynamic routing */}
-        <Route path="/programs/:slug" element={<ProgramDetailPage />} />
-        
-        {/* Legacy program pages for backward compatibility */}
-        <Route path="/programs/climate-action" element={<ClimateActionPage />} />
-        <Route path="/programs/water-sanitation" element={<WaterSanitationPage />} />
+        {/* Program Area Pages - Dynamic routing */}
+        <Route path="/areas/:slug" element={<ProgramAreaDetailPage />} />
       </Routes>
     </Router>
   );

@@ -5,15 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ImageGalleryCarousel from '../components/ImageGalleryCarousel';
-import { usePrograms } from '../hooks/usePrograms';
+import { useProgramAreas } from '../hooks/useProgramAreas';
 
 const OurWorkPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [selectedStatus, setSelectedStatus] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   
-  const { programs, loading, error } = usePrograms();
+  const { programAreas, loading, error } = useProgramAreas();
 
   useEffect(() => {
     // Handle hash-based scrolling
@@ -45,7 +44,7 @@ const OurWorkPage = () => {
     document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  }, [programs]);
+  }, [programAreas]);
 
   const impactStats = [
     { number: '1.2M+', label: 'Lives Impacted', icon: Users, color: 'from-blue-500 to-cyan-500' },
@@ -54,34 +53,14 @@ const OurWorkPage = () => {
     { number: '850+', label: 'Local Partners', icon: Award, color: 'from-purple-500 to-pink-500' }
   ];
 
-  const statuses = ['all', 'Active', 'Completed', 'Planning'];
-
-  const getStatusColor = (status: string) => {
-    switch (status.toLowerCase()) {
-      case 'active':
-        return 'bg-green-100 text-green-800 border-green-200';
-      case 'completed':
-        return 'bg-blue-100 text-blue-800 border-blue-200';
-      case 'planning':
-        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      default:
-        return 'bg-gray-100 text-gray-800 border-gray-200';
-    }
-  };
-
-  const filteredPrograms = programs.filter(program => {
-    const matchesStatus = selectedStatus === 'all' || program.status === selectedStatus;
-    const matchesSearch = program.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         (program.description && program.description.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                         (program.location && program.location.toLowerCase().includes(searchTerm.toLowerCase()));
-    return matchesStatus && matchesSearch;
+  const filteredProgramAreas = programAreas.filter(programArea => {
+    const matchesSearch = programArea.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         (programArea.description && programArea.description.toLowerCase().includes(searchTerm.toLowerCase()));
+    return matchesSearch;
   });
 
-  const featuredPrograms = filteredPrograms.filter(program => program.is_featured);
-  const regularPrograms = filteredPrograms.filter(program => !program.is_featured);
-
-  const viewProgram = (program: any) => {
-    navigate(`/programs/${program.slug}`);
+  const viewProgramArea = (programArea: any) => {
+    navigate(`/areas/${programArea.slug}`);
   };
 
   // Gallery images for Our Work page
@@ -125,7 +104,7 @@ const OurWorkPage = () => {
         <div className="pt-32 pb-20">
           <div className="max-w-4xl mx-auto px-6 lg:px-10 text-center">
             <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Unable to Load Programs</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Unable to Load Program Areas</h2>
             <p className="text-gray-600 mb-8">
               We're having trouble connecting to our database. Please check your connection and try again.
             </p>
@@ -193,151 +172,29 @@ const OurWorkPage = () => {
       {/* Search and Filter */}
       <section className="py-12 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
+          <div className="flex flex-col lg:flex-row gap-6 items-center justify-center">
             {/* Search */}
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search programs, locations, or keywords..."
+                placeholder="Search program areas or keywords..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
-
-            {/* Status Filter */}
-            <div className="flex items-center gap-4">
-              <Filter className="w-5 h-5 text-gray-600" />
-              <div className="flex flex-wrap gap-2">
-                {statuses.map((status) => (
-                  <button
-                    key={status}
-                    onClick={() => setSelectedStatus(status)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                      selectedStatus === status
-                        ? 'bg-gradient-to-r from-base-blue to-analogous-teal text-white shadow-lg'
-                        : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200 hover:border-blue-300'
-                    }`}
-                  >
-                    {status === 'all' ? 'All Programs' : status}
-                  </button>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Featured Programs */}
-      {featuredPrograms.length > 0 && (
-        <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-6 lg:px-10">
-            <div className="text-center mb-16 reveal">
-              <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-gray-900 mb-6">Featured Programs</h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Highlighting our most impactful initiatives that are creating lasting change worldwide.
-              </p>
-            </div>
-
-            <div className="space-y-12">
-              {featuredPrograms.map((program, index) => (
-                <div
-                  key={program.id}
-                  className="bg-white rounded-3xl overflow-hidden shadow-xl hover-lift border border-gray-100 group reveal"
-                  style={{ animationDelay: `${index * 0.2}s` }}
-                >
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-                    <div className="relative overflow-hidden h-64 lg:h-auto">
-                      {program.hero_image ? (
-                        <img
-                          src={program.hero_image}
-                          alt={program.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center">
-                          <Target className="w-16 h-16 text-blue-400" />
-                        </div>
-                      )}
-                      <div className="absolute top-6 left-6">
-                        <span className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white text-sm font-medium rounded-full shadow-lg">
-                          Featured
-                        </span>
-                      </div>
-                      <div className="absolute bottom-6 left-6 text-white">
-                        {program.location && (
-                          <div className="flex items-center gap-2 mb-2">
-                            <MapPin className="w-4 h-4" />
-                            <span className="text-sm font-medium">{program.location}</span>
-                          </div>
-                        )}
-                        {program.start_date && (
-                          <div className="flex items-center gap-2">
-                            <Calendar className="w-4 h-4" />
-                            <span className="text-sm">{new Date(program.start_date).getFullYear()}</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    
-                    <div className="p-8 lg:p-12 flex flex-col justify-center">
-                      <div className="flex items-center gap-4 mb-4">
-                        <span className={`inline-flex items-center px-3 py-1 text-xs font-medium rounded-full border ${getStatusColor(program.status)}`}>
-                          {program.status}
-                        </span>
-                      </div>
-                      
-                      <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4 font-playfair group-hover:text-blue-700 transition-colors">
-                        {program.title}
-                      </h3>
-                      
-                      <p className="text-gray-600 leading-relaxed mb-6 text-lg">
-                        {program.description || program.overview}
-                      </p>
-
-                      {/* Impact Stats */}
-                      <div className="grid grid-cols-2 gap-4 mb-6">
-                        {program.beneficiaries && (
-                          <div>
-                            <div className="text-xl font-bold gradient-text">{program.beneficiaries}</div>
-                            <div className="text-sm text-gray-600">Beneficiaries</div>
-                          </div>
-                        )}
-                        {program.budget && (
-                          <div>
-                            <div className="text-xl font-bold gradient-text">{program.budget}</div>
-                            <div className="text-sm text-gray-600">Budget</div>
-                          </div>
-                        )}
-                      </div>
-                      
-                      <div className="flex gap-3">
-                        <button
-                          onClick={() => viewProgram(program)}
-                          className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-base-blue to-analogous-teal text-white font-semibold rounded-lg hover:from-dark-blue hover:to-muted-blue transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group/btn"
-                        >
-                          <Eye className="w-5 h-5 mr-2" />
-                          View Program
-                          <ExternalLink className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* All Programs Grid */}
+      {/* All Program Areas Grid */}
       <section id="development" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="text-center mb-16 reveal">
-            <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-gray-900 mb-6">All Programs</h2>
+            <h2 className="text-3xl lg:text-5xl font-bold font-playfair text-gray-900 mb-6">Program Areas</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Discover our comprehensive portfolio of environmental and sustainability programs.
+              Discover our comprehensive portfolio of environmental and sustainability program areas.
             </p>
           </div>
 
@@ -345,39 +202,38 @@ const OurWorkPage = () => {
             <div className="flex items-center justify-center py-20">
               <div className="text-center">
                 <Loader2 className="w-12 h-12 animate-spin text-blue-600 mx-auto mb-4" />
-                <p className="text-gray-600">Loading programs...</p>
+                <p className="text-gray-600">Loading program areas...</p>
               </div>
             </div>
-          ) : filteredPrograms.length === 0 ? (
+          ) : filteredProgramAreas.length === 0 ? (
             <div className="text-center py-20">
               <Target className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No Programs Found</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">No Program Areas Found</h3>
               <p className="text-gray-600 mb-8">
-                No programs match your current search and filter criteria.
+                No program areas match your current search criteria.
               </p>
               <button 
                 onClick={() => {
-                  setSelectedStatus('all');
                   setSearchTerm('');
                 }}
                 className="text-base-blue hover:text-dark-blue font-medium"
               >
-                Clear Filters
+                Clear Search
               </button>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {regularPrograms.map((program, index) => (
+              {filteredProgramAreas.map((programArea, index) => (
                 <div
-                  key={program.id}
+                  key={programArea.id}
                   className="bg-white rounded-2xl overflow-hidden shadow-lg hover-lift border border-gray-100 group reveal"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <div className="relative overflow-hidden h-48">
-                    {program.hero_image ? (
+                    {programArea.hero_image ? (
                       <img
-                        src={program.hero_image}
-                        alt={program.title}
+                        src={programArea.hero_image}
+                        alt={programArea.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
                     ) : (
@@ -385,58 +241,33 @@ const OurWorkPage = () => {
                         <Target className="w-12 h-12 text-blue-400" />
                       </div>
                     )}
-                    <div className="absolute top-4 left-4">
-                      <span className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full border ${getStatusColor(program.status)}`}>
-                        {program.status}
-                      </span>
-                    </div>
                   </div>
                   
                   <div className="p-6">
                     <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 font-playfair group-hover:text-blue-700 transition-colors">
-                      {program.title}
+                      {programArea.name}
                     </h3>
                     
                     <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3">
-                      {program.description || program.overview}
+                      {programArea.description}
                     </p>
 
-                    {/* Program Details */}
-                    <div className="space-y-2 mb-4">
-                      {program.location && (
-                        <div className="flex items-center text-xs text-gray-500">
-                          <MapPin className="w-3 h-3 mr-1" />
-                          {program.location}
-                        </div>
-                      )}
-                      {program.beneficiaries && (
-                        <div className="flex items-center text-xs text-gray-500">
-                          <Users className="w-3 h-3 mr-1" />
-                          {program.beneficiaries}
-                        </div>
-                      )}
-                      {program.budget && (
-                        <div className="flex items-center text-xs text-blue-600 font-semibold">
-                          <Target className="w-3 h-3 mr-1" />
-                          {program.budget}
-                        </div>
-                      )}
+                    {/* Projects Count */}
+                    <div className="mb-4">
+                      <div className="flex items-center text-xs text-gray-500">
+                        <Target className="w-3 h-3 mr-1" />
+                        {programArea.projects?.length || 0} Projects
+                      </div>
                     </div>
                     
                     <div className="flex items-center justify-between">
                       <button
-                        onClick={() => viewProgram(program)}
+                        onClick={() => viewProgramArea(programArea)}
                         className="inline-flex items-center text-base-blue hover:text-dark-blue text-sm font-medium transition-colors group/btn"
                       >
                         Learn More
                         <ExternalLink className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 transition-transform" />
                       </button>
-                      
-                      {program.start_date && (
-                        <span className="text-xs text-gray-500">
-                          Since {new Date(program.start_date).getFullYear()}
-                        </span>
-                      )}
                     </div>
                   </div>
                 </div>
@@ -451,12 +282,12 @@ const OurWorkPage = () => {
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="text-center reveal">
             <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-3xl p-8 lg:p-12 border border-blue-100">
-              <h3 className="text-2xl font-bold font-playfair text-gray-900 mb-4">Manage Programs</h3>
+              <h3 className="text-2xl font-bold font-playfair text-gray-900 mb-4">Manage Program Areas</h3>
               <p className="text-gray-600 mb-8 text-lg leading-relaxed max-w-2xl mx-auto">
-                Add, edit, and organize programs through our comprehensive admin interface.
+                Add, edit, and organize program areas through our comprehensive admin interface.
               </p>
               <a
-                href="/admin/programs"
+                href="/admin/program-areas"
                 className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-base-blue to-analogous-teal text-white font-semibold rounded-full hover:from-dark-blue hover:to-muted-blue transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 Open Admin Panel
