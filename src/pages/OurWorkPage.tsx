@@ -7,7 +7,7 @@ import ImageGalleryCarousel from '../components/ImageGalleryCarousel';
 import { useProgramAreas } from '../hooks/useProgramAreas';
 import Header from '../components/Header';
 
-const OurWorkPage = () => {
+export const OurWorkPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
@@ -300,5 +300,3 @@ const OurWorkPage = () => {
     </div>
   );
 };
-
-export default OurWorkPage;
