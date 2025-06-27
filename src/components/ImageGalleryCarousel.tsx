@@ -163,5 +163,4 @@ const ImageGalleryCarousel: React.FC<ImageGalleryCarouselProps> = ({
   );
 };
 
-export { ImageGalleryCarousel };
 export default ImageGalleryCarousel;

@@ -4,7 +4,7 @@ import { Target, Eye, Users, Lightbulb, Award, Heart, Globe, Zap, Calendar, MapP
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
-export const AboutPage = () => {
+const AboutPage = () => {
   const location = useLocation();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
@@ -619,3 +619,5 @@ export const AboutPage = () => {
     </div>
   );
 };
+
+export default AboutPage;
