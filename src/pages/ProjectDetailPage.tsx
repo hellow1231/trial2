@@ -1,189 +1,259 @@
-import React, { useState } from 'react';
-import { Users, Calendar, MapPin, Award, CheckCircle, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { ArrowLeft, MapPin, Calendar, Users, FileText, Clock, CheckCircle } from 'lucide-react';
+import { useProject } from '../hooks/useProjects';
+import { ProjectStatusBadge } from '../components/projects/ProjectStatusBadge';
+import { ImageGalleryCarousel } from '../components/ImageGalleryCarousel';
 
-const project = {
-  title: 'AI-Powered Climate Prediction',
-  subtitle: 'Using machine learning to improve climate change predictions and early warning systems.',
-  backgroundImage: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1200&q=80',
-  highlights: [
-    { icon: Users, label: 'Team', value: '8 Members' },
-    { icon: Calendar, label: 'Duration', value: '2023-2025' },
-    { icon: MapPin, label: 'Location', value: 'Kathmandu, Nepal' },
-    { icon: Award, label: 'Partners', value: 'GEI, Local NGOs' }
-  ],
-  description: `
-    <p>This project leverages advanced machine learning algorithms to analyze climate data and provide accurate, real-time predictions for extreme weather events. Our goal is to help communities prepare for and adapt to climate change impacts.</p>
-    <p>We collaborate with local governments, NGOs, and research institutions to ensure the solutions are practical and scalable.</p>
-  `,
-  objectives: [
-    'Develop a robust AI model for climate prediction',
-    'Deploy early warning systems in vulnerable regions',
-    'Train local stakeholders in data interpretation',
-    'Publish open-access research findings'
-  ],
-  gallery: [
-    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
-    'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80'
-  ],
-  team: [
-    { name: 'Dr. Sarah Chen', role: 'Project Lead', image: 'https://randomuser.me/api/portraits/women/44.jpg' },
-    { name: 'Ravi Shrestha', role: 'Data Scientist', image: 'https://randomuser.me/api/portraits/men/32.jpg' },
-    { name: 'Amina Karki', role: 'Field Coordinator', image: 'https://randomuser.me/api/portraits/women/65.jpg' }
-  ],
-  partners: ['GEI', 'Nepal Climate Initiative', 'OpenAI'],
-};
+export function ProjectDetailPage() {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const { project, loading, error } = useProject(id!);
 
-const ProjectDetailPage = () => {
-  const [currentImage, setCurrentImage] = useState(0);
-  const totalImages = project.gallery.length;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading project details...</p>
+        </div>
+      </div>
+    );
+  }
 
-  const goToPrev = () => setCurrentImage((prev) => (prev === 0 ? totalImages - 1 : prev - 1));
-  const goToNext = () => setCurrentImage((prev) => (prev === totalImages - 1 ? 0 : prev + 1));
+  if (error || !project) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">Error loading project: {error || 'Project not found'}</p>
+          <button
+            onClick={() => navigate('/projects')}
+            className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
+          >
+            Back to Projects
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const projectImages = project.project_media
+    ?.filter(media => media.file_type === 'image')
+    .map(media => ({
+      url: media.file_url,
+      caption: media.caption || project.name
+    })) || [];
 
   return (
-    <div className="min-h-screen bg-white font-sans">
-      {/* Hero/Header */}
-      <section
-        className="relative h-80 flex items-center justify-center text-center text-white"
-        style={{
-          backgroundImage: `url(${project.backgroundImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-        aria-label="Project Hero Section"
-      >
-        <div className="absolute inset-0 bg-gradient-to-br from-black/60 to-cyan-900/40" aria-hidden="true"></div>
-        <div className="relative z-10">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4 drop-shadow-lg">{project.title}</h1>
-          <p className="text-xl lg:text-2xl max-w-2xl mx-auto drop-shadow-md">{project.subtitle}</p>
-        </div>
-      </section>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <button
+            onClick={() => navigate('/projects')}
+            className="flex items-center gap-2 text-teal-600 hover:text-teal-700 mb-4"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            Back to Projects
+          </button>
 
-      {/* Highlights/Stats */}
-      <section className="py-12 bg-white">
-        <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-          {project.highlights.map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={idx}
-                className="flex flex-col items-center text-center bg-gradient-to-br from-blue-100 to-cyan-100 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow duration-300"
-              >
-                <div className="w-14 h-14 flex items-center justify-center bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl mb-4">
-                  <Icon className="w-7 h-7 text-white" aria-hidden="true" />
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">{project.name}</h1>
+              <div className="flex items-center gap-4">
+                <ProjectStatusBadge status={project.status} size="lg" />
+                {project.program_areas && (
+                  <span className="px-3 py-1 bg-teal-100 text-teal-800 text-sm font-medium rounded-full">
+                    {project.program_areas.name}
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Project Images Carousel */}
+      {projectImages.length > 0 && (
+        <div className="py-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <ImageGalleryCarousel images={projectImages} />
+          </div>
+        </div>
+      )}
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Description */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">Project Description</h2>
+              <p className="text-gray-600 leading-relaxed">
+                {project.description || 'No description available for this project.'}
+              </p>
+            </div>
+
+            {/* Project Updates */}
+            {project.project_updates && project.project_updates.length > 0 && (
+              <div className="bg-white rounded-xl shadow-sm p-6">
+                <h2 className="text-xl font-semibold text-gray-900 mb-6">Project Updates</h2>
+                <div className="space-y-6">
+                  {project.project_updates
+                    .sort((a, b) => new Date(b.update_date).getTime() - new Date(a.update_date).getTime())
+                    .map((update) => (
+                      <div key={update.id} className="border-l-4 border-teal-500 pl-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          {update.milestone ? (
+                            <CheckCircle className="w-5 h-5 text-teal-600" />
+                          ) : (
+                            <Clock className="w-5 h-5 text-gray-400" />
+                          )}
+                          <h3 className="font-semibold text-gray-900">{update.title}</h3>
+                          {update.milestone && (
+                            <span className="px-2 py-1 bg-teal-100 text-teal-800 text-xs font-medium rounded-full">
+                              Milestone
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-gray-600 mb-2">{update.description}</p>
+                        <p className="text-sm text-gray-500">
+                          {new Date(update.update_date).toLocaleDateString()}
+                        </p>
+                      </div>
+                    ))}
                 </div>
-                <div className="text-2xl font-bold text-gray-900 mb-1">{item.value}</div>
-                <div className="text-gray-600 text-sm">{item.label}</div>
               </div>
-            );
-          })}
-        </div>
-      </section>
+            )}
 
-      {/* Main Content & Sidebar */}
-      <section className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-12 py-12">
-        {/* Main Content */}
-        <div className="lg:col-span-2">
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold mb-4 text-gray-900">Project Description</h2>
-            <div className="prose prose-lg text-gray-700" dangerouslySetInnerHTML={{ __html: project.description }} />
-          </div>
-          <div className="mb-8">
-            <h3 className="text-xl font-semibold mb-3 text-gray-900">Objectives</h3>
-            <ul className="list-disc pl-6 space-y-2 text-gray-700">
-              {project.objectives.map((obj, idx) => (
-                <li key={idx} className="flex items-start">
-                  <CheckCircle className="w-5 h-5 text-cyan-600 mr-2 mt-1" aria-hidden="true" />
-                  <span>{obj}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-xl font-semibold mb-3 text-gray-900">Gallery</h3>
-            <div className="relative w-full max-w-xl mx-auto">
-              <img
-                src={project.gallery[currentImage]}
-                alt={`Project gallery image ${currentImage + 1}`}
-                className="w-full h-64 object-cover rounded-lg shadow transition-all duration-300"
-              />
-              {/* Carousel Controls */}
-              <button
-                onClick={goToPrev}
-                aria-label="Previous image"
-                className="absolute top-1/2 left-2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-700 rounded-full p-2 shadow transition-all"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-              <button
-                onClick={goToNext}
-                aria-label="Next image"
-                className="absolute top-1/2 right-2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-700 rounded-full p-2 shadow transition-all"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-              {/* Dots */}
-              <div className="flex justify-center gap-2 mt-4">
-                {project.gallery.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentImage(idx)}
-                    aria-label={`Go to image ${idx + 1}`}
-                    className={`w-3 h-3 rounded-full ${currentImage === idx ? 'bg-cyan-600' : 'bg-gray-300'} transition-all`}
-                  />
-                ))}
+            {/* Stakeholders */}
+            {project.project_stakeholders && project.project_stakeholders.length > 0 && (
+              <div className="bg-white rounded-xl shadow-sm p-6">
+                <h2 className="text-xl font-semibold text-gray-900 mb-6">Project Stakeholders</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {project.project_stakeholders.map((stakeholder) => (
+                    <div key={stakeholder.id} className="border border-gray-200 rounded-lg p-4">
+                      <div className="flex items-start gap-3">
+                        <Users className="w-5 h-5 text-teal-600 mt-1" />
+                        <div className="flex-1">
+                          <h3 className="font-medium text-gray-900">{stakeholder.name}</h3>
+                          {stakeholder.role && (
+                            <p className="text-sm text-gray-600">{stakeholder.role}</p>
+                          )}
+                          {stakeholder.organization && (
+                            <p className="text-sm text-gray-500">{stakeholder.organization}</p>
+                          )}
+                          <span className={`inline-block mt-2 px-2 py-1 text-xs font-medium rounded-full ${
+                            stakeholder.type === 'team_member'
+                              ? 'bg-blue-100 text-blue-800'
+                              : stakeholder.type === 'partner'
+                              ? 'bg-green-100 text-green-800'
+                              : 'bg-purple-100 text-purple-800'
+                          }`}>
+                            {stakeholder.type.replace('_', ' ').toUpperCase()}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
-        </div>
-        {/* Sidebar */}
-        <aside className="space-y-8">
-          <div>
-            <h4 className="text-lg font-semibold mb-3 text-gray-900">Team Members</h4>
-            <ul className="space-y-4">
-              {project.team.map((member, idx) => (
-                <li key={idx} className="flex items-center gap-3">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-12 h-12 rounded-full object-cover border-2 border-cyan-500"
-                  />
-                  <div>
-                    <div className="font-medium text-gray-900">{member.name}</div>
-                    <div className="text-sm text-gray-600">{member.role}</div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Project Details */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Project Details</h3>
+              <div className="space-y-4">
+                {project.location && (
+                  <div className="flex items-start gap-3">
+                    <MapPin className="w-5 h-5 text-gray-400 mt-0.5" />
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">Location</p>
+                      <p className="text-sm text-gray-600">{project.location}</p>
+                      {project.latitude && project.longitude && (
+                        <p className="text-xs text-gray-500 mt-1">
+                          {project.latitude.toFixed(4)}, {project.longitude.toFixed(4)}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-lg font-semibold mb-3 text-gray-900">Partners</h4>
-            <div className="flex flex-wrap gap-2">
-              {project.partners.map((partner, idx) => (
-                <span
-                  key={idx}
-                  className="px-3 py-1 bg-cyan-100 text-cyan-800 text-xs rounded-full font-medium"
-                >
-                  {partner}
-                </span>
-              ))}
-            </div>
-          </div>
-        </aside>
-      </section>
+                )}
 
-      {/* Call to Action */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-cyan-600 text-white text-center">
-        <h2 className="text-3xl font-bold mb-4">Support This Project</h2>
-        <p className="text-lg mb-8 max-w-2xl mx-auto">
-          Join us in making a difference! Your support helps us bring innovative climate solutions to more communities.
-        </p>
-        <button className="inline-flex items-center gap-2 px-8 py-4 bg-white text-blue-700 font-semibold rounded-full shadow-lg hover:bg-blue-50 transition-all duration-300">
-          Contact Us <ArrowRight className="w-5 h-5" />
-        </button>
-      </section>
+                {(project.start_date || project.end_date) && (
+                  <div className="flex items-start gap-3">
+                    <Calendar className="w-5 h-5 text-gray-400 mt-0.5" />
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">Timeline</p>
+                      <div className="text-sm text-gray-600">
+                        {project.start_date && (
+                          <p>Start: {new Date(project.start_date).toLocaleDateString()}</p>
+                        )}
+                        {project.end_date && (
+                          <p>End: {new Date(project.end_date).toLocaleDateString()}</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex items-start gap-3">
+                  <FileText className="w-5 h-5 text-gray-400 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">Created</p>
+                    <p className="text-sm text-gray-600">
+                      {new Date(project.created_at).toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <Clock className="w-5 h-5 text-gray-400 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">Last Updated</p>
+                    <p className="text-sm text-gray-600">
+                      {new Date(project.updated_at).toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Project Documents */}
+            {project.project_media?.filter(media => media.file_type === 'document').length > 0 && (
+              <div className="bg-white rounded-xl shadow-sm p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Documents</h3>
+                <div className="space-y-3">
+                  {project.project_media
+                    .filter(media => media.file_type === 'document')
+                    .map((document) => (
+                      <a
+                        key={document.id}
+                        href={document.file_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                      >
+                        <FileText className="w-5 h-5 text-gray-400" />
+                        <div className="flex-1">
+                          <p className="text-sm font-medium text-gray-900">
+                            {document.file_name || 'Document'}
+                          </p>
+                          {document.caption && (
+                            <p className="text-xs text-gray-500">{document.caption}</p>
+                          )}
+                        </div>
+                      </a>
+                    ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
-};
-
-export default ProjectDetailPage; 
+}
